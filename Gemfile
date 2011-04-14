@@ -7,7 +7,7 @@ gem 'rails', '3.0.3'
 
 
 # Use unicorn as the web server
-# gem 'unicorn'
+
 
 # Deploy with Capistrano
 # gem 'capistrano'
@@ -27,6 +27,7 @@ gem 'rails', '3.0.3'
 # and rake tasks are available in development mode:
 group :development, :test do
 #  gem 'webrat'
+  gem 'mongrel'
   gem 'sqlite3-ruby', :require => 'sqlite3'
   gem 'capistrano'
   gem 'capistrano-ext'

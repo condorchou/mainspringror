@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Company name:</b>
+  <%= @client.company_name %>
+</p>
+
+<p>
+  <b>Remarks:</b>
+  <%= @client.remarks %>
+</p>
+
+<p>
+  <b>Intranet:</b>
+  <%= @client.intranet %>
+</p>
+
+<p>
+  <b>Botr player key:</b>
+  <%= @client.botr_player_key %>
+</p>
+
+
+<%= link_to 'Edit', edit_client_path(@client) %> |
+<%= link_to 'Back', clients_path %>

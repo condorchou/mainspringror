@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @video.title %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @video.location %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @video.description %>
+</p>
+
+<p>
+  <b>Season:</b>
+  <%= @video.season %>
+</p>
+
+<p>
+  <b>Episode:</b>
+  <%= @video.episode %>
+</p>
+
+<p>
+  <b>Label:</b>
+  <%= @video.label %>
+</p>
+
+<p>
+  <b>Participants:</b>
+  <%= @video.participants %>
+</p>
+
+<p>
+  <b>Release date:</b>
+  <%= @video.release_date %>
+</p>
+
+<p>
+  <b>Approved:</b>
+  <%= @video.approved %>
+</p>
+
+<p>
+  <b>Botr video key:</b>
+  <%= @video.botr_video_key %>
+</p>
+
+<p>
+  <b>Views:</b>
+  <%= @video.views %>
+</p>
+
+<p>
+  <b>Client:</b>
+  <%= @video.client_id %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @video.user_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_client_video_path(@client,@video) %> |
+<%= link_to 'Back', client_videos_path(@client) %>

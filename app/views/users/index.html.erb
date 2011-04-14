@@ -1,0 +1,27 @@
+<h1>Listing Client Users</h1>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Location</th>
+    <th>Client</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.username %></td>
+    <td><%= user.location %></td>
+    <td><%= user.client_id %></td>
+    <td><%= link_to 'Show', [@client, user] %></td>
+    <td><%= link_to 'Edit', edit_client_user_path(@client, user) %></td>
+    <td><%= link_to 'Destroy', client_user_path(@client,user), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New User', new_client_user_path(@client) %>

@@ -1,4 +1,12 @@
 Mindspring::Application.routes.draw do
+  
+  resources :clients do
+    resources :users do
+    end
+    resources :videos do
+    end
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

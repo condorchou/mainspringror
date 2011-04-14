@@ -1,0 +1,47 @@
+<h1>Listing videos</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Location</th>
+    <th>Description</th>
+    <th>Season</th>
+    <th>Episode</th>
+    <th>Label</th>
+    <th>Participants</th>
+    <th>Release date</th>
+    <th>Approved</th>
+    <th>Botr video key</th>
+    <th>Views</th>
+    <th>Client</th>
+    <th>User</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @videos.each do |video| %>
+  <tr>
+    <td><%= video.title %></td>
+    <td><%= video.location %></td>
+    <td><%= video.description %></td>
+    <td><%= video.season %></td>
+    <td><%= video.episode %></td>
+    <td><%= video.label %></td>
+    <td><%= video.participants %></td>
+    <td><%= video.release_date %></td>
+    <td><%= video.approved %></td>
+    <td><%= video.botr_video_key %></td>
+    <td><%= video.views %></td>
+    <td><%= video.client_id %></td>
+    <td><%= video.user_id %></td>
+    <td><%= link_to 'Show', client_video_path(@client, video) %></td>
+    <td><%= link_to 'Edit', edit_client_video_path(@client, video) %></td>
+    <td><%= link_to 'Destroy', client_video_path(@client, video), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Video', new_client_video_path %>
