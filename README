@@ -1,1 +1,13 @@
-Mainspringror project
+Mainspringror project - multiclient CMS for managing videos, users, comments, ratings
+
+Restful resources for CRUD operations on clients, their videos and their users with predictable urls.
+
+Security through obfuscation, no sequential integer ids in urls for clients or videos or users.  
+
+Session authentication before_filter on all controllers, no casual browsers can access data.
+
+clients/x/users/login_or_create?username=abc&location=xyz - allows client's user an entry point to login as a user (or create a new account if doesn't exist).
+
+login_or_create?... goto=forward_to_url_that_is_cgi_escapeHTML - after entry point, forward user to CMS page (allows real bookmarking)
+
+clients/x/videos/search?terms search within client videos matching search terms

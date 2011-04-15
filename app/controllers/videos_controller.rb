@@ -69,8 +69,8 @@ class VideosController < ApplicationController
     @video = @client.videos.find(params[:id])
 
     respond_to do |format|
-      if @video.update_attributes(params[:clients_video])
-        format.html { redirect_to(@video, :notice => 'Video was successfully updated.') }
+      if @video.update_attributes(params[:video])
+        format.html { redirect_to([@client,@video], :notice => 'Video was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

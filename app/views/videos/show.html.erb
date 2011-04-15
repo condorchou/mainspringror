@@ -50,6 +50,10 @@
   <%= @video.botr_video_key %>
 </p>
 
+<div>
+<script type="text/javascript" src="http://content.bitsontherun.com/players/<%= @video.botr_video_key -%>-<%= @client.botr_player_key -%>.js"></script> 
+</div>
+
 <p>
   <b>Views:</b>
   <%= @video.views %>
