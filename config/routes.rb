@@ -3,8 +3,9 @@ Mindspring::Application.routes.draw do
   resources :clients do
     resources :users do
       collection do
+        get 'login'
         post 'login'
-        get 'login_or_create'
+        get 'intranet_login'
       end
     end
     resources :videos do

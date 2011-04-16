@@ -1,8 +1,27 @@
 class UsersController < ApplicationController
   # GET /clients/users
   # GET /clients/users.xml
-  skip_before_filter :verify_session, :only => [:login, :login_or_create]
+  skip_before_filter :verify_session, :only => [:login, :intranet_login]
   before_filter :find_client
+
+  def login
+    @user = @client.users.build
+    if request.post?
+      @user.attributes = params[:user]
+      @user.client_id = @client.id #not passed in from form currently
+      if (@user = User.exists?(@user))
+        session[:client_id] = @client.id
+        session[:user_id] = @user.id
+        redirect_to client_videos_path(@client)
+      else
+        flash[:notice] = "Invalid Login"
+        redirect_to login_client_users_path(@client)
+      end
+    end
+  end
+
+  def intranet_login
+  end
 
   def find_client
     @client = Client.find(params[:client_id])
