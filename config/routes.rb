@@ -2,8 +2,16 @@ Mindspring::Application.routes.draw do
   
   resources :clients do
     resources :users do
+      collection do
+        post 'login'
+        get 'login_or_create'
+      end
     end
     resources :videos do
+      collection do
+        get 'search'
+        get 'banner'
+      end
     end
   end
 

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   # GET /clients/users
   # GET /clients/users.xml
+  skip_before_filter :verify_session, :only => [:login, :login_or_create]
   before_filter :find_client
 
   def find_client

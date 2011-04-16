@@ -1,7 +1,7 @@
 class VideosController < ApplicationController
   # GET /clients/videos
   # GET /clients/videos.xml
-
+  skip_before_filter :verify_session, :only => :banner
   before_filter :find_client
 
   def find_client
