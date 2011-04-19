@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110418231050) do
+ActiveRecord::Schema.define(:version => 20110419214923) do
 
   create_table "clients", :force => true do |t|
     t.string   "company_name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20110418231050) do
     t.string   "botr_player_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "token"
   end
 
   create_table "taggings", :force => true do |t|
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(:version => 20110418231050) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "password"
-    t.string   "role"
+    t.string   "role",       :default => "intranet_user"
   end
 
   create_table "videos", :force => true do |t|

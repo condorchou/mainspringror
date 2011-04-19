@@ -24,22 +24,26 @@ class AuthenticateController < ApplicationController
 #2) after the session is assigned give use restricted access
   def intranet_login
     #require a username and location and a token
-    errors = []
-    errors << "username required" if params[:username].blank?
-    errors << "location required" if params[:location].blank?
-    if errors.empty?
-        @user = @client.users.where(:username => params[:username], :location => params[:location]).first
-        if @user
-          session[:client_id] = @client.id
-          session[:user_id] = @user.id
-          redirect_to client_videos_path(@client) #TODO, render video show
-          return false
-        else
-          #TODO create new user passed on username and location if exist
-        end
+
+    opts = {:username => params[:username], :location => params[:location], :token => params[:token], :referer => request.referer}
+    @errors, @user = User.intranet_login(params)
+
+    if @errors.empty?
+       
+      #authenicate the user
+      reset_session
+      session[:user_id] = @user.id
+      if @user.role == 'client_admin'
+        redirect_to client_videos_path(@user.client)
+      else
+        #TODO, redirect to featured video, or goto params
+        @video = @user.client.videos.last
+        redirect_to client_video_path(@user.client,@video)
+      end
     else
-      render :text => errors.join('<br>'), :status => 400
+      render :text => @errors.join('<br>'), :status => 400
     end
+
   end
 
 

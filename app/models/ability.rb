@@ -12,6 +12,9 @@ class Ability
       #TODO: need to prevent selection of super_admin in views
       can [:manage], [User], :client_id => user.client.id
       can [:show,:edit,:update], [Client], :id => user.client.id
+    elsif user.role == 'intranet_user'
+      can :show, Client, :id => user.client.id #required for nested resource, since it goes through client
+      can [:show], Video, :client_id => user.client.id
     end
     # Define abilities for the passed in user here. For example:
     #
