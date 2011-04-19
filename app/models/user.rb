@@ -7,4 +7,5 @@ class User < ActiveRecord::Base
      User.where(:username => user.username,:client_id => user.client_id).first
   end
 
+  
 end

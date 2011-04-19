@@ -2,11 +2,6 @@ Mindspring::Application.routes.draw do
   
   resources :clients do
     resources :users do
-      collection do
-        get 'login'
-        post 'login'
-        get 'intranet_login'
-      end
     end
     resources :videos do
       collection do
@@ -15,6 +10,10 @@ Mindspring::Application.routes.draw do
       end
     end
   end
+
+  match 'login' => 'authenticate#login'
+  match 'intranet_login' => 'authenticate#intranet_login'
+  match 'logout' => 'authenticate#logout'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,27 +1,8 @@
 class UsersController < ApplicationController
   # GET /clients/users
   # GET /clients/users.xml
-  skip_before_filter :verify_session, :only => [:login, :intranet_login]
-  before_filter :find_client
-
-  def login
-    @user = @client.users.build
-    if request.post?
-      @user.attributes = params[:user]
-      @user.client_id = @client.id #not passed in from form currently
-      if (@user = User.exists?(@user))
-        session[:client_id] = @client.id
-        session[:user_id] = @user.id
-        redirect_to client_videos_path(@client)
-      else
-        flash[:notice] = "Invalid Login"
-        redirect_to login_client_users_path(@client)
-      end
-    end
-  end
-
-  def intranet_login
-  end
+  load_and_authorize_resource :client
+  load_and_authorize_resource :user, :through => :client
 
   def find_client
     @client = Client.find(params[:client_id])
@@ -42,7 +23,6 @@ class UsersController < ApplicationController
   # GET /clients/users/1
   # GET /clients/users/1.xml
   def show
-    @user = User.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -63,7 +43,6 @@ class UsersController < ApplicationController
 
   # GET /clients/users/1/edit
   def edit
-    @user = @client.users.find(params[:id])
   end
 
   # POST /clients/users
@@ -85,7 +64,6 @@ class UsersController < ApplicationController
   # PUT /clients/users/1
   # PUT /clients/users/1.xml
   def update
-    @user = @clients.users.find(params[:id])
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -101,7 +79,6 @@ class UsersController < ApplicationController
   # DELETE /clients/users/1
   # DELETE /clients/users/1.xml
   def destroy
-    @user = @client.users.find(params[:id])
     @user.destroy
 
     respond_to do |format|

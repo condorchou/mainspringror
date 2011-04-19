@@ -2,12 +2,34 @@ Mainspringror project - multiclient CMS for managing videos, users, comments, ra
 
 Restful resources for CRUD operations on clients, their videos and their users with predictable urls.
 
-Security through obfuscation, no sequential integer ids in urls for clients or videos or users.  
+1) See all clients at /clients
+2) Manage clients videos at clients/:client_id/videos
+3) Manage clients users at clients/:client_id/users
+
+====
+
+Declaritive Authorization: Users with different roles have access to these restful operations:
+
+roles: 
+
+anonymouse_intranet_user - videos controller access only and :client_id can only be his/her client.  username and location are both 'guest'.  Cannot comment or rate videos.
+videos - show, search
+
+intranet_user - videos controller access only and :client_id can only be his/her client.  Can comment and rate videos.
+videos - show, create, update, search, create_comment, rate_video
+
+client_administrator - can access videos controller and users controller for his/her client.  Can comment and rate videos.
+videos - all, users - create, update, delete, (can change user roles but only less than client_administrator)
+
+super_administrator - can access all controllers.  :client_id can be any valid client's id.
+(no check)
 
 Session authentication before_filter on all controllers, no casual browsers can access data.
 
-clients/x/users/login_or_create?username=abc&location=xyz - allows client's user an entry point to login as a user (or create a new account if doesn't exist).
+clients/:client_id/users/login is explicit login page using username and password
 
-login_or_create?... goto=forward_to_url_that_is_cgi_escapeHTML - after entry point, forward user to CMS page (allows real bookmarking)
+clients/:client_id/users/intranet_login?username=abc&location=xyz - allows client's user an entry point to login as a user (or create a new account if doesn't exist).
+
+intranet_login?... goto=forward_to_url_that_is_cgi_escapeHTML - after entry point, forward user to CMS page (allows real bookmarking)
 
 clients/x/videos/search?terms search within client videos matching search terms

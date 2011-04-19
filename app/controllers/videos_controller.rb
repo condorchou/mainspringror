@@ -1,9 +1,10 @@
 class VideosController < ApplicationController
   # GET /clients/videos
   # GET /clients/videos.xml
-  skip_before_filter :verify_session, :only => :banner
-  before_filter :find_client
-
+ # before_filter :find_client
+  load_and_authorize_resource :client
+  load_and_authorize_resource :video, :through => :client, :except => [:banner]
+  
   def find_client
     @client = Client.find(params[:client_id])
     if @client.nil?
@@ -12,7 +13,7 @@ class VideosController < ApplicationController
   end
 
   def index
-    @videos = @client.videos
+   # @videos = @client.videos
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,7 +24,7 @@ class VideosController < ApplicationController
   # GET /clients/videos/1
   # GET /clients/videos/1.xml
   def show
-    @video = Video.find(params[:id])
+   # @video = Video.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

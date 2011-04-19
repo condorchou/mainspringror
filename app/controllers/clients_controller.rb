@@ -1,11 +1,11 @@
 class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.xml
-
+  load_and_authorize_resource
+  
 
   def index
     @clients = Client.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @clients }
@@ -15,8 +15,6 @@ class ClientsController < ApplicationController
   # GET /clients/1
   # GET /clients/1.xml
   def show
-    @client = Client.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @client }
@@ -36,7 +34,6 @@ class ClientsController < ApplicationController
 
   # GET /clients/1/edit
   def edit
-    @client = Client.find(params[:id])
   end
 
   # POST /clients
@@ -58,7 +55,6 @@ class ClientsController < ApplicationController
   # PUT /clients/1
   # PUT /clients/1.xml
   def update
-    @client = Client.find(params[:id])
 
     respond_to do |format|
       if @client.update_attributes(params[:client])
@@ -74,7 +70,6 @@ class ClientsController < ApplicationController
   # DELETE /clients/1
   # DELETE /clients/1.xml
   def destroy
-    @client = Client.find(params[:id])
     @client.destroy
 
     respond_to do |format|
