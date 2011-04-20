@@ -9,6 +9,7 @@ class AuthenticateController < ApplicationController
       #TODO : get from client company name
       #@user.client_id = params[:company_name].to_client_id
       if (@user = User.exists?(@user))
+        reset_session
         session[:user_id] = @user.id
         redirect_to client_videos_path(@user.client)
       else
@@ -25,7 +26,7 @@ class AuthenticateController < ApplicationController
   def intranet_login
     #require a username and location and a token
 
-    opts = {:username => params[:username], :location => params[:location], :token => params[:token], :referer => request.referer}
+    opts = {:username => params[:username], :location => params[:location], :token => params[:token]}
     @errors, @user = User.intranet_login(params)
 
     if @errors.empty?
@@ -36,7 +37,16 @@ class AuthenticateController < ApplicationController
       if @user.role == 'client_admin'
         redirect_to client_videos_path(@user.client)
       else
+        unless params[:goto].blank?
+          dest_url =CGI::unescape(params[:goto])
+         #only needs to be true for one request, so we don't store long term in session
+          flash[:permalink_urls] = true
+          redirect_to dest_url
+          return false
+        end
+
         #TODO, redirect to featured video, or goto params
+        #
         @video = @user.client.videos.last
         redirect_to client_video_path(@user.client,@video)
       end

@@ -1,5 +1,7 @@
 Mainspringror project - multiclient CMS for managing videos, users, comments, ratings
 
+====
+
 Restful resources for CRUD operations on clients, their videos and their users with predictable urls.
 
 1) See all clients at /clients
@@ -8,28 +10,59 @@ Restful resources for CRUD operations on clients, their videos and their users w
 
 ====
 
-Declaritive Authorization: Users with different roles have access to these restful operations:
+Authentication and Authorization: 
 
-roles: 
+Authentication login by authenication controller:
+/login - explicite login with username, password and client_id
+/intranet_login -implicit login through intranet iframe src parameters using token, username, location 
 
-anonymouse_intranet_user - videos controller access only and :client_id can only be his/her client.  username and location are both 'guest'.  Cannot comment or rate videos.
-videos - show, search
+Authorization in each controller via CanCan plugin
+configured in models/abilities.rb - no client user can view videos of another client without proper role
+Roles:
 
-intranet_user - videos controller access only and :client_id can only be his/her client.  Can comment and rate videos.
-videos - show, create, update, search, create_comment, rate_video
+super_admin - can manage all resources including adding or deleting clients
+client_admin - client admin, can modify client record, manage users and videos
+intranet_user - typical intranet user that just looks at videos, can comment, can rate
 
-client_administrator - can access videos controller and users controller for his/her client.  Can comment and rate videos.
-videos - all, users - create, update, delete, (can change user roles but only less than client_administrator)
+====
 
-super_administrator - can access all controllers.  :client_id can be any valid client's id.
-(no check)
+separate iframe test environment:
 
-Session authentication before_filter on all controllers, no casual browsers can access data.
+to simulate client's intranet as perceived from an iframe
 
-clients/:client_id/users/login is explicit login page using username and password
 
-clients/:client_id/users/intranet_login?username=abc&location=xyz - allows client's user an entry point to login as a user (or create a new account if doesn't exist).
 
+Permalinks:
 intranet_login?... goto=forward_to_url_that_is_cgi_escapeHTML - after entry point, forward user to CMS page (allows real bookmarking)
+intranet_login action does a CGI.unescape and redirects employee to goto destination
+unobtrusive javascript replace links that lead back to mainspring with intranet_url + goto=escape(original_url)
+
+===
+
+Commenting
+
+====
+
+Rating
+
+====
+
+Tagging
+
+====
+
+Video Uploading
+
+====
+
+Content Assets
+
+====
+
+Search:
 
 clients/x/videos/search?terms search within client videos matching search terms
+
+====
+
+

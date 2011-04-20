@@ -72,3 +72,14 @@
 
 <%= link_to 'Edit', edit_client_video_path(@client,@video) %> |
 <%= link_to 'Back', client_videos_path(@client) %>
+<% if flash[:permalink_urls] %>
+rewriting urls
+<script src="http://code.jquery.com/jquery-1.5.js"></script>
+<script>
+$('a').attr('href', function() {
+  orig = this; 
+  return "<%=@client.intranet-%>?goto="+escape(this); 
+});
+$('a').attr("target", "_parent");
+</script>
+<% end %>
