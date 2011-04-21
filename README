@@ -47,10 +47,8 @@ Video show page can have tabbed sections.  When video from a tab section is clic
  with the client.tabs attribute (this will cause this content asset to be loaded on the video/show page).  When a new
  video/show page is rendered, the tab that is highlighted the one matching that video's video.tab_highlight attribute.
  highlighting will be done clientside using jQuery.
-
+TODO - create jQuery function that helps with that...
 ====
-
-
 
 Content Assets
 
@@ -71,10 +69,6 @@ Tagging
 ====
 
 Video Uploading
-
-====
-
-Content Assets
 
 ====
 
