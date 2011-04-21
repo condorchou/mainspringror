@@ -28,9 +28,10 @@ intranet_user - typical intranet user that just looks at videos, can comment, ca
 
 separate iframe test environment:
 
-to simulate client's intranet as perceived from an iframe
+to simulate client's intranet as perceived from an iframe use copy public/iframe_integration_sample.php
+There will be no simulation within the Ror app
 
-
+=====
 
 Permalinks:
 intranet_login?... goto=forward_to_url_that_is_cgi_escapeHTML - after entry point, forward user to CMS page (allows real bookmarking)
@@ -38,6 +39,24 @@ intranet_login action does a CGI.unescape and redirects employee to goto destina
 unobtrusive javascript replace links that lead back to mainspring with intranet_url + goto=escape(original_url)
 
 ===
+
+Tabs:
+
+Video show page can have tabbed sections.  When video from a tab section is clicked, that tab remains highlighted
+ and videos within that tab are retained on subsequent video.  The tabs must be built as a content asset then associated
+ with the client.tabs attribute (this will cause this content asset to be loaded on the video/show page).  When a new
+ video/show page is rendered, the tab that is highlighted the one matching that video's video.tab_highlight attribute.
+ highlighting will be done clientside using jQuery.
+
+====
+
+
+
+Content Assets
+
+Templates that are stored in the DB.  Evaluated as erb.  Can be used to render tabs in video show.
+
+====
 
 Commenting
 

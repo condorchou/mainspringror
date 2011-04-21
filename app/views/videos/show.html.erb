@@ -50,9 +50,6 @@
   <%= @video.botr_video_key %>
 </p>
 
-<div>
-<script type="text/javascript" src="http://content.bitsontherun.com/players/<%= @video.botr_video_key -%>-<%= @client.botr_player_key -%>.js"></script> 
-</div>
 
 <p>
   <b>Views:</b>
@@ -68,7 +65,19 @@
   <b>User:</b>
   <%= @video.user_id %>
 </p>
+<p>
+  <b>Tab Highlight:</b>
+  <%= @video.tab_highlight %>
+</p>
 
+<div style="border:1px solid black">
+<p>TABS</p>
+ <% begin %>
+ <%= raw ERB.new(@client.content_assets.find_by_handle(@client.tab_content_asset).body).result(binding) %>
+<% rescue => e %>
+ <%= e %>
+<% end %>
+</div>
 
 <%= link_to 'Edit', edit_client_video_path(@client,@video) %> |
 <%= link_to 'Back', client_videos_path(@client) %>
@@ -83,3 +92,9 @@ $('a').attr('href', function() {
 $('a').attr("target", "_parent");
 </script>
 <% end %>
+
+<div>
+<!-- this takes the longest to load, keep this last -->
+<script type="text/javascript" src="http://content.bitsontherun.com/players/<%= @video.botr_video_key -%>-<%= @client.botr_player_key -%>.js"></script> 
+</div>
+

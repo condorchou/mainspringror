@@ -1,14 +1,19 @@
 Mindspring::Application.routes.draw do
   
+
   resources :clients do
-    resources :users do
-    end
+    
+    resources :users
+    
+    resources :content_assets
+    
     resources :videos do
       collection do
         get 'search'
         get 'banner'
       end
     end
+
   end
 
   match 'login' => 'authenticate#login'

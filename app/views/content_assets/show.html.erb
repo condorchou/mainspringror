@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>handle:</b>
+  <%= @content_asset.handle %>
+</p>
+
+<p>
+  <b>client_id:</b>
+  <%= @content_asset.client_id %>
+</p>
+
+<p>
+  <b>body:</b>
+  <%= @content_asset.body %>
+</p>
+
+<%= link_to 'Edit', edit_client_content_asset_path(@client,@content_asset) %> |
+<%= link_to 'Back', client_content_assets_path(@client) %>
