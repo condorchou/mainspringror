@@ -5,16 +5,8 @@ class VideosController < ApplicationController
   load_and_authorize_resource :client
   load_and_authorize_resource :video, :through => :client, :except => [:banner]
   
-  def find_client
-    @client = Client.find(params[:client_id])
-    if @client.nil?
-      raise "Invalid Client request"
-    end
-  end
-
+  
   def index
-   # @videos = @client.videos
-
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @videos }
@@ -24,8 +16,7 @@ class VideosController < ApplicationController
   # GET /clients/videos/1
   # GET /clients/videos/1.xml
   def show
-   # @video = Video.find(params[:id])
-
+   
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @video }
@@ -45,7 +36,6 @@ class VideosController < ApplicationController
 
   # GET /clients/videos/1/edit
   def edit
-    @video = @client.videos.find(params[:id])
   end
 
   # POST /clients/videos
@@ -67,7 +57,6 @@ class VideosController < ApplicationController
   # PUT /clients/videos/1
   # PUT /clients/videos/1.xml
   def update
-    @video = @client.videos.find(params[:id])
 
     respond_to do |format|
       if @video.update_attributes(params[:video])
@@ -83,7 +72,6 @@ class VideosController < ApplicationController
   # DELETE /clients/videos/1
   # DELETE /clients/videos/1.xml
   def destroy
-    @video = @client.videos.find(params[:id])
     @video.destroy
 
     respond_to do |format|

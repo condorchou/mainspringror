@@ -8,6 +8,9 @@ Mindspring::Application.routes.draw do
     resources :content_assets
     
     resources :videos do
+      
+      resources :comments
+
       collection do
         get 'search'
         get 'banner'

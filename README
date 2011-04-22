@@ -57,25 +57,38 @@ Templates that are stored in the DB.  Evaluated as erb.  Can be used to render t
 ====
 
 Commenting
+Comments are nested resource of videos.  clients/:client_id/videos/:video_id/comment
+But normally accessed through video show page and updated through ajax.
+TODO - ajaxify add comment
 
 ====
+TODO
+Client styling:
+Client has one attribute css style.  It is loaded for the client on each page.  Since this data is in the DB
+and not under version control, recommend committing samples to repository.
 
+=====
+
+TODO
 Rating
 
 ====
-
+TODO
 Tagging
 
 ====
-
+TODO
 Video Uploading
 
 ====
-
+TODO
 Search:
 
 clients/x/videos/search?terms search within client videos matching search terms
 
 ====
+TODO
+Video Overlays - or other stylings
+videos model has attribute for css classes.  These css classes can be styled to support thumb overlays.
 
 

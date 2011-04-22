@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110421055334) do
+ActiveRecord::Schema.define(:version => 20110422054234) do
 
   create_table "clients", :force => true do |t|
     t.string   "company_name"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(:version => 20110421055334) do
     t.datetime "updated_at"
     t.string   "token"
     t.string   "tab_content_asset"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "video_id"
+    t.integer  "user_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "content_assets", :force => true do |t|

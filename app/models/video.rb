@@ -3,4 +3,6 @@ class Video < ActiveRecord::Base
 
   belongs_to :client
   belongs_to :user
+  has_many :comments
+
 end

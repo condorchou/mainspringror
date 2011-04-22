@@ -79,6 +79,17 @@
 <% end %>
 </div>
 
+<p>
+<b>Comments:</b>
+ <ul>
+ <% @video.comments.each do |comment| %>
+   <li><%= comment.body -%></li> 
+ <% end %>
+ </ul>
+  <%= render :partial => 'comments/form' %>
+</p>
+
+
 <%= link_to 'Edit', edit_client_video_path(@client,@video) %> |
 <%= link_to 'Back', client_videos_path(@client) %>
 <% if flash[:permalink_urls] %>

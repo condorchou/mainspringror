@@ -1,0 +1,10 @@
+<h1>Listing comments</h1>
+
+<ul>
+<% @comments.each do |comment| %>
+  <li><%= comment.body -%><span class="comment_manage">
+</li>
+<% end %>
+</ul>
+
+<%= link_to 'New Comment', new_client_video_comment_path %>

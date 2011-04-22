@@ -4,12 +4,6 @@ class UsersController < ApplicationController
   load_and_authorize_resource :client
   load_and_authorize_resource :user, :through => :client
 
-  def find_client
-    @client = Client.find(params[:client_id])
-    if @client.nil?
-      raise "Invalid Client request"
-    end
-  end
   
   def index
     @users = User.all
