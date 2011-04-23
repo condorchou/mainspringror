@@ -12,6 +12,15 @@ class ClientsController < ApplicationController
     end
   end
 
+  def style
+    respond_to do |format|
+    #  format.html { render :text => @client.css}
+      format.css  { render :text => @client.css }
+    end
+
+  end
+
+
   # GET /clients/1
   # GET /clients/1.xml
   def show

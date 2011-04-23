@@ -3,6 +3,10 @@ Mindspring::Application.routes.draw do
 
   resources :clients do
     
+    member do 
+      get 'style'
+    end
+
     resources :users
     
     resources :content_assets

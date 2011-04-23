@@ -2,8 +2,9 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    user ||= User.new
-
+    #user ||= User.new
+    return if user.nil?
+     
     if user.role == 'super_admin'
       can :manage, :all
     elsif user.role == 'client_admin'
@@ -11,10 +12,10 @@ class Ability
       #should not allow client_admin to create a super_admin
       #TODO: need to prevent selection of super_admin in views
       can [:manage], [User], :client_id => user.client.id
-      can [:show,:edit,:update], [Client], :id => user.client.id
+      can [:show,:edit,:update,:style], [Client], :id => user.client.id
       can :manage, ContentAsset, :client_id => user.client.id
-    elsif user.role == 'intranet_user'
-      can :show, Client, :id => user.client.id #required for nested resource, since it goes through client
+    elsif user.role == 'intranet_user' #default user
+      can [:show, :style], Client, :id => user.client.id #required for nested resource, since it goes through client
       can [:show], Video, :client_id => user.client.id
       can :read, ContentAsset, :client_id => user.client.id
     end
