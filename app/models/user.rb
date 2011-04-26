@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   belongs_to :client
   has_many :videos
-  
+   
   #return true if this model exists in the db with same
   #client_id, username and password
   def self.exists?(user)

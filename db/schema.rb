@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110422230748) do
+ActiveRecord::Schema.define(:version => 20110425214109) do
 
   create_table "clients", :force => true do |t|
     t.string   "company_name"
@@ -40,6 +40,17 @@ ActiveRecord::Schema.define(:version => 20110422230748) do
     t.datetime "updated_at"
   end
 
+  create_table "ratings", :force => true do |t|
+    t.integer  "rateable_id"
+    t.string   "rateable_type"
+    t.float    "average_rating"
+    t.integer  "ratings_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ratings", ["rateable_id", "rateable_type"], :name => "index_ratings_on_rateable_id_and_rateable_type"
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -54,6 +65,16 @@ ActiveRecord::Schema.define(:version => 20110422230748) do
     t.string "name"
   end
 
+  create_table "user_ratings", :force => true do |t|
+    t.integer  "rating_id"
+    t.integer  "user_id"
+    t.integer  "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_ratings", ["user_id", "rating_id"], :name => "index_user_ratings_on_user_id_and_rating_id"
+
   create_table "users", :force => true do |t|
     t.string   "username"
     t.string   "location"
@@ -62,6 +83,13 @@ ActiveRecord::Schema.define(:version => 20110422230748) do
     t.datetime "updated_at"
     t.string   "password"
     t.string   "role",       :default => "intranet_user"
+  end
+
+  create_table "video_likings", :force => true do |t|
+    t.integer  "video_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "videos", :force => true do |t|

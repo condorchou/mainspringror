@@ -62,15 +62,15 @@ But normally accessed through video show page and updated through ajax.
 TODO - ajaxify add comment
 
 ====
-TODO
 Client styling:
 Client has one attribute css style.  It is loaded for the client on each page.  Since this data is in the DB
 and not under version control, recommend committing samples to repository.
-
+TODO: add samples to repository
 =====
 
-TODO
 Rating
+used https://github.com/josei/acts_as_rateable
+TODO add ajax methods for rating a video
 
 ====
 TODO

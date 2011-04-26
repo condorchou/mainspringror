@@ -89,6 +89,14 @@
   <%= render :partial => 'comments/form' %>
 </p>
 
+<p>
+<b>Rated: <%= @video.ratings_count %> times</b>
+  <% if @video.rated_by? @user %>
+  "You liked this video"
+  <% else %>
+    TODO ajax "like this video"
+  <% end %>
+</p>
 
 <%= link_to 'Edit', edit_client_video_path(@client,@video) %> |
 <%= link_to 'Back', client_videos_path(@client) %>
