@@ -73,8 +73,9 @@ used https://github.com/josei/acts_as_rateable
 TODO add ajax methods for rating a video
 
 ====
-TODO
 Tagging
+git://github.com/jviney/acts_as_taggable_on_steroids.git
+
 
 ====
 TODO
@@ -91,4 +92,7 @@ TODO
 Video Overlays - or other stylings
 videos model has attribute for css classes.  These css classes can be styled to support thumb overlays.
 
+====
+TODO
+Add helpers for generating certain urls
 

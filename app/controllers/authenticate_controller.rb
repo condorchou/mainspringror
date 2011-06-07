@@ -11,7 +11,13 @@ class AuthenticateController < ApplicationController
       if (@user = User.exists?(@user))
         reset_session
         session[:user_id] = @user.id
-        redirect_to client_videos_path(@user.client)
+        if @user.role == "client_admin"
+          redirect_to client_videos_path(@user.client)
+        else
+#TODO, redirect to featured video
+          @video = @user.client.videos.last
+          redirect_to client_video_path(@user.client, @video)
+        end
       else
         flash[:notice] = "Invalid Login"
         redirect_to login_path
