@@ -3,7 +3,7 @@ Mindspring::Application.routes.draw do
 
   resources :home
 
-    resources :clients do
+  resources :clients do
     
     member do 
       get 'style'
@@ -18,7 +18,6 @@ Mindspring::Application.routes.draw do
       resources :comments
 
       collection do
-        get 'search'
         get 'banner'
       end
     end

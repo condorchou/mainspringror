@@ -16,7 +16,7 @@ class Ability
       can :manage, ContentAsset, :client_id => user.client.id
     elsif user.role == 'intranet_user' #default user
       can [:show, :style], Client, :id => user.client.id #required for nested resource, since it goes through client
-      can [:show], Video, :client_id => user.client.id
+      can [:index, :show], Video, :client_id => user.client.id
       can :read, ContentAsset, :client_id => user.client.id
     end
     # Define abilities for the passed in user here. For example:

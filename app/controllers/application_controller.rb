@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     if resource.role == 'super_user'
       clients_path
     elsif resource.role == 'client_admin'
-      client_videos_path(resource.client)
+      client_path(resource.client)
     else
       root_path
     end

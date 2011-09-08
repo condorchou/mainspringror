@@ -7,6 +7,11 @@ goto /login to login as super_user (password is also super_user)
 as a super_user you are directed to /clients after you login, from there you can create, edit, delete clients.
 click on logout link or visit /logout to logout.
 
+login as sample client using authentication_token: belsobeer_joy@belsobeer.com, password is password.
+as a client_admin you are redirected to the client show page.  You cannot access the list of clients at /clients/.
+You can manage users or videos, but cannot accesses other clients content.
+
+====
 
 Restful resources for CRUD operations on clients, their videos and their users with predictable urls.
 
@@ -16,7 +21,7 @@ Manage clients users at clients/:client_id/users
 show video at clients/:client_id/videos/:video_id
 videos have comments at clients/:client_id/videos/:video_id/comments
 create video at clients/:client_id/videos/ (via post)
-see config/routes.rb for more info
+see config/routes.rb
 ====
 
 Security:

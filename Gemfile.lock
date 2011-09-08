@@ -1,3 +1,10 @@
+PATH
+  remote: vendor/gems/bits_on_the_run-0.99.1
+  specs:
+    bits_on_the_run (0.99.1)
+      activesupport
+      curb
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -59,6 +66,7 @@ GEM
       capybara (>= 1.0.0)
       cucumber (~> 1.0.0)
       nokogiri (>= 1.4.6)
+    curb (0.7.15)
     database_cleaner (0.6.7)
     devise (1.4.4)
       bcrypt-ruby (~> 3.0)
@@ -162,6 +170,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bits_on_the_run!
   cancan
   capistrano
   capistrano-ext
