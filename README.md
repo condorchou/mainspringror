@@ -1,6 +1,12 @@
 Mainspringror project - multiclient CMS for managing videos, users, comments, ratings
 
 ====
+rake db:migrate to create tables, super_user and sample client, with one sample client_admin
+====
+goto /login to login as super_user (password is also super_user)
+as a super_user you are directed to /clients after you login, from there you can create, edit, delete clients.
+click on logout link or visit /logout to logout.
+
 
 Restful resources for CRUD operations on clients, their videos and their users with predictable urls.
 
@@ -17,7 +23,7 @@ Security:
 
 Access to the CMS is forbidden without session authentication or token authentication
 Once logged in, no user can access resources of another client (except superuser)
-User's login with a login page using email and password
+User's login with a login page using authentication_token (made of client handle and user unique id) and password
 User's cannot be created using signup unless they have permission to create users
 A default superuser is created, modify after first migration.  Use it to create other
 clients, and or users.

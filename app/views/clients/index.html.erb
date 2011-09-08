@@ -9,6 +9,8 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
+    <th></th>
   </tr>
 
 <% @clients.each do |client| %>
@@ -20,6 +22,9 @@
     <td><%= link_to 'Show', client %></td>
     <td><%= link_to 'Edit', edit_client_path(client) %></td>
     <td><%= link_to 'Destroy', client, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Users', client_users_path(client) %></td>
+    <td><%= link_to 'Videos', client_videos_path(client) %></td>
+
   </tr>
 <% end %>
 </table>

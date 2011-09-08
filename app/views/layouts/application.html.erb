@@ -5,12 +5,14 @@
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
-  <% unless session[:user_id].nil? %>
-  <% @user = User.find(session[:user_id]) %>
-    <link rel="stylesheet" type="text/css" href="<%=style_client_path(@user.client,:format => :css)-%>" />
-  <% end %>
- </head>
+  
+  </head>
 <body>
+<% if current_user.nil? %>
+  <%= link_to('Login', login_path) %>
+<% else %>
+ You are logged in as <%= current_user.authentication_token %> <%= link_to('Logout', logout_path) %>
+<% end %>
  <p class="notice"><%= notice %></p>
  <p class="alert"><%= alert %></p>
 
