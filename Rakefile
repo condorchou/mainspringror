@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Mindspring::Application.load_tasks
+Mainspring::Application.load_tasks

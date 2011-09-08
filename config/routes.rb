@@ -1,4 +1,4 @@
-Mindspring::Application.routes.draw do
+Mainspring::Application.routes.draw do
   
 
   resources :home
@@ -14,8 +14,8 @@ Mindspring::Application.routes.draw do
     resources :content_assets
     
     resources :videos do
-      get 'upload_form'
-      get 'upload_complete' 
+      get 'upload_form' #parent page
+      get 'botr_upload_form' #iframe, so that we stay on our domain after video finishes upload and is redirected to botr completion page
       resources :comments
 
       collection do

@@ -14,7 +14,6 @@ class CreateVideos < ActiveRecord::Migration
       t.integer :views
       t.integer :client_id
       t.integer :user_id
-
       t.timestamps
     end
   end
