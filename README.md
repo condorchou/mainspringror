@@ -1,15 +1,37 @@
-Mainspringror project - multiclient CMS for managing videos, users, comments, ratings
+Mainspringror project - multiclient CMS for managing videos, users, comments, ratings using Bits on the Run (botr) as video upload/convert/player/thumbnails.
+Provides a method for clients to quickly integrate externally hosted you-tube like video page, privately from within their intranet.
+====
+Getting Started
 
-====
-rake db:migrate to create tables, super_user and sample client, with one sample client_admin
-====
-goto /login to login as super_user (password is also super_user)
+  rake db:migrate to create tables, super_user and sample client, with one sample client_admin
+
+goto /login to login as super_user (authentication token is super_user, password is also super_user)
 as a super_user you are directed to /clients after you login, from there you can create, edit, delete clients.
 click on logout link or visit /logout to logout.
 
 login as sample client using authentication_token: belsobeer_joy@belsobeer.com, password is password.
 as a client_admin you are redirected to the client show page.  You cannot access the list of clients at /clients/.
-You can manage users or videos, but cannot accesses other clients content.
+You can manage belsobeer's users or videos, but cannot accesses other clients content.
+
+=====
+
+Creating Clients
+
+If you are a super_user you can access /clients/new to create a new client.  A unique ID called a 'handle' is automatically
+created based on the lowercased company name with all non alpha numeric characters converted to an underscore. 
+
+The client will require a botr player key which is first created on bits on the run and paste the code into the client
+record.  All videos for this client will use this botr player.
+
+=====
+Creating Users
+
+Users belong to a client.  Goto clients/:client_id/users/new to create a new user.
+Each user MUST have a globally (across all clients) unique authentication_token, this is created automatically
+by concatenating the client handle and the user's client_user_id (which is the user ID the client has assigned him or her).
+The user's client_user_id is unique within that client scope, it can be an email or other unique user ID.
+
+Users use their authentication_token to login.
 
 ====
 
@@ -21,7 +43,9 @@ Manage clients users at clients/:client_id/users
 show video at clients/:client_id/videos/:video_id
 videos have comments at clients/:client_id/videos/:video_id/comments
 create video at clients/:client_id/videos/ (via post)
-see config/routes.rb
+run:
+  rake routes
+to see the RESTFUL urls.
 ====
 
 Security:
@@ -30,8 +54,8 @@ Access to the CMS is forbidden without session authentication or token authentic
 Once logged in, no user can access resources of another client (except superuser)
 User's login with a login page using authentication_token (made of client handle and user unique id) and password
 User's cannot be created using signup unless they have permission to create users
-A default superuser is created, modify after first migration.  Use it to create other
-clients, and or users.
+A default superuser is created, modify the password after first migration.  Use it to create other
+clients.
 
 ====
 
