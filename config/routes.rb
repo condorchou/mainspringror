@@ -14,7 +14,8 @@ Mindspring::Application.routes.draw do
     resources :content_assets
     
     resources :videos do
-      
+      get 'upload_form'
+      get 'upload_complete' 
       resources :comments
 
       collection do
