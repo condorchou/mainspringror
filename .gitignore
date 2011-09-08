@@ -4,4 +4,4 @@ db/*.sqlite3
 log/*.log
 tmp/**/*
 config/database.yml
-config/botr_api.yml
+config/bits_on_the_run.yml
