@@ -5,7 +5,7 @@ class Ability
     #user ||= User.new
     return if user.nil?
      
-    if user.role == 'super_admin'
+    if user.role == 'super_user' 
       can :manage, :all
     elsif user.role == 'client_admin'
       can :manage, [Video], :client_id => user.client.id

@@ -1,6 +1,32 @@
 class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable#, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :authentication_token, :username, :role, :client_user_id, :client_id, :location
+  
+  validates_numericality_of :client_id
+
+  validates_presence_of :client_user_id
+  validates_uniqueness_of :client_user_id, :scope => :client_id
+
+
+  before_save :set_authentication_token
+
+  def set_authentication_token
+    c = Client.find(self.client_id)
+    if c.nil?
+      errors.add(:client_id, 'invalid')
+    end
+    self.authentication_token = c.handle + '_' + self.client_user_id.downcase.gsub(/[^a-z0-9\@\-\_\.]/,'_')
+  end
+
   belongs_to :client
   has_many :videos
+  
+  
    
   #return true if this model exists in the db with same
   #client_id, username and password

@@ -1,7 +1,7 @@
+*.swp
 .bundle
 db/*.sqlite3
 log/*.log
 tmp/**/*
-Gemfile.lock
 config/database.yml
 config/botr_api.yml

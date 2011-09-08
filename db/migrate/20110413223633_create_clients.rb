@@ -5,7 +5,8 @@ class CreateClients < ActiveRecord::Migration
       t.text :remarks
       t.string :intranet
       t.string :botr_player_key
-
+      t.string :token
+      t.string :handle
       t.timestamps
     end
   end

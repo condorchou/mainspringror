@@ -1,7 +1,9 @@
 Mindspring::Application.routes.draw do
   
 
-  resources :clients do
+  resources :home
+
+    resources :clients do
     
     member do 
       get 'style'
@@ -23,9 +25,17 @@ Mindspring::Application.routes.draw do
 
   end
 
-  match 'login' => 'authenticate#login'
-  match 'intranet_login' => 'authenticate#intranet_login'
-  match 'logout' => 'authenticate#logout'
+  #match 'login' => 'users#sign_in'
+  #match 'intranet_login' => 'authenticate#intranet_login'
+ # match 'logout' => 'authenticate#logout'
+
+  root :to => "home#index"
+  devise_for :users, :controllers => {:sessions => 'users/sessions', :registrations => 'users/registrations' } do
+    get "login", :to => "users/sessions#new"
+    get "register", :to => "users/registrations#new"
+    get "logout", :to => "users/sessions#destroy"
+  end
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

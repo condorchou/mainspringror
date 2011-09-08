@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+gem 'rails', '3.0.8'
+gem 'devise'
 gem 'cancan'
 
 group :production do
@@ -30,7 +31,7 @@ end
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
 group :development, :test do
-  gem 'mongrel'
+  gem 'unicorn'
   gem 'rspec-rails'
   gem 'cucumber-rails', ">= 0.3.2"
   gem 'capybara'
