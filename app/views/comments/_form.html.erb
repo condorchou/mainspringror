@@ -1,7 +1,7 @@
 <%
 #used for writing comments
-  @user = User.find(session[:user_id]) if @user.nil? 
-  @comment = @video.comments.build(:user_id => @user.id) if @comment.nil?
+  @user = current_user
+  @comment = @video.comments.build(:user_id => current_user.id) if @comment.nil?
 %>
 <%= form_for([@client, @video, @comment]) do |f| %>
   <% if @comment.errors.any? %>

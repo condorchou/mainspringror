@@ -9,24 +9,8 @@ Manage clients videos at clients/:client_id/videos
 Manage clients users at clients/:client_id/users
 show video at clients/:client_id/videos/:video_id
 videos have comments at clients/:client_id/videos/:video_id/comments
-upload video at clients/:client_id/videos/ (via post)
+create video at clients/:client_id/videos/ (via post)
 see config/routes.rb for more info
-====
-
-Clients integrate video CMS in their intranet:
-
-clients install jQuery and our plugin within their intranet
-invoking our plugin does 2 things:
-  creates a user with a token based on client_id, username, location
-  accesses a resource via the token and retrives html content
-  injects content into the DOM including CSS stylesheet
-
-====
-
-Sample html integration page
-
-public/test.html
-
 ====
 
 Security:
@@ -71,4 +55,20 @@ git://github.com/jviney/acts_as_taggable_on_steroids.git
 TODO
 Video Uploading
 
+
+Clients integrate video CMS in their intranet:
+
+clients install jQuery and our plugin within their intranet
+invoking our plugin does 2 things:
+  creates a user with a token based on client_id, username, location
+  accesses a resource via the token and retrives html content
+  injects content into the DOM including CSS stylesheet
+
+====
+
+Sample html integration page
+
+public/test.html
+
+====
 
