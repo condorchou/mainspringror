@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.8'
 gem 'devise'
 gem 'cancan'
+gem 'jquery-rails', '>= 1.0.12'
 
 group :production do
   gem 'mysql2', '0.2.6'

@@ -72,6 +72,9 @@ GEM
       json (>= 1.4.6)
     highline (1.6.2)
     i18n (0.5.0)
+    jquery-rails (1.0.12)
+      railties (~> 3.0)
+      thor (~> 0.14)
     json (1.5.4)
     json_pure (1.5.4)
       spruz (~> 0.2.8)
@@ -166,6 +169,7 @@ DEPENDENCIES
   cucumber-rails (>= 0.3.2)
   database_cleaner
   devise
+  jquery-rails (>= 1.0.12)
   mysql2 (= 0.2.6)
   rails (= 3.0.8)
   rspec-rails
