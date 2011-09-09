@@ -1,7 +1,10 @@
 class UsersController < ApplicationController
   # GET /clients/users
   # GET /clients/users.xml
-  load_and_authorize_resource :client
+ # load_and_authorize_resource :client
+  load_resource :client, :find_by => :handle
+  authorize_resource :client
+
   load_and_authorize_resource :user, :through => :client
 
   

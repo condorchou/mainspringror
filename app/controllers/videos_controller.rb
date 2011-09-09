@@ -2,7 +2,10 @@ class VideosController < ApplicationController
   # GET /clients/videos
   # GET /clients/videos.xml
  # before_filter :find_client
-  load_and_authorize_resource :client
+ # load_and_authorize_resource :client
+  load_resource :client, :find_by => :handle
+  authorize_resource :client
+
   load_and_authorize_resource :video, :through => :client, :except => [:banner]
   
   

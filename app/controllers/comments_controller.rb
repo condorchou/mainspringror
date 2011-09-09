@@ -2,7 +2,10 @@ class CommentsController < ApplicationController
   # GET /clients/comments
   # GET /clients/comments.xml
  # before_filter :find_client
-  load_and_authorize_resource :client
+ # load_and_authorize_resource :client
+  load_resource :client, :find_by => :handle
+  authorize_resource :client
+
   load_and_authorize_resource :video, :through => :client
   load_and_authorize_resource :comment, :through => :video
   before_filter :find_user

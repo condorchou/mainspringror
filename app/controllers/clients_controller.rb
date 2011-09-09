@@ -1,8 +1,8 @@
 class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.xml
-  load_and_authorize_resource
-  
+  load_resource :find_by => :handle
+  authorize_resource
 
   def index
     @clients = Client.all
