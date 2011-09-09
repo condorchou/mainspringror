@@ -34,32 +34,16 @@ The user's client_user_id is unique within that client scope, it can be an email
 Users use their authentication_token to login.
 
 ====
-
-Restful resources for CRUD operations on clients, their videos and their users with predictable urls.
-
-See all clients at /clients
-Manage clients videos at clients/:client_id/videos
-Manage clients users at clients/:client_id/users
-show video at clients/:client_id/videos/:video_id
-videos have comments at clients/:client_id/videos/:video_id/comments
-create video at clients/:client_id/videos/ (via post)
-run:
-  rake routes
-to see the RESTFUL urls.
+Video creation takes 2 steps:
+1) Create the DB record - 
+  a) clients/client_id/videos/new
+  b) upon submit and record is created you will be redirected to ...
+2) Upload the video to botr
+  a) clients/client_id/videos/upload_form
+  b) select file from your computer and click submit, wait for success msg
 ====
 
-Security:
-
-Access to the CMS is forbidden without session authentication or token authentication
-Once logged in, no user can access resources of another client (except superuser)
-User's login with a login page using authentication_token (made of client handle and user unique id) and password
-User's cannot be created using signup unless they have permission to create users
-A default superuser is created, modify the password after first migration.  Use it to create other
-clients.
-
-====
-
-Authentication and Authorization using Devise and CanCan 
+Authentication and Authorization using Devise and CanCan gems
 
 set user roles in models/abilities.rb
 
@@ -86,24 +70,4 @@ Tagging
 git://github.com/jviney/acts_as_taggable_on_steroids.git
 
 
-====
-TODO
-Video Uploading
-
-
-Clients integrate video CMS in their intranet:
-
-clients install jQuery and our plugin within their intranet
-invoking our plugin does 2 things:
-  creates a user with a token based on client_id, username, location
-  accesses a resource via the token and retrives html content
-  injects content into the DOM including CSS stylesheet
-
-====
-
-Sample html integration page
-
-public/test.html
-
-====
 
