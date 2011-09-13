@@ -17,7 +17,7 @@
        //inject css styling for the canvas to position layers absolutely and to set default cursor
        $.mainspring.injectCSS();
 
-       element.append("<iframe src="+'"' +$.mainspring.getDomain()+ '?auth_token='+$.mainspring.opts.authentication_token+'"'+"></iframe>");
+       element.append("<iframe width='"+$.mainspring.opts.width+"' height='"+$.mainspring.opts.height+"' src="+'"' +$.mainspring.getDomain()+ '?auth_token='+$.mainspring.opts.authentication_token+'"'+"></iframe>");
           
                     
        return element;
@@ -34,7 +34,9 @@
         clientHandle: "belsobeer",
         name: "Joy McDee",
         location: "Los Angeles, CA",
-        authentication_token: "belsobeer_joy@belsobeer.com"
+        authentication_token: "belsobeer_joy@belsobeer.com",
+        width: 800,
+        height: 800
     },
     
     //options
@@ -46,6 +48,7 @@
         } else if ($.mainspring.opts.environment == 'production') {
           url = "http://production.mainspringror.com"
         }
+        url = url+"/clients/"+$.mainspring.opts.clientHandle;
         return url;
     },
     injectCSS: function() {

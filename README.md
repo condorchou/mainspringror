@@ -3,9 +3,27 @@ Provides a method for clients to quickly integrate externally hosted you-tube li
 ====
 Getting Started
 
+install ruby 1.9.2, I use rvm
+  rvm 1.9.2
+make sure you have bundler installed and run
+  bundle install
+to install all the gems required
+if you don't have bundler, run
+  gem install bundler
+
+Now run:
   rake db:migrate
   
 to create tables, super_user and sample client, with one sample client_admin
+
+To start the rails server locally, run
+
+  unicorn
+
+Goto localhost:8080
+===
+
+Signing In:
 
 goto /login to sign-in as the 'super_user' (authentication token is super_user, password is also super_user)
 as a super_user you are directed to /clients after you login, from there you can create, edit, delete clients.
@@ -59,8 +77,14 @@ Clients will be required to install a jQuery plugin on one of their intranet pag
 The plugin will create an iframe that returns the requested video or content page.
 Using this technique, what is NOT supported is regular bookmarks, or cross-browser supported forward and backword buttons.
 
-See public/intranet.php for a sample of integration.  You can also view this page to test how the user experience will be using
+See code on public/intranet.php for a sample of integration.  You can also view this page to test how the user experience will be using
 the sample client.
+
+====
+
+Testing Client Video Portal Experience
+
+http://localhost/mainspringror/public/intranet.php
 
 ====
 
