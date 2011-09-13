@@ -17,7 +17,9 @@
        //inject css styling for the canvas to position layers absolutely and to set default cursor
        $.mainspring.injectCSS();
 
-                 
+       element.append("<iframe src="+'"' +$.mainspring.getDomain()+ '?auth_token='+$.mainspring.opts.authentication_token+'"'+"></iframe>");
+          
+                    
        return element;
 
   }; //end fn.mainspring function
@@ -32,21 +34,23 @@
         clientHandle: "belsobeer",
         name: "Joy McDee",
         location: "Los Angeles, CA",
-        authorization_token: "belsobeer_joy@belsobeer.com"
+        authentication_token: "belsobeer_joy@belsobeer.com"
     },
     
     //options
     opts: {},
-
-    injectCSS: function() {
+    getDomain: function() {
         var url = "http://127.0.0.1:8080"
         if ($.mainspring.opts.environment == 'staging') {
           url = "http://staging.mainspringror.com"
         } else if ($.mainspring.opts.environment == 'production') {
           url = "http://production.mainspringror.com"
         }
-
-        $('head').append('<link rel="stylesheet" href="' + url + '/clients/stylesheet.css' + '" type="text/css" />');
+        return url;
+    },
+    injectCSS: function() {
+      
+        $('head').append('<link rel="stylesheet" href="' + $.mainspring.getDomain() + '/clients/stylesheet.css' + '" type="text/css" />');
     }
     
     }; //end overridable functions

@@ -12,7 +12,8 @@ This is an example of server side script running on an intranet.
 
 <script>
   $('#connect_tv_container').mainspring({
-    environment:'development'
+    environment:'development',
+    authentication_token: 'belsobeer_joy@belsobeer.com'
   });
 </script>
 </body>

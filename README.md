@@ -3,11 +3,16 @@ Provides a method for clients to quickly integrate externally hosted you-tube li
 ====
 Getting Started
 
-  rake db:migrate to create tables, super_user and sample client, with one sample client_admin
+  rake db:migrate
+  
+to create tables, super_user and sample client, with one sample client_admin
 
-goto /login to login as super_user (authentication token is super_user, password is also super_user)
+goto /login to sign-in as the 'super_user' (authentication token is super_user, password is also super_user)
 as a super_user you are directed to /clients after you login, from there you can create, edit, delete clients.
 click on logout link or visit /logout to logout.
+
+TODO: not all links are conveniently located on all pages because navigation will depend on the type of
+user logged in.  Use a partial template for this later.
 
 login as sample client using authentication_token: belsobeer_joy@belsobeer.com, password is password.
 as a client_admin you are redirected to the client show page.  You cannot access the list of clients at /clients/.
@@ -26,7 +31,7 @@ record.  All videos for this client will use this botr player.
 =====
 Creating Users
 
-Users belong to a client.  Goto clients/:client_id/users/new to create a new user.
+Users belong to a client and are managed by the client afer client signs in.  Goto clients/:client_id/users/new to create a new user.
 Each user MUST have a globally (across all clients) unique authentication_token, this is created automatically
 by concatenating the client handle and the user's client_user_id (which is the user ID the client has assigned him or her).
 The user's client_user_id is unique within that client scope, it can be an email or other unique user ID.
@@ -41,6 +46,22 @@ Video creation takes 2 steps:
 2) Upload the video to botr
   a) clients/client_id/videos/upload_form
   b) select file from your computer and click submit, wait for success msg
+====
+
+Client Video Portal Installation:
+
+Clients will be required to install a jQuery plugin on one of their intranet pages.
+1) require jQuery
+2) require our jQuery mainspring.js plugin
+3) Create a containing div where content will be injected
+4) invoke the jQuery plugin and pass user parameters to the script.
+
+The plugin will create an iframe that returns the requested video or content page.
+Using this technique, what is NOT supported is regular bookmarks, or cross-browser supported forward and backword buttons.
+
+See public/intranet.php for a sample of integration.  You can also view this page to test how the user experience will be using
+the sample client.
+
 ====
 
 Authentication and Authorization using Devise and CanCan gems
