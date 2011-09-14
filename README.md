@@ -5,19 +5,25 @@ Getting Started
 ===
 
 install ruby 1.9.2, I use rvm
-   rvm 1.9.2
+
+    rvm 1.9.2
+
 make sure you have bundler installed and run
-   bundle install
+    
+    bundle install
+
 to install all the gems required
 if you don't have bundler first run
-   gem install bundler
+    
+    gem install bundler
 
 to create tables, super_user and sample client, with one sample client_admin, run:
-   rake db:migrate
+    
+    rake db:migrate
   
 To start the rails server locally, run
 
-   unicorn
+    unicorn
 
 Goto localhost:8080
 
@@ -90,7 +96,7 @@ the sample client.
 Testing Client Video Portal Experience
 ===
 
-http://localhost/mainspringror/public/intranet.php
+    http://localhost/mainspringror/public/intranet.php
 
 
 Authentication and Authorization using Devise and CanCan gems
