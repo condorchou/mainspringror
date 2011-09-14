@@ -19,10 +19,11 @@ ActiveRecord::Schema.define(:version => 20110907225344) do
     t.string   "botr_player_key"
     t.string   "token"
     t.string   "handle"
+    t.text     "css"
+    t.text     "js"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tab_content_asset"
-    t.text     "css"
   end
 
   create_table "comments", :force => true do |t|

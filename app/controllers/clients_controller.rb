@@ -2,7 +2,7 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.xml
   load_resource :find_by => :handle
-  authorize_resource
+  authorize_resource :except => [:style, :behavior]
 
   def index
     @clients = Client.all
@@ -15,7 +15,15 @@ class ClientsController < ApplicationController
   def style
     respond_to do |format|
     #  format.html { render :text => @client.css}
-      format.css  { render :text => @client.css }
+      format.css 
+    end
+
+  end
+
+  def behavior
+    respond_to do |format|
+    #  format.html { render :text => @client.css}
+      format.js
     end
 
   end

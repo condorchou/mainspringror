@@ -8,14 +8,12 @@ install ruby 1.9.2, I use rvm
 make sure you have bundler installed and run
   bundle install
 to install all the gems required
-if you don't have bundler, run
+if you don't have bundler first run
   gem install bundler
 
-Now run:
+to create tables, super_user and sample client, with one sample client_admin, run:
   rake db:migrate
   
-to create tables, super_user and sample client, with one sample client_admin
-
 To start the rails server locally, run
 
   unicorn
@@ -69,13 +67,20 @@ Video creation takes 2 steps:
 Client Video Portal Installation:
 
 Clients will be required to install a jQuery plugin on one of their intranet pages.
-1) require jQuery
-2) require our jQuery mainspring.js plugin
+1) include jQuery
+2) include our jQuery mainspring.js plugin
 3) Create a containing div where content will be injected
 4) invoke the jQuery plugin and pass user parameters to the script.
 
 The plugin will create an iframe that returns the requested video or content page.
-Using this technique, what is NOT supported is regular bookmarks, or cross-browser supported forward and backword buttons.
+Using iframe, alternative solutions need to be found for regular bookmarks
+Browser back buttons may not be supported across all browsers.
+
+Custom markup and styling per client is done via client specific js and css which is loaded into the
+layout after detecting the client.  Navigation is dynamically generated this way depending on the
+current user's permissions/ability.
+
+
 
 See code on public/intranet.php for a sample of integration.  You can also view this page to test how the user experience will be using
 the sample client.

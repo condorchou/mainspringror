@@ -14,8 +14,6 @@
        //this jQuery object
        element = this;
        
-       //inject css styling for the canvas to position layers absolutely and to set default cursor
-       $.mainspring.injectCSS();
 
        element.append("<iframe width='"+$.mainspring.opts.width+"' height='"+$.mainspring.opts.height+"' src="+'"' +$.mainspring.getDomain()+ '?auth_token='+$.mainspring.opts.authentication_token+'"'+"></iframe>");
           
@@ -50,13 +48,9 @@
         }
         url = url+"/clients/"+$.mainspring.opts.clientHandle;
         return url;
-    },
-    injectCSS: function() {
-      
-        $('head').append('<link rel="stylesheet" href="' + $.mainspring.getDomain() + '/clients/stylesheet.css' + '" type="text/css" />');
     }
-    
-    }; //end overridable functions
+        
+  }; //end overridable functions
    
 // end of closure
 

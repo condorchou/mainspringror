@@ -7,6 +7,7 @@ Mainspring::Application.routes.draw do
     
     member do 
       get 'style'
+      get 'behavior'
     end
 
     resources :users
