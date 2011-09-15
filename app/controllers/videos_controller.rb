@@ -7,7 +7,10 @@ class VideosController < ApplicationController
   authorize_resource :client
 
   load_and_authorize_resource :video, :through => :client, :except => [:banner]
-  
+ 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    redirect_to client_videos_path(@client), :notice => "Video Not Found"
+  end 
   
   def index
     respond_to do |format|

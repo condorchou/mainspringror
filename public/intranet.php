@@ -5,15 +5,22 @@
 </head>
 <body style="background-color:gray">
 <p>
-This is an example of server side script running on an intranet.
+This is an example of server side script running on an intranet.  Load this page with '?goto=videos%2F1' to 
+set the iframe src to videos/1
 </p>
 <div id="connect_tv_container">
 </div>
 
+
 <script>
   $('#connect_tv_container').mainspring({
     environment:'development',
-    authentication_token: 'belsobeer_joy@belsobeer.com'
+    clientHandle: 'belsobeer',
+    userID: 'new_guy@belsobeer.com',
+    name: 'new guy',
+    location: 'Los Angeles, CA',
+    encodedIframeURI: '<?php echo $_GET['goto']; ?>',
+    width: 1000
   });
 </script>
 </body>

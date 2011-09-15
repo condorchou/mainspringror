@@ -1,73 +1,32 @@
 class AuthenticateController < ApplicationController
   
-  #cancan: skip_authorization_check
-  
-  def login
-    @user = User.new
-    if request.post?
-      @user.attributes = params[:user]
-      #TODO : get from client company name
-      #@user.client_id = params[:company_name].to_client_id
-      if (@user = User.exists?(@user))
-        reset_session
-        session[:user_id] = @user.id
-        if @user.role == "client_admin"
-          redirect_to client_videos_path(@user.client)
-        else
-#TODO, redirect to featured video
-          @video = @user.client.videos.last
-          redirect_to client_video_path(@user.client, @video)
-        end
-      else
-        flash[:notice] = "Invalid Login"
-        redirect_to login_path
-      end
-    end
-  end
+   #TODO protect this method from easy access
+#use salted hash, take token, plus user_id, random string, create md5
 
-#this is an unsafe login technique
-#need to verify that 
-#1) the referring url comes from the client intranet
-#2) after the session is assigned give use restricted access
-  def intranet_login
-    #require a username and location and a token
-
-    opts = {:username => params[:username], :location => params[:location], :token => params[:token]}
-    @errors, @user = User.intranet_login(params)
-
-    if @errors.empty?
-       
-      #authenicate the user
-      reset_session
-      session[:user_id] = @user.id
-      if @user.role == 'client_admin'
-        redirect_to client_videos_path(@user.client)
-      else
-        unless params[:goto].blank?
-          dest_url =CGI::unescape(params[:goto])
-         #only needs to be true for one request, so we don't store long term in session
-          flash[:permalink_urls] = true
-          redirect_to dest_url
-          return false
-        end
-
-        #TODO, redirect to featured video, or goto params
-        #
-        @video = @user.client.videos.last
-        redirect_to client_video_path(@user.client,@video)
-      end
-    else
-      render :text => @errors.join('<br>'), :status => 400
-    end
-
-  end
-
-
-  def logout
+  def index
+#log any previous user out
     reset_session
-    flash[:notice] = "You are logged out"
-    redirect_to :action => 'login'    
+    @user_id = params[:user_id]
+    @username = params[:username]
+    @client_handle = params[:client_handle]
+    @location = params[:location]
+    @client = Client.where(:handle => @client_handle).first
+    if @client.nil?
+      respond_to do |format|
+        format.js {render :js => "alert('Error Client Nil');"}
+      end
+      return false
+    end
+    #see if user exists
+    @user = @client.users.where(:authentication_token => "#{@client_handle}_#{@user_id}").first
+    if @user.nil?
+      #create it
+      @user = @client.users.create(:location => @location, :username => @username, :password => "password", :client_user_id => @user_id, :client_id => @client.id)
+    end
+    @authentication_token = @user.authentication_token
+    respond_to do |format|
+      format.js  
+    end
   end
-
 
 end

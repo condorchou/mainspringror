@@ -2,7 +2,7 @@ Mainspring::Application.routes.draw do
   
 
   resources :home
-
+  resources 'authenticate', :only => [:index]
   resources :clients do
     
     member do 
