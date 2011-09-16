@@ -3,6 +3,7 @@ class AuthenticateController < ApplicationController
    #TODO protect this method from easy access
 #use salted hash, take token, plus user_id, random string, create md5
 
+
   def index
 #log any previous user out
     @user_id = params[:user_id]
@@ -22,11 +23,7 @@ class AuthenticateController < ApplicationController
       #create it
       @user = @client.users.create(:location => @location, :username => @username, :client_user_id => @user_id, :client_id => @client.id)
     end
-    sign_in @user
-    @authentication_token = @user.authentication_token
-    respond_to do |format|
-      format.js  
-    end
+    render :json => {:user_id => @user.id}, :callback => params[:callback]
   end
 
 end

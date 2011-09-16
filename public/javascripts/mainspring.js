@@ -13,7 +13,11 @@
                      
        //this jQuery object
        $.mainspring.opts.element = this;
-       $("head").append("<scr"+"ipt src='"+$.mainspring.createUserJsonpURL()+"'></scr"+"ipt>"); 
+       $.getJSON($.mainspring.createUserJsonpURL()+"&callback=?", 
+          function(data) {
+             console.log(data);
+          });
+           //   $("head").append("<scr"+"ipt src='"+$.mainspring.createUserJsonpURL()+"'></scr"+"ipt>"); 
 
                          
        return this;
@@ -33,14 +37,14 @@
         userID: "joy@belsobeer.com",
         width: 800,
         height: 800,
-        encodedIframeURI : "videos"
+        fetchRemoteURI : "videos"
     },
     
     //options
     opts: {},
     createIframe: function(authentication_token) {
        $.mainspring.opts.element.append("<iframe width='"+$.mainspring.opts.width+"' height='"+$.mainspring.opts.height+
-       "' src="+'"' +$.mainspring.decodeEncodedIframeURI()+ '"'+"></iframe>");
+       "' src="+'"' +$.mainspring.decodefetchRemoteURI()+ '"'+"></iframe>");
           
 
     },
@@ -54,7 +58,7 @@
       return encodeURI($.mainspring.opts.location);
     },
     createUserJsonpURL: function() {
-      return $.mainspring.getHost() + '/authenticate.js?client_handle='+$.mainspring.opts.clientHandle+
+      return $.mainspring.getHost() + '/authenticate?client_handle='+$.mainspring.opts.clientHandle+
       '&username='+$.mainspring.encodeName()+'&user_id='+$.mainspring.encodeUserID()+
       '&location='+$.mainspring.encodeLocation();
     },
@@ -71,9 +75,9 @@
         url = $.mainspring.getHost()+"/clients/"+$.mainspring.opts.clientHandle;
         return url;
     },
-    decodeEncodedIframeURI: function() {
+    decodefetchRemoteURI: function() {
       var temp_array = [$.mainspring.getClientServiceURL()];
-      var src = decodeURIComponent($.mainspring.opts.encodedIframeURI);
+      var src = decodeURIComponent($.mainspring.opts.fetchRemoteURI);
       if (src != "") {
         temp_array.push(src);
       } else {
