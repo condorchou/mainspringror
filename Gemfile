@@ -8,6 +8,7 @@ gem 'bits_on_the_run', :path => "vendor/gems/bits_on_the_run-0.99.1"
 group :production do
   gem 'mysql2', '0.2.6'
 end
+gem 'restful_jsonp'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
