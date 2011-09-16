@@ -40,8 +40,7 @@
     opts: {},
     createIframe: function(authentication_token) {
        $.mainspring.opts.element.append("<iframe width='"+$.mainspring.opts.width+"' height='"+$.mainspring.opts.height+
-       "' src="+'"' +$.mainspring.decodeEncodedIframeURI()+ '?auth_token='+
-       authentication_token+'"'+"></iframe>");
+       "' src="+'"' +$.mainspring.decodeEncodedIframeURI()+ '"'+"></iframe>");
           
 
     },

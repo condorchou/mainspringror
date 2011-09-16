@@ -5,7 +5,6 @@ class AuthenticateController < ApplicationController
 
   def index
 #log any previous user out
-    reset_session
     @user_id = params[:user_id]
     @username = params[:username]
     @client_handle = params[:client_handle]
@@ -21,8 +20,9 @@ class AuthenticateController < ApplicationController
     @user = @client.users.where(:authentication_token => "#{@client_handle}_#{@user_id}").first
     if @user.nil?
       #create it
-      @user = @client.users.create(:location => @location, :username => @username, :password => "password", :client_user_id => @user_id, :client_id => @client.id)
+      @user = @client.users.create(:location => @location, :username => @username, :client_user_id => @user_id, :client_id => @client.id)
     end
+    sign_in @user
     @authentication_token = @user.authentication_token
     respond_to do |format|
       format.js  

@@ -16,8 +16,8 @@ set the iframe src to videos/1
   $('#connect_tv_container').mainspring({
     environment:'development',
     clientHandle: 'belsobeer',
-    userID: 'new_guy@belsobeer.com',
-    name: 'new guy',
+    userID: 'new_2guy@belsobeer.com',
+    name: 'new guy2',
     location: 'Los Angeles, CA',
     encodedIframeURI: '<?php echo $_GET['goto']; ?>',
     width: 1000

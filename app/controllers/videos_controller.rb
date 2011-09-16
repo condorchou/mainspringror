@@ -64,7 +64,8 @@ class VideosController < ApplicationController
     @video = @client.videos.find(params[:video_id])
     unless @video.botr_video_key.blank?
       flash[:notice] = "This video is already uploaded, remove botr_video_key if you wish to re-upload a video"
-      redirect_to :action => 'edit'
+      redirect_to edit_client_video_path(@client, @video)
+      return false
     end
   end
 
