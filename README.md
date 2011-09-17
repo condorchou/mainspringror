@@ -1,6 +1,7 @@
 Mainspringror project - Rails based multiclient CMS for managing videos, users, comments, ratings etc.
 Uses Bits on the Run (botr) as CDR for video upload/convert/player/thumbnails.
-Provides a RESTFUL webservice for integrating with 3rd parties using authentication token.
+Provides a RESTFUL webservice for integrating with 3rd parties
+Uses devise authentication token for webservice loginless access.
 Provides a js method for clients to quickly integrate externally hosted you-tube like video page, from within their intranet.
 Customizable js methods mean that clients can control the look and behavior of their respective video pages without requiring extensive changes
 to any of the Rails MVC.
@@ -92,13 +93,6 @@ The plugin will use jsonp to communicate with the mainspring server which is on 
 The rails app uses the restful_jsonp plugin to allow POST, PUT and DELETE requests over jsonp by appending _method=POST etc, 
 where normally only GET is possible.  This is so that ajax actions such as 'Add comment', which uses a POST to /videos/:video_id/comments are still possible.
 
-The plugin makes webservice calls which return json wrapped in a callback function to display the data.
-
-TODO:
-Use a json templating library such as PURE or Google Closure Templates to customize the look and behavior of video page per client.
-
-Custom markup and styling per client is done via client specific js and css which is loaded into the
-layout after detecting the client.
 
 See code on public/intranet.php for a sample of integration.  You can also view this page to test how the user experience will be using
 the sample client.
@@ -107,6 +101,19 @@ Testing Client Video Portal Experience
 ===
 
     http://localhost/mainspringror/public/intranet.php
+
+Customizing Client Intranet Portal Views
+====
+
+The js plugin makes webservice calls which return json wrapped in a callback function to display the data.
+You can customize the js display function which converts the json data into HTML
+TODO:
+Use a json templating library such as PURE or Google Closure Templates to create default the look and behavior of video page per client.
+
+TODO:
+The custom markup and styling per client is done via client specific js and css which is loaded into the
+layout after detecting the client
+
 
 
 Authentication and Authorization using Devise and CanCan gems
