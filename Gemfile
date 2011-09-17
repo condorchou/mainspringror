@@ -9,6 +9,10 @@ group :production do
   gem 'mysql2', '0.2.6'
 end
 gem 'restful_jsonp'
+gem 'rabl'
+gem 'yajl-ruby'
+
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

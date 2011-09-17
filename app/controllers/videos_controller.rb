@@ -16,7 +16,7 @@ class VideosController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @videos }
-      format.json { render :json => @videos, :callback => params[:callback] }
+      format.json 
     end
   end
 
@@ -27,7 +27,7 @@ class VideosController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @video }
-      format.json { render :json => @video, :callback => params[:callback] }
+      format.json 
     end
   end
 
