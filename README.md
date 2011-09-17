@@ -1,5 +1,9 @@
-Mainspringror project - multiclient CMS for managing videos, users, comments, ratings using Bits on the Run (botr) as video upload/convert/player/thumbnails.
-Provides a method for clients to quickly integrate externally hosted you-tube like video page, privately from within their intranet.
+Mainspringror project - Rails based multiclient CMS for managing videos, users, comments, ratings etc.
+Uses Bits on the Run (botr) as CDR for video upload/convert/player/thumbnails.
+Provides a RESTFUL webservice for integrating with 3rd parties using authentication token.
+Provides a js method for clients to quickly integrate externally hosted you-tube like video page, from within their intranet.
+Customizable js methods mean that clients can control the look and behavior of their respective video pages without requiring extensive changes
+to any of the Rails MVC.
 
 Getting Started
 ===
@@ -78,17 +82,23 @@ Client Video Portal Installation:
 
 Clients will be required to install a jQuery plugin on one of their intranet pages.
 1) include jQuery
-2) include our jQuery mainspring.js plugin
+TODO use jQuery ajax request with caching turned on and explicte function name rather than random
+2) include /clients/:client_id/main_spring.js plugin (will be cached on subsequent requests)
 3) Create a containing div where content will be injected
-4) invoke the jQuery plugin and pass user parameters to the script.
+4) invoke the jQuery plugin and pass user parameters to the script just as username, location, environment, remoteURI etc.
 
-The plugin will create an iframe that returns the requested video or content page.
-Using iframe, alternative solutions need to be found for regular bookmarks
-Browser back buttons may not be supported across all browsers.
+The plugin will use jsonp to communicate with the mainspring server which is on a different domain than the client's intranet.
+
+The rails app uses the restful_jsonp plugin to allow POST, PUT and DELETE requests over jsonp by appending _method=POST etc, 
+where normally only GET is possible.  This is so that ajax actions such as 'Add comment', which uses a POST to /videos/:video_id/comments are still possible.
+
+The plugin makes webservice calls which return json wrapped in a callback function to display the data.
+
+TODO:
+Use a json templating library such as PURE or Google Closure Templates to customize the look and behavior of video page per client.
 
 Custom markup and styling per client is done via client specific js and css which is loaded into the
-layout after detecting the client.  Navigation is dynamically generated this way depending on the
-current user's permissions/ability.
+layout after detecting the client.
 
 See code on public/intranet.php for a sample of integration.  You can also view this page to test how the user experience will be using
 the sample client.
