@@ -13,6 +13,15 @@
 <p>
   <b>body:</b>
   <%= @content_asset.body %>
+  <br/>
+
+  <b>Eval:</b>
+<% begin %>
+ <%= raw ERB.new(@content_asset.body).result(binding) %>
+<% rescue => e %>
+ <%= e %>
+<% end %>
+
 </p>
 
 <%= link_to 'Edit', edit_client_content_asset_path(@client,@content_asset) %> |
