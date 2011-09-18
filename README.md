@@ -1,4 +1,5 @@
-Mainspringror project - Rails based multiclient CMS for managing videos, users, comments, ratings etc.
+Mainspringror project
+- Rails based multiclient CMS for managing videos, users, comments, ratings etc.
 Uses Bits on the Run (botr) as CDR for video upload/convert/player/thumbnails.
 Provides a RESTFUL webservice for integrating with 3rd parties
 Uses devise authentication token for webservice loginless access.
