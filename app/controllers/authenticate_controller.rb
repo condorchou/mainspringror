@@ -23,7 +23,6 @@ class AuthenticateController < ApplicationController
       #create it
       @user = @client.users.create(:location => @location, :username => @username, :client_user_id => @user_id, :client_id => @client.id)
     end
-    render :json => {:user_id => @user.id}, :callback => params[:callback]
   end
 
 end
