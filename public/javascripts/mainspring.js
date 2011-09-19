@@ -13,9 +13,16 @@
                      
        //this jQuery object
        $.mainspring.opts.element = this;
+       
+       //TODO: only need to do this once, so store user id in cookie
+       if (true) {
+         $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp'})
+       }
 
-       $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback: "$.mainspring.displayVideo"})
+       //fetch remote page with jsonp ajax call with authentication and call a callback method
+       $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
 
+   
 
 
    //    $.getJSON($.mainspring.createUserJsonpURL()+"&callback=?", 
@@ -50,26 +57,21 @@
     //options
     opts: {},
     fetchRemoteURI: function(remoteURI) {
-      var decodedRemoteURI = $.mainspring.decodeRemoteURI(remoteURI);
-      $.getJSON(decodedRemoteURI+".json?auth_token="+$.mainspring.opts.clientHandle + '_' + $.mainspring.opts.clientUserID +"&callback=?",
-        function(data) {
-          $.mainspring.displayVideo(data);
-          //test
-          $.mainspring.opts.data = data;
-        });
+      var url = $.mainspring.decodeRemoteURI(remoteURI) + ".json?auth_token="+$.mainspring.opts.clientHandle +
+         '_' + $.mainspring.opts.clientUserID;
+      $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderPage"})
+
     },
-    displayVideo: function(data) {
+    renderPage: function(data) {
+      /*
+        if array of videos, render videos
+        if object video, render single video landing page
+        if object content asset render single content asset page
+
+      */
       console.log(data);
     },
-    displaySearchResults: function(data) {
-    },
-
-    createIframe: function(authentication_token) {
-       $.mainspring.opts.element.append("<iframe width='"+$.mainspring.opts.width+"' height='"+$.mainspring.opts.height+
-       "' src="+'"' +$.mainspring.decodeRemoteURI()+ '"'+"></iframe>");
-          
-
-    },
+  
     encodeName: function() {
       return encodeURI($.mainspring.opts.name);
     },
