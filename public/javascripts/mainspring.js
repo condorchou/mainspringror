@@ -14,9 +14,14 @@
        //this jQuery object
        $.mainspring.opts.element = this;
        
+       //inject other dependencies
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
+
+       $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', cache:true, dataType:'script'});
+
        //TODO: only need to do this once, so store user id in cookie
        if (true) {
-         $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp'})
+         $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'$.mainspring.setUserCookie' });
        }
 
        //fetch remote page with jsonp ajax call with authentication and call a callback method
@@ -62,6 +67,9 @@
       $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderPage"})
 
     },
+    setUserCookie: function(data) {
+      console.log("set the returned user id into the cookie so we don't need to make this call again");
+    },
     renderPage: function(data) {
       /*
         if array of videos, render videos
@@ -82,7 +90,7 @@
       return encodeURI($.mainspring.opts.location);
     },
     createUserJsonpURL: function() {
-      return $.mainspring.getHost() + '/authenticate?client_handle='+$.mainspring.opts.clientHandle+
+      return $.mainspring.getHost() + '/authenticate.json?client_handle='+$.mainspring.opts.clientHandle+
       '&username='+$.mainspring.encodeName()+'&user_id='+$.mainspring.encodeClientUserID()+
       '&location='+$.mainspring.encodeLocation();
     },
