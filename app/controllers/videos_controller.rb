@@ -23,11 +23,12 @@ class VideosController < ApplicationController
   # GET /clients/videos/1
   # GET /clients/videos/1.xml
   def show
-   
+  #  @video = Video.includes([:comments, :user]).where(:id => @video.id)
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @video }
-      format.json 
+    #  format.json { render :json => @video.to_json(:include => {:comments => {:include => {:user => {:only => [:username, :location]}} }}) } 
+      format.json
     end
   end
 
