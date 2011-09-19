@@ -89,7 +89,7 @@
       if ($.mainspring.opts.environment == 'staging') {
          url = "http://staging.mainspringror.com";
       } else if ($.mainspring.opts.environment == 'production') {
-         url = "http://production.mainspringror.com";
+         url = "https://production.mainspringror.com";
       }
       return url;
     },

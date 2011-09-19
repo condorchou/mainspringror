@@ -9,9 +9,9 @@ class CreateVideos < ActiveRecord::Migration
       t.string :label
       t.text :participants
       t.datetime :release_date
-      t.boolean :approved
+      t.boolean :approved, :default => false
       t.string :botr_video_key
-      t.integer :views
+      t.integer :views, :default => 0
       t.integer :client_id
       t.integer :user_id
       t.timestamps
