@@ -34,13 +34,14 @@
  </div>
 
 
-
-<% if current_user.role == 'super_user' %>
+<% role_options = ['intranet_user']
+role_options << 'client_admin' if current_user.role == 'client_admin'
+role_options << 'super_user' if current_user.role == 'super_user'
+%>
  <div class="field">
     <%= f.label :role %><br />
-    <%= f.text_field :role %>
+    <%= f.select(:role,role_options) %>
   </div>
-<% end %>
 
   <div class="field">
     <%= f.label :location %><br />
