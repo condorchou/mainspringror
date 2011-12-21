@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
-
 gem 'rails', '3.0.8'
-gem 'devise'
+gem 'devise', '~> 1.4.7'
 gem 'cancan'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'bits_on_the_run', :path => "vendor/gems/bits_on_the_run-0.99.1"
