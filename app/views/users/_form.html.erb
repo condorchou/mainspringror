@@ -28,14 +28,14 @@
  </div>
 
   <div class="field">   
-   <%= f.label :client_user_id %>  (required)
+   <label for="client_user_id">Client User ID (required)</label>
 <br />
     <%= f.text_field :client_user_id %>
  </div>
 
 
 <% role_options = ['intranet_user']
-role_options << 'client_admin' if current_user.role == 'client_admin'
+role_options << 'client_admin' if current_user.role != 'intranet_user' 
 role_options << 'super_user' if current_user.role == 'super_user'
 %>
  <div class="field">

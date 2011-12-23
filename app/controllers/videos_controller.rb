@@ -32,15 +32,15 @@ class VideosController < ApplicationController
     end
   end
 
-  # GET /clients/videos/new
-  # GET /clients/videos/new.xml
   def new
     @video = @client.videos.build
     @video.user_id = current_user.id
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @video }
-    end
+    @call = BitsOnTheRun::call('videos/create')
+    @video_key = @call.link.query.key
+    @upload_url = @call.upload_url +
+      "&redirect_address="+client_videos_path([@client],:only_path => false) +
+      "&redirect_query._method=POST" +
+      "&redirect_query.auth_token=#{current_user.authentication_token}"
   end
 
   # GET /clients/videos/1/edit
@@ -53,37 +53,37 @@ class VideosController < ApplicationController
     @video = @client.videos.build(params[:video])
 
     respond_to do |format|
-      if @video.save!
-        format.html { redirect_to client_video_upload_form_path(@client,@video) }
-        format.xml  { render :xml => @video, :status => :created, :location => @video }
+      if @video.save
+        format.html { render :text => "Video Successfully Uploaded" }
+     #   format.xml  { render :xml => @video, :status => :created, :location => @video }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @video.errors, :status => :unprocessable_entity }
+     #   format.xml  { render :xml => @video.errors, :status => :unprocessable_entity }
       end
     end
   end
-  
+=begin  
   def upload_form
     @video = @client.videos.find(params[:video_id])
-    unless @video.botr_video_key.blank?
+    if @video.botr_video_key.blank?
+      begin
+        c = BitsOnTheRun::Client.new('/videos/create')
+        @upload_response = BitsOnTheRun::VideoCreateResponse.new(c.response)
+        @video.botr_video_key = @upload_response.key
+        @video.save!
+        @upload_url = @upload_response.send(:url)
+      rescue => e
+        flash[:notice] = "Unable to Connect to Video Server, please try again later"
+        redirect_to edit_client_video_path(@client, @video)
+      end
+
+    else
       flash[:notice] = "This video is already uploaded, remove botr_video_key if you wish to re-upload a video"
       redirect_to edit_client_video_path(@client, @video)
       return false
     end
   end
-
-  def botr_upload_form
-    begin
-      @video = @client.videos.find(params[:video_id])
-      c = BitsOnTheRun::Client.new('/videos/create')
-      @upload_response = BitsOnTheRun::VideoCreateResponse.new(c.response)
-      @video.botr_video_key = @upload_response.key
-      @video.save!
-      @upload_url = @upload_response.send(:url)
-    rescue => e
-      render :text => "#{e} #{@upload_response.inspect}Unable to Connect to Video Server, please try again later"
-    end
-  end
+=end
 
 
   # PUT /clients/videos/1
@@ -92,7 +92,7 @@ class VideosController < ApplicationController
 
     respond_to do |format|
       if @video.update_attributes(params[:video])
-        format.html { redirect_to([@client,@video], :notice => 'Video was successfully updated.') }
+        format.html { redirect_to(edit_client_video_path(@client, @video), :notice => 'Video was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

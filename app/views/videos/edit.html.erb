@@ -1,6 +1,12 @@
 <h1>Editing clients_video</h1>
+<%= form_for([@client, @video]) do |f| %>
 
-<%= render 'form' %>
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 
 <%= link_to 'Show', client_video_path(@client,@video) %> |
 <%= link_to 'Back', client_videos_path %>

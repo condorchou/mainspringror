@@ -1,10 +1,3 @@
-PATH
-  remote: vendor/gems/bits_on_the_run-0.99.1
-  specs:
-    bits_on_the_run (0.99.1)
-      activesupport
-      curb
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -37,6 +30,9 @@ GEM
     activesupport (3.0.8)
     arel (2.0.10)
     bcrypt-ruby (3.0.1)
+    bitsontherun (0.1.2)
+      curb (>= 0.7.0)
+      json (>= 1.4.0)
     builder (2.1.2)
     cancan (1.6.5)
     capistrano (2.8.0)
@@ -174,7 +170,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bits_on_the_run!
+  bitsontherun
   cancan
   capistrano
   capistrano-ext
