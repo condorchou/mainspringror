@@ -1,3 +1,8 @@
-key: 'myKEY'
-secret: 'mySECRET'
+#these are bogus keys, use your own
+development:
+  key: 'xEv3Uuse'
+  secret: 'bogusksdYP4zYuauZDjBd'
+production:
+  key: 'AfZsdf'  
+  secret: '0Dgst23pBbNMAJqzKxoSlHwX9'
 
