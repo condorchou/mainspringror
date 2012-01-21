@@ -1,0 +1,87 @@
+<!-- begin containment div sets width for content -->
+<div style="float:left;width:640px;margin-left:1px;margin-top:0px;">
+	<div id="left_container">
+	<!-- begin video embed container-->
+		<!--<${video_player}{{html "</scr"+"ipt>"}}-->
+		<div id="video_embed_container">
+		</div>
+	 <!-- end video embed container -->
+
+	 <!-- begin video description information container -->
+		<div class="space15"><img alt="" src="images/spacer.gif" /></div>
+	</div>
+	<div id="video_rate">		
+		<div id="rating_stats">
+			<strong>${num_comments}</strong>&nbsp;comments&nbsp;
+			<span>|</span>
+			<strong>${views}</strong>&nbsp;views&nbsp;
+			<span>|</span>
+			<strong>${thumbs_ups}</strong>&nbsp;<nobr>thumbs up</nobr>&nbsp;
+		</div>
+		<div id="social_buttons">
+	
+			<a href="#" onclick="new Ajax.Updater('video_rate', '/themes/thumbs_up?handle=${botr_video_key}&amp;user_id=${userid}', {asynchronous:true, evalScripts:true}); return false;"><img alt="i like this" border="none" src="images/thumb_up.gif" /></a>
+		
+		&nbsp;
+			<a href="mailto:  ?subject=Connect TV: ${org_name}  Wellness&body=Test O' Riley thought you might be interested in this Connect TV episode: ${org_name}  Wellness ${url}">
+				<img alt="Share this video" src="images/share_link.gif" />
+			</a>
+		</div>
+		<div class="clearboth"></div>
+	</div> <!-- end video_rate -->
+	<span id="participants">
+		This Connected TV episode is brought to you by:&nbsp; <span>${participants} - ${location}</span>
+	</span>
+	<div class="clearboth"></div>
+	<br><Br> 
+	<div id="nav_div"></div> <!-- End nav_div-->
+	<div id="navigation_grid" style="background-color:#FFF;">
+	  <div id="grid"></div>
+	</div>
+</div> <!--  End mail col -->
+
+<div id="feature_description">
+	<div id="search_box"></div>
+	<div style="position:absolute;top:17px;left:220px;color:#7f7f7f;width:450px;height:13px;font-size:8.5pt;display:none;">&nbsp;</div>
+<!-- end header -->
+	<div id="clipContext">
+		<p id="location_title">${title}</p>
+		<p id="clip_date">${location}&nbsp; ${release_date} &ndash; ${shortSummary}</p>
+
+		<!-- participants -->
+		<!-- end participants -->
+		<span id="long_description">
+			${description}
+		</span>
+		<br />
+
+		<div style="float:left;width:450px;overflow:hidden;">
+			<b>Related Links:</b>&nbsp; 
+		</div>
+
+		<br style="float:clear;"> 
+		<b>Tags:</b>&nbsp;
+		<span id="videotags">
+		</span>
+		<div class="space10">&nbsp;</div>	
+	</div>
+
+	<div style="float:left;width:280px;">
+		<div id="comments_div">
+			<form action="/themes/corvel/create_comment?user_id=10871&amp;video_id=657" method="post" onsubmit="new Ajax.Updater('comments_div', '/themes/corvel/create_comment?user_id=10871&amp;video_id=657', {asynchronous:true, evalScripts:true, onComplete:function(request){new Effect.Highlight('comments_div', {startcolor: '#ebce7b', endcolor: '#ffffff' });}, parameters:Form.serialize(this)}); return false;">
+
+				<div id="comments_label">Add a new comment</div>
+				<textarea class="comments_text_area" id="body" name="body"></textarea>
+				<div class="comments_submit_button"><input name="commit" type="submit" value="submit comment" /></div>
+				<input type="hidden" value="2" name="${id}" id="comment_video_id">
+				<input type="hidden" value="1" name="${userid}" id="comment_user_id">
+				<div class="comments_name_location">${name}, ${location}</div>
+				<div class="clear">&nbsp;</div>	
+				<div class="space10">&nbsp;</div>	
+			</form>
+			<!-- end form for submit comment -->
+			<div class="space5">&nbsp;</div>	
+			<div id="comments"></div>
+		</div>
+	</div>
+</div>

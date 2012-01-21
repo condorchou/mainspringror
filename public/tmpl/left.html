@@ -1,0 +1,57 @@
+<!-- begin containment div sets width for content -->
+<div style="float:left;width:640px;margin-left:1px;margin-top:0px;">
+	<div id="left_container">
+	<!-- begin video embed container-->
+		<div id="video_embed_container">
+			<!--
+			<script type="text/javascript" src="http://content.bitsontherun.com/players/EVwCtgxd-kasi1DWo.js"></script>
+			-->
+		</div>
+	 <!-- end video embed container -->
+
+	 <!-- begin video description information container -->
+		<div class="space15"><img alt="" src="images/spacer.gif" /></div>
+	</div>
+	<div id="video_rate">		
+		<div id="rating_stats">
+			<strong>4</strong>&nbsp;comments&nbsp;
+			<span>|</span>
+			<strong>1195</strong>&nbsp;views&nbsp;
+			<span>|</span>
+			<strong>26</strong>&nbsp;<nobr>thumbs up</nobr>&nbsp;
+		</div>
+		<div id="social_buttons">
+	
+			<a href="#" onclick="new Ajax.Updater('video_rate', '/themes/thumbs_up?handle={{videokey}}&amp;user_id={{userid}}', {asynchronous:true, evalScripts:true}); return false;"><img alt="i like this" border="none" src="images/thumb_up.gif" /></a>
+		
+		&nbsp;
+			<a href="mailto:  ?subject=Connect TV: CorVel Wellness&body=Test O' Riley thought you might be interested in this Connect TV episode: CorVel Wellness http://webprod/cctv/index.aspx?mtr_params=BAgiPmh0dHA6Ly9tZWF0dGVhbXJvci5jb20vdGhlbWVzL2NvcnZlbD92aWQ9\NdHZBSlFSSWdtejdGbEo2cQ==">
+				<img alt="Share this video" src="images/share_link.gif" />
+			</a>
+		</div>
+		<div class="clearboth"></div>
+	</div> <!-- end video_rate -->
+	<span id="participants">
+		This Connected TV episode is brought to you by:&nbsp; <span>Brent Frazier & The Boise Office</span>
+	</span>
+	<div class="clearboth"></div>
+	 
+	<div id="nav_div">
+		<table id="tabbednav">	
+			<tr>
+				<td class="season_off" onclick="new Ajax.Request('/themes/change_nav/connect_tv_seasons', {asynchronous:true, evalScripts:true})">&nbsp;
+				</td>
+				<td class="spacer"></td>
+				<td class="corporate_off" onclick="new Ajax.Request('/themes/change_nav/corporate_videos', {asynchronous:true, evalScripts:true})">&nbsp;
+				</td>
+				<td class="spacer"></td>
+				<td class="iconnect_off" onclick="new Ajax.Request('/themes/change_nav/iconnect', {asynchronous:true, evalScripts:true})">&nbsp;
+				</td>
+				<td class="spacer"></td>
+				<td class="howto_off" onclick="new Ajax.Request('/themes/change_nav/faq', {asynchronous:true, evalScripts:true})">&nbsp;
+				</td>
+			</tr>
+		</table>
+	</div> <!-- End nav_div-->
+	<div id="navigation_grid" style="background-color:#FFF;border:0px solid blue;"></div>
+</div> <!--  End mail col -->

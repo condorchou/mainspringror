@@ -1,27 +1,26 @@
 <html>
 <head>
-  <script src="http://127.0.0.1:8080/javascripts/jquery.min.js"></script>
-  <script src="http://127.0.0.1:8080/javascripts/mainspring.js"></script>
+  <script src="js/jquery-1.7.1.min.js"></script>
+  <script src="js/jquery-ui-1.8.17.custom.min.js"></script>
+  <script src="js/jquery.tmpl.min.js"></script>
+  <script src="js/jquery.cookie.js"></script>
+  <script src="js/mainspring.js"></script>
+	<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="stylesheet" /> 
 </head>
-<body style="background-color:gray">
-<p>
-This is an example of server side script running on an intranet.  Load this page with '?goto=videos%2F1' to 
-set the iframe src to videos/1
-</p>
-<div id="connect_tv_container">
-</div>
+<body>
 
-
+<div id="connect_tv_container"></div>
 <script>
-  $('#connect_tv_container').mainspring({
+	jQuery('#connect_tv_container').mainspring({
     environment:'development',
     clientHandle: 'belsobeer',
-    clientUserID: 'new_2guy@belsobeer.com',
-    name: 'new guy2',
-    location: 'Los Angeles, CA',
+    clientUserID: 'condor@condor.com',
+    name: 'Condor Chou',
+    location: 'Boston, MA',
     remoteURI: '<?php echo $_GET['goto']; ?>',
     width: 1000
   });
+	
 </script>
 </body>
 </html>
