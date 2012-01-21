@@ -11,6 +11,9 @@ body, p, ol, ul, td, textarea {
 	clear:both;
 	height:1px;
 }
+.eighty{
+	height:70px !important;
+}
 
 #connect_tv_container {
 	width:945px;
@@ -716,7 +719,8 @@ a.current{
 
 #nav_div{
 	width:640px;
-	padding-top:40px;
+	padding-top:10px;
+	border:0px;
 }
 
 #navigation_grid{

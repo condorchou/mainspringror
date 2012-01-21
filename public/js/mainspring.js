@@ -94,12 +94,15 @@
 		renderTabs: function(data){
 			//alert(data);
 			$.cookie({"tab": data});
-			//var video = {t1:1,t2:2,t3:3,t4:4};
 
-			$.get("tmpl/tabButtons.tmpl.html", function(template){
-				//alert(template);
-				$.tmpl(template).appendTo("#nav_div");
-				$('#nav_div').tabs();
+			var video = [{t:1},{t:2},{t:3},{t:4}];
+			$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
+				$.get("tmpl/tab.tmpl.html", function(tabTmpl){
+					//$.tmpl(tabTmpl,video).appendTo("#tab_container");
+					$.tmpl(tabContainer).appendTo("#tab_container");
+					$.tmpl(tabTmpl,video).appendTo("#tab_top");
+					$('#nav_div').tabs();
+				});
 			});
 		/*
 		$('#nav_div').bind('tabsselect', function(event, ui) {
@@ -109,7 +112,6 @@
 				alert(ui.index);   // zero-based index of the selected (clicked) tab
 		});
 		*/
-		//$( "#nav_div" ).tabs();
 /*
 		 var $tabs = $("#nav_div").tabs();
 		 $tabs.tabs('select', data); // switch to third tab
@@ -125,14 +127,12 @@
 				tiles[i] = data[i].video;
 				tiles[i].botr_video_key = "EVwCtgxd";
 			}
+			//alert(tiles);
 
 			$.get("tmpl/tiles.tmpl.html", function(template){	
 				$.tmpl(template, tiles).appendTo("#grid");
 			});
 
-			//$("#nav_div").tabs();
-			//$("#connect_tv_container").tabs();
-			
 		},
 
     submitComment: function(data) {
@@ -183,11 +183,12 @@
 			
 			$.get('tmpl/template.html', function(template){
 				$.tmpl(template, data[0].video).appendTo("#connect_tv_container");
-				//$('#nav_div').tabs();
 			});
 			//alert(data[0].video.tab_highlight);
 			
-			//$.mainspring.renderTabs(data[0].video.tab_highlight);
+			$.mainspring.renderTabs(data[0].video.tab_highlight);
+				$('#nav_div').tabs();
+			
 			$.get("tmpl/comments.html", function(template){
 				$.tmpl(template, comments).appendTo("#comments");
 			});
@@ -204,6 +205,7 @@
 				$.mainspring.submitComment(data[0].video);
 				return false; 
 			});
+			
 			
 			//console.log(data);
 			//console.log(this);
