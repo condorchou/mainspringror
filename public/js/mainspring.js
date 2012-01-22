@@ -92,7 +92,7 @@
 
 		},
 		renderTabs: function(data){
-			//alert(data);
+
 			$.cookie({"tab": data});
 
 			var video = [{t:1},{t:2},{t:3},{t:4}];
@@ -102,20 +102,25 @@
 					$.tmpl(tabContainer).appendTo("#tab_container");
 					$.tmpl(tabTmpl,video).appendTo("#tab_top");
 					$('#nav_div').tabs();
+
+					$('#nav_div').tabs('select', data); // switch to third tab
+					
+					$('#nav_div').bind('tabsselect', function(event, ui) {
+							 // Objects available in the function context:
+							//alert(ui.tab);     // anchor element of the selected (clicked) tab
+							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
+							//alert(ui.index);   // zero-based index of the selected (clicked) tab
+							$("#grid div").remove();
+							url = $.mainspring.decodeRemoteURI("videos.json");
+							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
+
+							//
+						 //$('#nav_div').tabs('select', ui.index); // switch to third tab
+					});
+		
 				});
 			});
-		/*
-		$('#nav_div').bind('tabsselect', function(event, ui) {
-				 // Objects available in the function context:
-				alert(ui.tab);     // anchor element of the selected (clicked) tab
-				alert(ui.panel);   // element, that contains the selected/clicked tab contents
-				alert(ui.index);   // zero-based index of the selected (clicked) tab
-		});
-		*/
-/*
-		 var $tabs = $("#nav_div").tabs();
-		 $tabs.tabs('select', data); // switch to third tab
-*/
+		
 
 
 		},
@@ -146,7 +151,6 @@
 			*/
 		},
     renderPage: function(data) {
-			//alert(data);
       //console.log(data);
 			var videoInfo = {
 					environment: "development",
@@ -187,7 +191,6 @@
 			//alert(data[0].video.tab_highlight);
 			
 			$.mainspring.renderTabs(data[0].video.tab_highlight);
-				$('#nav_div').tabs();
 			
 			$.get("tmpl/comments.html", function(template){
 				$.tmpl(template, comments).appendTo("#comments");
