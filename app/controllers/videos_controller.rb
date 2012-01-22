@@ -14,11 +14,12 @@ class VideosController < ApplicationController
     @user = current_user
   end 
  
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    redirect_to client_videos_path(@client), :notice => "Video Not Found"
-  end 
+ # rescue_from ActiveRecord::RecordNotFound do |exception|
+ #   redirect_to client_videos_path(@client), :notice => "Video Not Found"
+ # end 
   
   def index
+    @videos = @client.videos.search(params[:search])
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @videos }

@@ -36,6 +36,10 @@ gem 'yajl-ruby'
 # Bundle gems for the local environment. Make sure to
 # put test-only gems in this group so their generators
 # and rake tasks are available in development mode:
+
+gem 'pg'
+gem 'thinking-sphinx'
+
 group :development, :test do
   gem 'unicorn'
   gem 'rspec-rails'
@@ -43,7 +47,7 @@ group :development, :test do
   gem 'capybara'
   gem 'database_cleaner'
   gem 'webrat'
-  gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem 'capistrano'
-  gem 'capistrano-ext'
+#  gem 'sqlite3-ruby', :require => 'sqlite3'
+#  gem 'capistrano'
+#  gem 'capistrano-ext'
 end
