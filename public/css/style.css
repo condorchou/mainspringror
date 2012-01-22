@@ -7,6 +7,10 @@ body, p, ol, ul, td, textarea {
     line-height: 14px;
 }
 
+.ui-tabs .ui-tabs-panel{
+	padding: 0 !important;
+}
+
 .clearboth{
 	clear:both;
 	height:1px;
@@ -727,6 +731,7 @@ a.current{
 	position:relative;
 	background-color:#ebebeb;
 	padding-bottom:10px;
+	padding-left:2px;
 	width:640px;
 	height:530px;
 }
@@ -758,7 +763,7 @@ a.current{
 .video_tile_wrapper{
 	width:160px;
 	float:left;
-	height:165px;
+	height:120px;
 	overflow:hidden;
 	margin-bottom:10px;
 }
