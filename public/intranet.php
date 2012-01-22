@@ -5,7 +5,7 @@
   <script src="js/jquery.tmpl.min.js"></script>
   <script src="js/jquery.cookie.js"></script>
   <script src="js/mainspring.js"></script>
-	<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.17.custom.css" rel="stylesheet" /> 
+	<link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" /> 
 </head>
 <body>
 
