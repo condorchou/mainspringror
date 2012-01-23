@@ -137,5 +137,21 @@ Tagging
 
 git://github.com/jviney/acts_as_taggable_on_steroids.git
 
+===
+Uses thinking sphinx for full text video search in production
 
+===
+Runs flying sphinx on heroku
+http://devcenter.heroku.com/articles/flying_sphinx
+
+# For Cedar
+$ heroku run rake fs:index
+$ heroku run rake fs:start
+$ heroku run rake fs:stop
+$ heroku run rake fs:restart
+$ heroku run rake fs:rebuild
+
+====
+runs once a day cron job to index videos
+using heroku cron add on
 
