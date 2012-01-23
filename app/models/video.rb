@@ -8,14 +8,24 @@ class Video < ActiveRecord::Base
   has_many :comments
   has_many :likes
 
-  define_index do
-    has client_id, user_id
-    indexes title
-    indexes location
-    indexes description
-    indexes participants
-    indexes comments.body, :as => :comment_body
-    indexes user.username, :as => :user_username
+  if Rails.env.to_s == "production"
+
+    define_index do
+      has client_id, user_id
+      indexes title
+      indexes location
+      indexes description
+      indexes participants
+      indexes comments.body, :as => :comment_body
+      indexes user.username, :as => :user_username
+    end
+
+  else
+    #hack for developing locally without the need for sphinx installed
+    def self.search(terms)
+      Video.where("title ILIKE :search",{:search => "%#{terms}%"})
+    end
+
   end
 
 
