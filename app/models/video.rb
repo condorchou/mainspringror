@@ -23,7 +23,7 @@ class Video < ActiveRecord::Base
   else
     #hack for developing locally without the need for sphinx installed
     def self.search(terms)
-      Video.where("title ILIKE :search",{:search => "%#{terms}%"})
+      Video.where("title LIKE :search",{:search => "%#{terms}%"})
     end
 
   end
