@@ -39,6 +39,7 @@ gem 'yajl-ruby'
 
 gem 'pg'
 gem 'thinking-sphinx'
+gem 'flying-sphinx'
 
 group :development, :test do
   gem 'unicorn'
