@@ -16,6 +16,7 @@ class Video < ActiveRecord::Base
       indexes location
       indexes description
       indexes participants
+      indexes cached_tag_list
       indexes comments.body, :as => :comment_body
       indexes user.username, :as => :user_username
     end
