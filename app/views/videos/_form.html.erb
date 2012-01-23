@@ -39,14 +39,18 @@
     <%= f.text_area :participants %>
   </div>
    
+
     <%= f.hidden_field :client_id %>
 
 
     <%= f.hidden_field :user_id %>
-
+    
 
 <% if current_user.role != 'intranet_user' %>
-
+  <div class="field">
+    <%= f.label :cached_tag_list %><br />
+    <%= f.text_field :cached_tag_list %>
+  </div>
   <div class="field">
     <%= f.label :release_date %><br />
     <%= f.datetime_select :release_date %>

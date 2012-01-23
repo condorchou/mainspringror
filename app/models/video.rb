@@ -23,7 +23,11 @@ class Video < ActiveRecord::Base
   else
     #hack for developing locally without the need for sphinx installed
     def self.search(terms)
-      Video.where("title LIKE :search",{:search => "%#{terms}%"})
+      if ActiveRecord::Base.configurations[Rails.env]['adapter'] == "postgresql"
+        Video.where("title ILIKE :search",{:search => "%#{terms}%"})
+      else
+        Video.where("title LIKE :search",{:search => "%#{terms}%"})
+      end
     end
 
   end

@@ -57,27 +57,20 @@
 </p>
 
 <p>
-  <b>Client:</b>
+  <b>Client ID:</b>
   <%= @video.client_id %>
 </p>
 
 <p>
-  <b>User:</b>
+  <b>User ID:</b>
   <%= @video.user_id %>
 </p>
+
 <p>
-  <b>Tab Highlight:</b>
-  <%= @video.tab_highlight %>
+  <b>Cached Tag list:</b>
+  <%= @video.cached_tag_list %>
 </p>
 
-<div style="border:1px solid black">
-<p>TABS</p>
- <% begin %>
- <%= raw ERB.new(@client.content_assets.find_by_handle(@client.tab_content_asset).body).result(binding) %>
-<% rescue => e %>
- <%= e %>
-<% end %>
-</div>
 
 <p>
 <b>Comments:</b>
@@ -90,12 +83,7 @@
 </p>
 
 <p>
-<b>Rated: <%= @video.ratings_count %> times</b>
-  <% if @video.rated_by? @user %>
-  "You liked this video"
-  <% else %>
-    TODO ajax "like this video"
-  <% end %>
+<b>Liked: <%= @video.likes_count %> times</b>
 </p>
 
 <%= link_to 'Edit', edit_client_video_path(@client,@video) %> |

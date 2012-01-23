@@ -132,12 +132,6 @@ Content Assets
 Templates that are stored in the DB.  Evaluated as erb.  Can be used to render misc client static content related
 to videos, such as a policy page.
 
-Rating
-===
-
-used https://github.com/josei/acts_as_rateable
-TODO add ajax methods for rating a video
-
 Tagging
 ===
 
