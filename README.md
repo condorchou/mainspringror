@@ -132,16 +132,26 @@ Content Assets
 Templates that are stored in the DB.  Evaluated as erb.  Can be used to render misc client static content related
 to videos, such as a policy page.
 
-Rating
-===
-
-used https://github.com/josei/acts_as_rateable
-TODO add ajax methods for rating a video
-
 Tagging
 ===
 
 git://github.com/jviney/acts_as_taggable_on_steroids.git
 
+===
+Uses thinking sphinx for full text video search in production
 
+===
+Runs flying sphinx on heroku
+http://devcenter.heroku.com/articles/flying_sphinx
+
+# For Cedar
+$ heroku run rake fs:index
+$ heroku run rake fs:start
+$ heroku run rake fs:stop
+$ heroku run rake fs:restart
+$ heroku run rake fs:rebuild
+
+====
+runs once a day cron job to index videos
+using heroku cron add on
 

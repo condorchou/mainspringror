@@ -17,6 +17,12 @@ Mainspring::Application.routes.draw do
     resources :videos do
       get 'upload_form' #parent page
       get 'botr_upload_form' #iframe, so that we stay on our domain after video finishes upload and is redirected to botr completion page
+      
+      resources :likes, :only => [:create, :index] do
+        collection do
+          delete 'destroy'
+        end
+      end
       resources :comments
 
       collection do

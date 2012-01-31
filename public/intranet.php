@@ -4,6 +4,7 @@
   <script src="js/jquery-ui-1.8.17.custom.min.js"></script>
   <script src="js/jquery.tmpl.min.js"></script>
   <script src="js/jquery.cookie.js"></script>
+  <script src="js/quickpager.jquery.js"></script>
   <script src="js/mainspring.js"></script>
 	<link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" /> 
 </head>
@@ -11,7 +12,7 @@
 
 <div id="connect_tv_container"></div>
 <script>
-	jQuery('#connect_tv_container').mainspring({
+  $('#connect_tv_container').mainspring({
     environment:'development',
     clientHandle: 'belsobeer',
     clientUserID: 'condor@condor.com',

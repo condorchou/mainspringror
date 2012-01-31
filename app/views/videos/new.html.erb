@@ -1,5 +1,82 @@
-<h1>New clients_video</h1>
 
-<%= render 'form' %>
+<%= form_for([@client, @video],:html => {:multipart => true}) do |f| %>
 
-<%= link_to 'Back', client_videos_path %>
+<%= render :partial => 'form', :locals => {:f => f} %>
+
+  <fieldset>
+  <label>Select video</label>
+		<input id="uploadFile" type="file" name="file" />
+		<small id="uploadText">Videos can be... Up to 1 GB in size, Up to 5 minutes in length, A wide variety of formats (WMV, AVI, MP4, MOV, FLV, ...)</small>
+  </fieldset>
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script>
+//if a botr_video_key is provided (only super user can see text_field to fill out the botr_video_key option)
+//then do nothing
+$("#new_video").submit(function(){
+  
+  if ($("#video_botr_video_key").val() != '' && $("#uploadFile").val() === '') {
+    //save record in the normal way because no file is being uploaded, yet
+    //super user has specified a botr_video_key
+    return true;
+  }
+  if ($("#uploadFile").val() != '' && $("#video_botr_video_key").val() != '') {
+    //submit modified form because file was selected and the modified form
+    //specified a new botr_video_key (this logical path will never be chosen)
+    //
+    return true;
+  }
+  if ($("#uploadFile").val() != '') {
+    alert('before change');
+    $("#new_video").attr("action",'<%=@upload_url-%>');
+    $("#video_botr_video_key").val('<%=@video_key-%>');
+
+    $("#new_video :input").each(function(){
+      var old_name = $(this).attr("name");
+      if (old_name != 'file') {
+        var new_name = "redirect_query." + old_name;
+        $(this).attr("name", new_name);
+      }
+    });
+
+    
+
+    alert('after change');
+    return true;
+  }
+  
+  if ($("#video_botr_video_key").val() === '' && $("#uploadFile").val() === '') {
+     <% if current_user.role == 'super_user' %>
+       alert('botr_video_key OR file Required');
+     <% else %>
+       alert('File Required');
+     <% end %>
+     return false;
+  }
+  
+});
+
+function modifyForm() {
+        return false;
+     
+    
+
+  }
+//otherwise if a file is selected for upload:
+//1. replace the form action with botr upload url
+//2. append redirect_address to the botr_url and set value to original form action
+//3. prepend 'redirect_query.' to each form input name
+//4  set value of 'redirect_query.botr_video_key' to the video key in upload url
+//3. add key_in_path=true to the redirect_address
+//4. submit the form
+//5. upon successful callback to the create new video url
+//and modify all the form data into 
+//on submit:
+//if 
+</script>
+

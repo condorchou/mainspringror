@@ -568,12 +568,12 @@ a.current{
     border:1px solid black;
     width:100px;
 }
-.video_list td.blurb {
-    padding-right:20px;
 
+.video_list td.thumbTd {
+    width:150px;
 }
 
-.video_list td.blurb p {
+.video_list td.titleTd p {
     font-size:11.5px;padding-bottom:1px; /* space between title and description*/
 
 }
@@ -618,7 +618,7 @@ a.current{
 	outline: none;
 	margin-bottom:8px;}
 
-.comments_submit_button {
+#comments_submit_button {
 	float:left;
 	margin-left:8px;
 	padding-top:3px;
@@ -629,7 +629,7 @@ a.current{
 	background-color:#316BA9;
 }
 
-.comments_submit_button input
+#comments_submit_button input
 {
 	text-align:center;
 	background-color:#316BA9;
@@ -639,8 +639,6 @@ a.current{
 	font-size:9pt;
 	text-align:center;
 }
-/*.comments_submit_button input{margin-top:5px;margin-left:8px;text-align:center;width:150px;color:#FFFFFF;height:24px;border:0;background-color:#316BA9;cursor:pointer;float:left;font-size:9pt;}
-*/
 
 .comments_name_location {
 	vertical-align:middle;
@@ -707,7 +705,7 @@ a.current{
     clear:both;position:absolute;top:283px;left:62px;
 }
 .back_to_homepage {
-    margin:25px 0 5px 100px;
+    margin:25px 0 5px 0;
 }
 /* new navigation css */
 #navigation_bar {
@@ -815,3 +813,40 @@ a.current{
 	width:200px;
 	text-align:right;
 }
+
+ul.simplePagerNav li{
+    display:block;
+    floaT: left;
+    padding: 3px;
+    margin-bottom: 10px;
+    font-family: georgia;
+		font-size:15px;
+		
+}
+
+ul.simplePagerNav li a{
+    color: #333;
+    text-decoration: none;
+		font-size:14px;
+		margin:4px;
+		line-height:15px;
+}
+
+li.currentPage {
+	background: red;
+  background: #316BA9;	
+}
+
+ul.simplePagerNav li.currentPage a {
+	color: #fff;	
+}
+
+table.pageme {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+}  
+
+table.pageme td {
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+} 

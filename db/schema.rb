@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110907225344) do
+ActiveRecord::Schema.define(:version => 20120120190845) do
 
   create_table "clients", :force => true do |t|
     t.string   "company_name"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(:version => 20110907225344) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "likes", :force => true do |t|
+    t.integer  "video_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "likes", ["user_id", "video_id"], :name => "index_likes_on_user_id_and_video_id", :unique => true
 
   create_table "ratings", :force => true do |t|
     t.integer  "rateable_id"
@@ -110,15 +119,16 @@ ActiveRecord::Schema.define(:version => 20110907225344) do
     t.string   "label"
     t.text     "participants"
     t.datetime "release_date"
-    t.boolean  "approved"
+    t.boolean  "approved",        :default => false
     t.string   "botr_video_key"
-    t.integer  "views"
+    t.integer  "views",           :default => 0
     t.integer  "client_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cached_tag_list"
     t.string   "tab_highlight"
+    t.integer  "likes_count",     :default => 0,     :null => false
   end
 
 end

@@ -16,33 +16,38 @@
     <%= f.text_field :username %>
   </div>
 
+
+  <div class="field">
+    <%= f.label :email %> (optional)<br />
+    <%= f.text_field :email %>
+  </div>
+
  <div class="field">
     <%= f.label :password %><br />
     <%= f.text_field :password %>
  </div>
 
-  <div class="field">
-    <%= f.label :client_user_id %><br />
+  <div class="field">   
+   <label for="client_user_id">Client User ID (required)</label>
+<br />
     <%= f.text_field :client_user_id %>
  </div>
 
 
-
-<% if current_user.role == 'super_user' %>
+<% role_options = ['intranet_user']
+role_options << 'client_admin' if current_user.role != 'intranet_user' 
+role_options << 'super_user' if current_user.role == 'super_user'
+%>
  <div class="field">
     <%= f.label :role %><br />
-    <%= f.text_field :role %>
+    <%= f.select(:role,role_options) %>
   </div>
-<% end %>
 
   <div class="field">
     <%= f.label :location %><br />
     <%= f.text_field :location %>
   </div>
-  <div class="field">
-    <%= f.label :client_id %><br />
-    <%= f.text_field :client_id %>
-  </div>
+    <%= f.hidden_field :client_id %>
   <div class="actions">
     <%= f.submit %>
   </div>

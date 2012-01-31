@@ -1,4 +1,3 @@
-<%= form_for([@client, @video]) do |f| %>
   <% if @video.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@video.errors.count, "error") %> prohibited this clients_video from being saved:</h2>
@@ -39,6 +38,19 @@
     <%= f.label :participants %><br />
     <%= f.text_area :participants %>
   </div>
+   
+
+    <%= f.hidden_field :client_id %>
+
+
+    <%= f.hidden_field :user_id %>
+    
+
+<% if current_user.role != 'intranet_user' %>
+  <div class="field">
+    <%= f.label :cached_tag_list %><br />
+    <%= f.text_field :cached_tag_list %>
+  </div>
   <div class="field">
     <%= f.label :release_date %><br />
     <%= f.datetime_select :release_date %>
@@ -48,27 +60,23 @@
     <%= f.check_box :approved %>
   </div>
   <div class="field">
-    <%= f.label :botr_video_key %><br />
-    <%= f.text_field :botr_video_key %>
-  </div>
-  <div class="field">
     <%= f.label :views %><br />
     <%= f.text_field :views %>
-  </div>
-  <div class="field">
-    <%= f.label :client_id %><br />
-    <%= f.text_field :client_id %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id %><br />
-    <%= f.text_field :user_id %>
   </div>
   <div class="field">
     <%= f.label :tab_highlight %><br />
     <%= f.text_field :tab_highlight %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
+
+<% if current_user.role == 'intranet_user' %>
+    <%= f.hidden_field :botr_video_key %>
+<% else %>
+  <div class="field">
+    <%= f.label :botr_video_key %><br />
+    <%= f.text_field :botr_video_key %>
+  </div>
+
+<% end %>
+

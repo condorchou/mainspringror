@@ -2,7 +2,6 @@
 //create closure
 //
 (function($){
-  
 
   $.fn.mainspring = function(options){
        //options override defaults
@@ -28,14 +27,85 @@
 
        //fetch remote page with jsonp ajax call with authentication and call a callback method
        $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
+				$.cookie({"backUrl": $(location).attr('href')});
 
        return this;
 
   }; //end fn.mainspring function
 
+	function renderTabs(data){
 
-    //overridable static functions 
+		$.cookie({"tab": data});
+
+		var video = [{t:1},{t:2},{t:3},{t:4}];
+		$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
+			$.get("tmpl/tab.tmpl.html", function(tabTmpl){
+				//$.tmpl(tabTmpl,video).appendTo("#tab_container");
+				$.tmpl(tabContainer).appendTo("#tab_container");
+				$.tmpl(tabTmpl,video).appendTo("#tab_top");
+				$('#nav_div').tabs();
+
+				$('#nav_div').tabs('select', data); // switch to third tab
+				
+				$('#nav_div').bind('tabsselect', function(event, ui) {
+						 // Objects available in the function context:
+						//alert(ui.tab);     // anchor element of the selected (clicked) tab
+						//alert(ui.panel);   // element, that contains the selected/clicked tab contents
+						//alert(ui.index);   // zero-based index of the selected (clicked) tab
+						$("#grid div").remove();
+						url = $.mainspring.decodeRemoteURI("videos.json");
+						$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
+
+				});
+			});
+		});
+	};
+	
+	function getOpts(){
+		return $.mainspring.opts;
+	};
+	
+
+	function setupComments(video,config){
+		$('#comments_submit_button').live('click',function(){
+			processComments(video, config);
+		});
+	};
+	/*
+	function renderNewComments(data){
+		alert(eval(data));
+	};
+	*/
+
+	function processComments(video,config){
+
+		var aOpts = getOpts();
+		var aUrl = $.mainspring.decodeRemoteURI("videos/"+video.id +"/comments.json");
+		aUrl += "?auth_token="+aOpts.clientHandle+"_"+aOpts.clientUserID+"&_method=POST&comment[body]=";
+    aUrl += encodeURI($("#comment_form textarea").val());
+		$.ajax({url: aUrl, dataType:'jsonp', jsonpCallback: "$.mainspring.renderNewComments"})
+
+		/*$.post(aUrl, function(data){
+		})
+		.success(function(data){alert("add comment success")})
+		.error(function(data){alert("comment add error");console.log(data)})//alert("ilikeit error")})
+		.complete(function(data){
+			console.log(data);
+			//$("#comment_form textarea").animate({color:"#FFF"}).val('').css({'color':'#000'}).show();
+			$("#comment_form textarea").val('');
+		});
+		*/
+	};
+
+	function renderComments(data){
+			$.get("tmpl/comments.html", function(template){
+				$.tmpl(template, data).appendTo("#comments");
+				$("#comments").quickPager({pageSize:10});
+			});
+	};
   $.mainspring = {
+
+		debug: true, 
     
     //default settings
     defaults : {
@@ -59,52 +129,29 @@
 			
 			url = $.mainspring.decodeRemoteURI("videos.json");
       $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
-			
-			
-			
-			
 
     },
-    setUserCookie: function(data) {
-    //alert("set the returned user id into the cookie so we don't need to make this call again");
-    },
-		getTile: function(data){
-			$.mainspring.renderTabs(data);
+		renderNewComments: function(data){
+			alert(eval(data));
 		},
-		selectTile: function(data){
 
-		},
-		updateTiles: function(data){
+    //overridable static functions 
+		ilikethis: function(userid,videoid){
+				var time = new Date().getTime();
+				var aUrl = "http://localhost:8080";
+				var at = this.opts.clientHandle+"_"+this.opts.clientUserID;
+				aUrl += "/clients/"+this.opts.clientHandle+"/videos/"+videoid+"/likes.json";
+				aUrl += "?auth_token="+at+"&_method=POST";
 
-		},
-		renderTabs: function(data){
-
-			$.cookie({"tab": data});
-
-			var video = [{t:1},{t:2},{t:3},{t:4}];
-			$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
-				$.get("tmpl/tab.tmpl.html", function(tabTmpl){
-					//$.tmpl(tabTmpl,video).appendTo("#tab_container");
-					$.tmpl(tabContainer).appendTo("#tab_container");
-					$.tmpl(tabTmpl,video).appendTo("#tab_top");
-					$('#nav_div').tabs();
-
-					$('#nav_div').tabs('select', data); // switch to third tab
-					
-					$('#nav_div').bind('tabsselect', function(event, ui) {
-							 // Objects available in the function context:
-							//alert(ui.tab);     // anchor element of the selected (clicked) tab
-							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
-							//alert(ui.index);   // zero-based index of the selected (clicked) tab
-							$("#grid div").remove();
-							url = $.mainspring.decodeRemoteURI("videos.json");
-							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
-
-					});
+				$.post(aUrl, function(data){})
+				.success(function(){if($.mainspring.debug === true)alert("ilikeit success")})
+				.error(function(){})//alert("ilikeit error")})
+				.complete(function(){
+						var img = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
+						$('#ilikethis').hide().replaceWith(img).fadeIn();
+						
 				});
-			});
-		
-
+				
 
 		},
 		renderTiles: function(data){
@@ -113,9 +160,10 @@
 			//alert(data.length);
 			for(i = 0; i < data.length; i++){
 				tiles[i] = data[i].video;
-				tiles[i].botr_video_key = "EVwCtgxd";
+				if($.mainspring.debug == true){
+					tiles[i].botr_video_key = "EVwCtgxd";
+				}
 			}
-			//alert(tiles);
 
 			$.get("tmpl/tiles.tmpl.html", function(template){	
 				$.tmpl(template, tiles).appendTo("#grid");
@@ -123,18 +171,51 @@
 
 		},
 
-    submitComment: function(data) {
-		/*
-			alert("submitComment() called "+$("#comment_form").serialize());
-			var url = '/clients/'+this.opts.clientHandle+'/videos/'+data.id+'/';
-			alert(url);
-			$.post(url, function(ret) {
-				alert(ret);
+		renderSearchResults: function(data){
+			//parse data for search rendering
+			for(i = 0; i < data.length; i++){
+				if($.mainspring.debug === true){
+					data[i].video.botr_video_key = "EVwCtgxd";
+				}
+				data[i].video.label = data[i].video.label.split(',');
+			}
+
+			$("#ms_wrapper div").remove();
+			$.get("tmpl/search.tmpl.html", function(template){
+				$.tmpl(template,{terms:$.cookie('search'), backUrl:$.cookie('backUrl')}).appendTo("#ms_wrapper");
 			});
-			*/
+			//reuse search
+			$.get("tmpl/search.html", function(template){
+				$.tmpl(template,data).appendTo("#search_box");
+			});
+			//grab template for individual search results
+			if(data.length > 0){
+				$.get("tmpl/searchEntry.tmpl.html", function(template){
+					$.tmpl(template,data).appendTo("#searchListContainer");
+					$("#searchListContainer #noresults").remove();
+				});
+			}
+				
 		},
+
+
+    performSearch: function(data) {
+			//search value
+			var search = 0;
+			if(typeof(data) === 'undefined'){
+				search = $("#search_form input#search_box").val();
+			}else{
+				search = data;	
+			}
+
+			$.cookie({"search": search});
+			$.cookie({"backUrl": $(location).attr('href')});
+
+			var aUrl = $.mainspring.decodeRemoteURI("videos.json?search="+search);
+			$.ajax({url: aUrl, dataType:'jsonp', jsonpCallback: "$.mainspring.renderSearchResults"})
+		},
+
     renderPage: function(data) {
-      //console.log(data);
 			var videoInfo = {
 					environment: "development",
 					clientHandle: "belsobeer",
@@ -146,12 +227,7 @@
 					user_id : ""
 			};
 		
-
-		//console.log(data);
-
-			var video = data[0].video;
-
-			var comments = video.comments;
+			var comments = data[0].video.comments;
 
 			if(typeof(comments) === 'undefined'){
 				data[0].video.num_comments = 0;
@@ -159,56 +235,55 @@
 				data[0].video.num_comments = comments.length;
 			}
 
-	
-			//data[0].video.num_comments = comments.length;
 			data[0].video.name = this.opts.name;
-			data[0].video.location = "Boise, ID";
+			data[0].video.location = this.opts.location;
 			var tmp = data[0].video.release_date.split("T");
-			data[0].video.release_date = tmp[0];
-			data[0].video.shortSummary = "Here is a short summary";
+			data[0].video.release_date = tmp[0];//.substring(0,tmp[0].length-1);
 			data[0].video.userid = $.mainspring.opts.clientUserID;
-			data[0].video.video_player = "script type=text/javascript src=http://content.bitsontherun.com/players/EVwCtgxd-kasi1DWo.js>";
+			data[0].video.video_player = "<script type=text/javascript src=http://content.bitsontherun.com/players/EVwCtgxd-kasi1DWo.js>";
 
-			var labelArr = data[0].video.label.split(",");	
-			var tags = new Array();
-			for(i = 0; i < labelArr.length; i++){
-				tags.push({ "tag_name" : labelArr[i].trim() });
+			if(data[0].video.liked_by_current_user === false){
+				data[0].video.thumbs_up_link = "<a href=\"#\" onclick=\"$.mainspring.ilikethis('"+data[0].video.userid+"','"+data[0].video.id+"'); return false;\"><img alt=\"i like this\" border=\"none\" src=\"images/thumb_up.gif\" /></a>";
+			}else{
+				data[0].video.thumbs_up_link = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
 			}
+			data[0].video.label =	data[0].video.label.split(",");	
 				
 			var searchUrl = [{search_url: "http://google.com"}];
-
+			
+			//Grab main template structure
 			$.get('tmpl/template.html', function(template){
 				$.tmpl(template, data[0].video).appendTo("#connect_tv_container");
+					
+				//initialize comments
+				setupComments(data[0].video,this);
+
 			});
 			
-			$.mainspring.renderTabs(data[0].video.tab_highlight);
+			//Render tabs based on tabs data
+			//$.mainspring.renderTabs(data[0].video.tab_highlight);
+			renderTabs(data[0].video.tab_highlight);
 
+			//if we have comments render comments
 			if(typeof(comments) !== 'undefined')
 			{
-				$.get("tmpl/comments.html", function(template){
-					$.tmpl(template, comments).appendTo("#comments");
-				});
+				renderComments(comments);
 			}
-
+			
+			//Lets add in the search box
 			$.get("tmpl/search.html", function(template){	
 				$.tmpl(template, searchUrl).appendTo("#search_box");
 			});
-			$.get("tmpl/tags.html", function(template){	
-				$.tmpl(template, tags).appendTo("#videotags");
-			});
+
+			//Render video template
 			$.get("tmpl/video.tmpl.html", function(template){	
 				$.tmpl(template, data[0].video).appendTo("#video_embed_container");
 			});
-			$("#comment_form").bind("submit", function() { 
-				$.mainspring.submitComment(data[0].video);
-				return false; 
-			});
-			
-			
-			//console.log(data);
-			//console.log(this);
+
     },
-  
+    setUserCookie: function(data) {
+    //alert("set the returned user id into the cookie so we don't need to make this call again");
+    },
     encodeName: function() {
       return encodeURI($.mainspring.opts.name);
     },
@@ -225,6 +300,7 @@
     },
     getHost: function() {
       var url = "http://127.0.0.1:8080";
+      //var url = "http://192.168.2.10:8080";
       if ($.mainspring.opts.environment == 'staging') {
          url = "http://staging.mainspringror.com";
       } else if ($.mainspring.opts.environment == 'production') {

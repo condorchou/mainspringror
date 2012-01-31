@@ -1,2 +1,24 @@
-<iframe frameborder="0" src="<%=client_video_botr_upload_form_path(@client,@video)-%>" scrolling="no" style="padding:0;margin:0;width:100%;border:0;">
-</iframe>
+<form id="uploadForm" method="POST" action="<%=@upload_url-%>" enctype="multipart/form-data">
+  <fieldset>
+  <label>Select video</label>
+		<input id="uploadFile" type="file" name="file" />
+		<small id="uploadText">Videos can be... Up to 1 GB in size, Up to 5 minutes in length, A wide variety of formats (WMV, AVI, MP4, MOV, FLV, ...)</small>
+		<button type="submit" id="uploadButton">Upload</button>
+  </fieldset>
+</form>
+<script>
+
+
+  jQuery(document).ready(function(){
+    
+    jQuery('#uploadButton').click(function() {
+    if (jQuery("#uploadFile").val() == '') {
+			  alert("File Required");
+			  return false;
+	}
+  });
+  
+    
+});
+
+</script>

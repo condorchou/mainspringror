@@ -1,9 +1,17 @@
+<h1>Showing <%= @client.handle %> User</h1>
+
 <p id="notice"><%= notice %></p>
 
 <p>
   <b>Username:</b>
   <%= @user.username %>
 </p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
 
 <p>
   <b>Password:</b>
@@ -19,6 +27,12 @@
   <b>Role:</b>
   <%= @user.role %>
 </p>
+
+<p>
+  <b>Client User Id:</b>
+  <%= @user.client_user_id %>
+</p>
+
 
 <p>
   <b>Client:</b>
