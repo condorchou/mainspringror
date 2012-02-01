@@ -19,10 +19,12 @@ class VideosController < ApplicationController
  # end 
   
   def index
-    if params[:tags].blank?
+    if !params[:search].blank?
       @videos = @client.videos.search(params[:search])
-    else
+    elsif !params[:tags].blank?
       @videos = @client.videos.find_tagged_with(params[:tags])
+    else
+      @videos = @client.videos
     end
     respond_to do |format|
       format.html # index.html.erb
