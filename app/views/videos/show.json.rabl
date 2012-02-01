@@ -1,6 +1,6 @@
 object Video.includes(:comments => :user).where(:id => @video)
   attributes :id, :title, :botr_video_key, :location, :description, 
-  :season, :episode, :label, :participants, :release_date, :approved, :botr_video_key,
+  :participants, :release_date, :approved, :botr_video_key,
   :views, :likes_count
 
   code :liked_by_current_user do
