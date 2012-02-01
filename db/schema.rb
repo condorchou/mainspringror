@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(:version => 20120120190845) do
     t.text     "js"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "tab_content_asset"
   end
 
   create_table "comments", :force => true do |t|
@@ -51,17 +50,6 @@ ActiveRecord::Schema.define(:version => 20120120190845) do
 
   add_index "likes", ["user_id", "video_id"], :name => "index_likes_on_user_id_and_video_id", :unique => true
 
-  create_table "ratings", :force => true do |t|
-    t.integer  "rateable_id"
-    t.string   "rateable_type"
-    t.float    "average_rating"
-    t.integer  "ratings_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "ratings", ["rateable_id", "rateable_type"], :name => "index_ratings_on_rateable_id_and_rateable_type"
-
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -75,16 +63,6 @@ ActiveRecord::Schema.define(:version => 20120120190845) do
   create_table "tags", :force => true do |t|
     t.string "name"
   end
-
-  create_table "user_ratings", :force => true do |t|
-    t.integer  "rating_id"
-    t.integer  "user_id"
-    t.integer  "score"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "user_ratings", ["user_id", "rating_id"], :name => "index_user_ratings_on_user_id_and_rating_id"
 
   create_table "users", :force => true do |t|
     t.string   "username"
@@ -114,9 +92,6 @@ ActiveRecord::Schema.define(:version => 20120120190845) do
     t.text     "title"
     t.string   "location"
     t.text     "description"
-    t.integer  "season"
-    t.integer  "episode"
-    t.string   "label"
     t.text     "participants"
     t.datetime "release_date"
     t.boolean  "approved",        :default => false
@@ -127,7 +102,6 @@ ActiveRecord::Schema.define(:version => 20120120190845) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "cached_tag_list"
-    t.string   "tab_highlight"
     t.integer  "likes_count",     :default => 0,     :null => false
   end
 

@@ -4,9 +4,6 @@ class CreateVideos < ActiveRecord::Migration
       t.text :title
       t.string :location
       t.text :description
-      t.integer :season
-      t.integer :episode
-      t.string :label
       t.text :participants
       t.datetime :release_date
       t.boolean :approved, :default => false
