@@ -66,11 +66,30 @@ task :import_comments_csv => [:environment] do
   client = Client.find_by_handle('corvel')
   CSV.foreach("5_corvel_comments.csv") do |row|
     begin
-      hash = {:video_id => client.videos.where(:botr_video_key => row[0]).first.id, :user_id => client.users.where(:username => row[1]).first.id}
-      hash[:body] = row[2]
-      puts "Comment.create!(#{hash.inspect})"
+      puts "begin"
+      puts "  row = #{row.inspect}"
+      puts "  hash = {:video_id => client.videos.where(:botr_video_key => row[0]).first.id, :user_id => client.users.where(:username => row[1]).first.id, :body => row[2]}"
+      puts "  Comment.create(hash)"
+      puts "rescue"
+      puts "end"
     rescue => e
-      puts "#can't find video with botr_video_key #{row[0]}"
+    end
+  end
+
+end
+
+task :import_ratings_csv => [:environment] do
+#user_id,video_id
+  client = Client.find_by_handle('corvel')
+  CSV.foreach("5_corvel_ratings.csv") do |row|
+    begin
+      puts "begin"
+      puts "  row = #{row.inspect}"
+      puts "  hash = {:video_id => client.videos.where(:botr_video_key => row[1]).first.id, :user_id => client.users.where(:username => row[0]).first.id}"
+      puts "  Like.create(hash)"
+      puts "rescue"
+      puts "end"
+    rescue => e
     end
   end
 
