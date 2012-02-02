@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
-gem 'rails', '3.0.8'
+#gem 'rails', '3.0.8'
+gem 'rails', '3.1'
 gem 'devise', '~> 1.4.7'
 gem 'cancan'
 gem 'jquery-rails', '>= 1.0.12'
@@ -7,7 +8,8 @@ gem 'bitsontherun'
 
 group :production do
 end
-gem 'restful_jsonp'
+#gem 'restful_jsonp'
+gem 'rack_restful_jsonp', :git => 'https://github.com/mlarratt/rack_restful_jsonp.git'
 gem 'rabl'
 gem 'yajl-ruby'
 
