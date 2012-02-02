@@ -13,7 +13,7 @@ gem 'yajl-ruby'
 
 
 group :production do
-  gem 'pg'
+
   gem 'thinking-sphinx'
   gem 'flying-sphinx'
 end
@@ -26,5 +26,5 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'webrat'
   gem 'sqlite3-ruby', :require => 'sqlite3'
-  gem 'pg'
+  
 end

@@ -1,2 +1,2 @@
 collection @videos
-attributes :id, :title
+attributes :id, :title, :botr_video_key, :label
