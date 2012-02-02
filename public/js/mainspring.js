@@ -18,7 +18,20 @@
        //$.ajax({url: 'javascripts/controls.js', cache:true, dataType:'script'});
        //$.ajax({url: 'javascripts/jquery.cookie.js', cache:true, dataType:'script'});
 			 
-       $('head').append('<link rel="stylesheet" href="css/style.css" type="text/css"/>');
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/style.css" type="text/css"/>');
+       //$.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
+       //$.get($.mainspring.getClientServiceURL()+'/behavior.js');//, function(data){alert(data);});
+       var aUrl = $.mainspring.getClientServiceURL()+'/behavior.json?callback=?';
+			 $.ajax({url: aUrl, 
+			 					dataType:'jsonp', 
+								jsonp:'callback', 
+								jsonpCallback: "$.mainspring.test",
+								dataType:'json',
+								error: function(xhr, status){
+									console.log(xhr);
+								}
+							});
 
        //TODO: only need to do this once, so store user id in cookie
        if (true) {
@@ -185,9 +198,11 @@
 				$.tmpl(template,{terms:$.cookie('search'), backUrl:$.cookie('backUrl')}).appendTo("#ms_wrapper");
 			});
 			//reuse search
+			/*
 			$.get("tmpl/search.html", function(template){
 				$.tmpl(template,data).appendTo("#search_box");
 			});
+			*/
 			//grab template for individual search results
 			if(data.length > 0){
 				$.get("tmpl/searchEntry.tmpl.html", function(template){
@@ -203,7 +218,7 @@
 			//search value
 			var search = 0;
 			if(typeof(data) === 'undefined'){
-				search = $("#search_form input#search_box").val();
+				search = $("input#search_box").val();
 			}else{
 				search = data;	
 			}
@@ -299,7 +314,22 @@
       '&location='+$.mainspring.encodeLocation();
     },
     getHost: function() {
-      var url = "http://127.0.0.1:8080";
+      var url = "http://10.0.1.7:8080";
+      //var url = "http://127.0.0.1:8080";
+      //var url = "http://192.168.2.10:8080";
+      if ($.mainspring.opts.environment == 'staging') {
+         url = "http://staging.mainspringror.com";
+      } else if ($.mainspring.opts.environment == 'production') {
+         url = "https://production.mainspringror.com";
+      }
+      return url;
+    },
+    test: function(data) {
+			console.log(data);	
+		},
+    getCommonHost: function() {
+      var url = "http://10.0.1.7:8888";
+      //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
       if ($.mainspring.opts.environment == 'staging') {
          url = "http://staging.mainspringror.com";
@@ -312,6 +342,10 @@
         url = $.mainspring.getHost()+"/clients/"+$.mainspring.opts.clientHandle;
         return url;
     },
+		getCommonURL: function(){
+        url = $.mainspring.getCommonHost()+"/mainspringror/public";
+        return url;
+		},
     decodeRemoteURI: function(remoteURI) {
       var temp_array = [$.mainspring.getClientServiceURL()];
       var src = decodeURIComponent(remoteURI);
