@@ -60,11 +60,11 @@ class CommentsController < ApplicationController
       if @comment.save
         format.html { redirect_to([@client,@video,@comment], :notice => 'Comment was successfully created.') }
         format.xml  { render :xml => @comment, :status => :created, :location => @comment }
-        format.json { render :json => @comment.attributes, :status => :created}
+        format.json { render :json => @comment.attributes, :status => :created, :callback => params[:callback]}
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @comment.errors, :status => :unprocessable_entity }
-        format.json { render :json => @comment.attributes.merge({:errors => @comment.errors}), :status => :unprocessable_entity}
+        format.json { render :json => @comment.attributes.merge({:errors => @comment.errors}), :callback => params[:callback], :status => :unprocessable_entity}
       end
     end
   end

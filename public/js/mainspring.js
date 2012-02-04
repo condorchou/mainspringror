@@ -18,10 +18,12 @@
        //$.ajax({url: 'javascripts/controls.js', cache:true, dataType:'script'});
        //$.ajax({url: 'javascripts/jquery.cookie.js', cache:true, dataType:'script'});
 			 
-       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/style.css" type="text/css"/>');
-       //$.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
+       //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
+       $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
        //$.get($.mainspring.getClientServiceURL()+'/behavior.js');//, function(data){alert(data);});
+			 /*
        var aUrl = $.mainspring.getClientServiceURL()+'/behavior.json?callback=?';
 			 $.ajax({url: aUrl, 
 			 					dataType:'jsonp', 
@@ -32,6 +34,7 @@
 									console.log(xhr);
 								}
 							});
+							*/
 
        //TODO: only need to do this once, so store user id in cookie
        if (true) {
@@ -46,33 +49,9 @@
 
   }; //end fn.mainspring function
 
-	function renderTabs(data){
 
-		$.cookie({"tab": data});
 
-		var video = [{t:1},{t:2},{t:3},{t:4}];
-		$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
-			$.get("tmpl/tab.tmpl.html", function(tabTmpl){
-				//$.tmpl(tabTmpl,video).appendTo("#tab_container");
-				$.tmpl(tabContainer).appendTo("#tab_container");
-				$.tmpl(tabTmpl,video).appendTo("#tab_top");
-				$('#nav_div').tabs();
 
-				$('#nav_div').tabs('select', data); // switch to third tab
-				
-				$('#nav_div').bind('tabsselect', function(event, ui) {
-						 // Objects available in the function context:
-						//alert(ui.tab);     // anchor element of the selected (clicked) tab
-						//alert(ui.panel);   // element, that contains the selected/clicked tab contents
-						//alert(ui.index);   // zero-based index of the selected (clicked) tab
-						$("#grid div").remove();
-						url = $.mainspring.decodeRemoteURI("videos.json");
-						$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
-
-				});
-			});
-		});
-	};
 	
 	function getOpts(){
 		return $.mainspring.opts;
@@ -84,12 +63,7 @@
 			processComments(video, config);
 		});
 	};
-	/*
-	function renderNewComments(data){
-		alert(eval(data));
-	};
-	*/
-
+	
 	function processComments(video,config){
 
 		var aOpts = getOpts();
@@ -97,6 +71,7 @@
 		aUrl += "?auth_token="+aOpts.clientHandle+"_"+aOpts.clientUserID+"&_method=POST&comment[body]=";
     aUrl += encodeURI($("#comment_form textarea").val());
 		$.ajax({url: aUrl, dataType:'jsonp', jsonpCallback: "$.mainspring.renderNewComments"})
+		$("textarea#body.comments_text_area").attr('value','');
 
 		/*$.post(aUrl, function(data){
 		})
@@ -119,6 +94,7 @@
   $.mainspring = {
 
 		debug: true, 
+		crossdomain: false, 
     
     //default settings
     defaults : {
@@ -139,13 +115,40 @@
       var url = $.mainspring.decodeRemoteURI(remoteURI) + ".json?auth_token="+$.mainspring.opts.clientHandle +
          '_' + $.mainspring.opts.clientUserID;
       $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderPage"})
-			
-			url = $.mainspring.decodeRemoteURI("videos.json");
-      $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
-
     },
+
+		renderTabs: function(data){
+			$.cookie({"tab": data});
+
+			var video = [{t:1},{t:2},{t:3},{t:4}];
+			$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
+				$.get("tmpl/tab.tmpl.html", function(tabTmpl){
+					//$.tmpl(tabTmpl,video).appendTo("#tab_container");
+					$.tmpl(tabContainer).appendTo("#tab_container");
+					$.tmpl(tabTmpl,video).appendTo("#tab_top");
+					$('#nav_div').tabs();
+					$('#nav_div').tabs('select', data); // switch to third tab
+					$('#nav_div').bind('tabsselect', function(event, ui) {
+							 // Objects available in the function context:
+							//alert(ui.tab);     // anchor element of the selected (clicked) tab
+							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
+							//alert(ui.index);   // zero-based index of the selected (clicked) tab
+							$("#grid div").remove();
+							url = $.mainspring.decodeRemoteURI("videos.json");
+							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
+
+					});
+				});
+			});
+		},
+
 		renderNewComments: function(data){
-			alert(eval(data));
+			var acomment = {username: this.opts.name,created_at:data.created_at,body:data.body};
+			var data = {comment:acomment};
+			//renderComments(data);
+			$.get("tmpl/comments.html", function(template){
+				$.tmpl(template, data).prependTo("#comments");
+			});
 		},
 
     //overridable static functions 
@@ -184,6 +187,11 @@
 
 		},
 
+		getTileInfo: function(callback, search){
+				url = $.mainspring.decodeRemoteURI("videos.json?search="+search);
+				$.ajax({url: url, dataType:'jsonp', jsonpCallback: callback})
+		},
+
 		renderSearchResults: function(data){
 			//parse data for search rendering
 			for(i = 0; i < data.length; i++){
@@ -197,12 +205,7 @@
 			$.get("tmpl/search.tmpl.html", function(template){
 				$.tmpl(template,{terms:$.cookie('search'), backUrl:$.cookie('backUrl')}).appendTo("#ms_wrapper");
 			});
-			//reuse search
-			/*
-			$.get("tmpl/search.html", function(template){
-				$.tmpl(template,data).appendTo("#search_box");
-			});
-			*/
+
 			//grab template for individual search results
 			if(data.length > 0){
 				$.get("tmpl/searchEntry.tmpl.html", function(template){
@@ -222,6 +225,7 @@
 			}else{
 				search = data;	
 			}
+			alert(search);
 
 			$.cookie({"search": search});
 			$.cookie({"backUrl": $(location).attr('href')});
@@ -276,8 +280,12 @@
 			});
 			
 			//Render tabs based on tabs data
-			//$.mainspring.renderTabs(data[0].video.tab_highlight);
-			renderTabs(data[0].video.tab_highlight);
+			$.mainspring.renderTabs(data[0].video.tab_highlight);
+
+			url = $.mainspring.decodeRemoteURI("videos.json");
+      $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
+
+
 
 			//if we have comments render comments
 			if(typeof(comments) !== 'undefined')
@@ -285,11 +293,6 @@
 				renderComments(comments);
 			}
 			
-			//Lets add in the search box
-			$.get("tmpl/search.html", function(template){	
-				$.tmpl(template, searchUrl).appendTo("#search_box");
-			});
-
 			//Render video template
 			$.get("tmpl/video.tmpl.html", function(template){	
 				$.tmpl(template, data[0].video).appendTo("#video_embed_container");
@@ -314,7 +317,11 @@
       '&location='+$.mainspring.encodeLocation();
     },
     getHost: function() {
-      var url = "http://10.0.1.7:8080";
+			if($.mainspring.crossdomain)
+				var url = "http://10.0.1.7:8080";
+			else
+				var url = "http://localhost:8080";
+
       //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
       if ($.mainspring.opts.environment == 'staging') {
@@ -328,7 +335,11 @@
 			console.log(data);	
 		},
     getCommonHost: function() {
-      var url = "http://10.0.1.7:8888";
+			if($.mainspring.crossdomain)
+				var url = "http://10.0.1.7:8888";
+			else
+				var url = "http://localhost";
+
       //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
       if ($.mainspring.opts.environment == 'staging') {

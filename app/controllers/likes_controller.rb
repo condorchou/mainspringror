@@ -31,11 +31,11 @@ class LikesController < ApplicationController
       if @like.save
         format.html { redirect_to([@client,@video,@like], :notice => 'like was successfully created.') }
         format.xml  { render :xml => @like, :status => :created, :location => @like }
-        format.json { render :json => @like.attributes, :status => :created}
+        format.json { render :json => @like.attributes, :status => :created, :callback => params[:callback]}
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @like.errors, :status => :unprocessable_entity }
-        format.json { render :json => @like.attributes.merge({:errors => @like.errors}), :status => :unprocessable_entity}
+        format.json { render :json => @like.attributes.merge({:errors => @like.errors}), :callback => params[:callback], :status => :unprocessable_entity}
       end
     end
   end

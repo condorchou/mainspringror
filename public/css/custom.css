@@ -1,0 +1,11 @@
+.ui-tabs .ui-tabs-nav li a {
+		/* Tab width */
+    width: 129.6px;
+		/* Tab alignment */	
+		text-align:center;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+	/* Active Tab text color */
+	color: #2E8DAC;
+}
