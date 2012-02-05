@@ -1,13 +1,7 @@
 <html>
 <head>
   <script src="js/jquery-1.7.1.min.js"></script>
-  <script src="js/jquery-ui-1.8.17.custom.min.js"></script>
-  <script src="js/jquery.tmpl.min.js"></script>
-  <script src="js/jquery.cookie.js"></script>
-  <script src="js/quickpager.jquery.js"></script>
   <script src="js/mainspring.js"></script>
-  <!--<script src="js/msextension.js"></script>-->
-	<link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" /> 
 </head>
 <body>
 

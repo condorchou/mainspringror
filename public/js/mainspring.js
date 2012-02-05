@@ -12,45 +12,27 @@
        $.mainspring.opts.element = this;
        
        //inject other dependencies
-
-       //$.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', cache:true, dataType:'script'});
-       //$.ajax({url: 'javascripts/prototype.js', cache:true, dataType:'script'});
-       //$.ajax({url: 'javascripts/controls.js', cache:true, dataType:'script'});
-       //$.ajax({url: 'javascripts/jquery.cookie.js', cache:true, dataType:'script'});
-			 
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
+			 //local test copy before copy to sepcific servert
        //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
+       $.ajax({url: $.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js', dataType:'script'});
+       $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script'});
+       $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script'});
+       $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script'});
        $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
-       //$.get($.mainspring.getClientServiceURL()+'/behavior.js');//, function(data){alert(data);});
-			 /*
-       var aUrl = $.mainspring.getClientServiceURL()+'/behavior.json?callback=?';
-			 $.ajax({url: aUrl, 
-			 					dataType:'jsonp', 
-								jsonp:'callback', 
-								jsonpCallback: "$.mainspring.test",
-								dataType:'json',
-								error: function(xhr, status){
-									console.log(xhr);
-								}
-							});
-							*/
 
-       //TODO: only need to do this once, so store user id in cookie
        if (true) {
          $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'jQuery.mainspring.setUserCookie' });
        }
 
        //fetch remote page with jsonp ajax call with authentication and call a callback method
        $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
-				$.cookie({"backUrl": $(location).attr('href')});
 
        return this;
 
   }; //end fn.mainspring function
-
-
-
 
 	
 	function getOpts(){
@@ -171,23 +153,24 @@
 
 		},
 		renderTiles: function(data){
-      //console.log(data);
-			var tiles = new Array();
-			//alert(data.length);
-			for(i = 0; i < data.length; i++){
-				tiles[i] = data[i].video;
-				if($.mainspring.debug == true){
-					tiles[i].botr_video_key = "EVwCtgxd";
+			if(typeof(data) !== 'undefined'){
+				var tiles = new Array();
+				for(i = 0; i < data.length; i++){
+					tiles[i] = data[i].video;
+					if($.mainspring.debug == true){
+						tiles[i].botr_video_key = "EVwCtgxd";
+					}
 				}
-			}
 
-			$.get("tmpl/tiles.tmpl.html", function(template){	
-				$.tmpl(template, tiles).appendTo("#grid");
-			});
+				$.get("tmpl/tiles.tmpl.html", function(template){	
+					$.tmpl(template, tiles).appendTo("#grid");
+				});
+			}
 
 		},
 
-		getTileInfo: function(callback, search){
+		getTileInfo: function(search){
+				var callback = $.mainspring.renderTiles;
 				url = $.mainspring.decodeRemoteURI("videos.json?search="+search);
 				$.ajax({url: url, dataType:'jsonp', jsonpCallback: callback})
 		},
@@ -282,9 +265,6 @@
 			//Render tabs based on tabs data
 			$.mainspring.renderTabs(data[0].video.tab_highlight);
 
-			url = $.mainspring.decodeRemoteURI("videos.json");
-      $.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
-
 
 
 			//if we have comments render comments
@@ -298,6 +278,7 @@
 				$.tmpl(template, data[0].video).appendTo("#video_embed_container");
 			});
 
+			$.cookie({"backUrl": $(location).attr('href')});
     },
     setUserCookie: function(data) {
     //alert("set the returned user id into the cookie so we don't need to make this call again");
