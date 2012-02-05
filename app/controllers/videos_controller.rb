@@ -26,6 +26,9 @@ class VideosController < ApplicationController
     else
       @videos = @client.videos
     end
+    if !params[:order].blank?
+      @videos = @videos.order(params[:order])
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @videos }
