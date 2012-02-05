@@ -5,7 +5,7 @@ class Video < ActiveRecord::Base
 
   belongs_to :client
   belongs_to :user
-  has_many :comments
+  has_many :comments, :order => "id DESC"
   has_many :likes
 
   if Rails.env.to_s == "production"
