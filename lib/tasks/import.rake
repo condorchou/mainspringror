@@ -54,7 +54,7 @@ task :import_users_csv => [:environment] do
 #client_id,created_at,id,location,updated_at,username
   puts "client = Client.find_by_handle('corvel')"
   CSV.foreach("5_corvel_users.csv") do |row|
-    hash = {:location => row[3], :username => row[5]}
+    hash = {:location => row[3], :username => row[5], :created_at => row[4], :updated_at => row[4]}
     hash[:client_user_id] = row[5].downcase.gsub(/[^a-z0-9\.\-\'\(\)]/,'_')
     puts "client.users.create(#{hash.inspect})"
   end
@@ -68,7 +68,7 @@ task :import_comments_csv => [:environment] do
     begin
       puts "begin"
       puts "  row = #{row.inspect}"
-      puts "  hash = {:video_id => client.videos.where(:botr_video_key => row[0]).first.id, :user_id => client.users.where(:username => row[1]).first.id, :body => row[2]}"
+      puts "  hash = {:video_id => client.videos.where(:botr_video_key => row[0]).first.id, :user_id => client.users.where(:username => row[1]).first.id, :body => row[2], :updated_at => row[3], :created_at => row[3] }"
       puts "  Comment.create(hash)"
       puts "rescue"
       puts "end"

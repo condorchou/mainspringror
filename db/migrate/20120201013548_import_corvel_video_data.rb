@@ -2,7 +2,7 @@ class ImportCorvelVideoData < ActiveRecord::Migration
   def self.up
     Video.reset_column_information
 #migration for 5_corvel_videos.csv
-c = Client.create!({:company_name=>'Corvel', :token => 'corvel'})
+c = Client.create!({:company_name=>'Corvel', :token => 'corvel', :botr_player_key => 'kasi1DWo'})
 u = User.create!(:email => 'corvel@corvel.com', :username => 'Corvel', :role => 'client_admin',
      :password => 'password', :client_user_id => 'corvel@corvel.com', :client_id => c.id, :location => 'Los Angeles, CA')
 v = c.videos.create({"approved"=>"true", "botr_video_key"=>"bjKa5B0O", "cached_tag_list"=>"Corporate,Connected TV", "created_at"=>"Tue Apr 12 21:30:34 UTC 2011", "description"=>"Richard Schweppe shatters the myths of the corporate office in Irvine.", "id"=>"320", "location"=>"Irvine, CA", "participants"=>"The Irvine office", "release_date"=>"2011-05-10", "title"=>"Corporate Office- <br />Myth vs. Reality", "updated_at"=>"Tue Jan 31 00:24:20 UTC 2012", "views"=>"3496", "likes_count"=>"85"})
