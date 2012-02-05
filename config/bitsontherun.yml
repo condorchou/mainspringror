@@ -1,0 +1,7 @@
+#these are bogus keys, use your own
+development:
+  key: 'Et3UrUuT'
+  secret: 'Q8ckDqjEu4WYP4zYuauZDjBd'
+production:
+  key: 'AfZOaHe1'
+  secret: '0Dgt23pBbNMAJqzKxoSlHwX9'

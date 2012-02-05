@@ -25,6 +25,9 @@ class ClientsController < ApplicationController
     respond_to do |format|
     #  format.html { render :text => @client.css}
       format.js
+      format.html { render :html => @client }
+      format.xml  { render :xml => @client }
+      format.json { render :json => @client }
     end
 
   end

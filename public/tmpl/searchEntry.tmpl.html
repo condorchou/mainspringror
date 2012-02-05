@@ -1,0 +1,20 @@
+				<tr>
+					<td colspan="2">
+						 <div class="gray_hr"></div>
+					</td>
+				</tr>
+				<tr>
+					<td class="thumbTd">
+					 <div class="thumb">
+					<a target="_top" href="?goto=videos/${video.id}"><img src="http://content.bitsontherun.com/thumbs/${video.botr_video_key}-320.jpg" alt="${video.title}" style="width: 120px;"></a>
+					</div>
+					</td>
+					<td class="titleTd">
+					  <p><a target="_top" href="?goto=videos/${video.id}">${video.title}</a></p>
+						 ${videoDescription}
+						 <div style="color: rgb(152, 152, 152);">
+								RELATED TAGS: {{each video.label}} 
+									<a href="#" onclick="$.mainspring.performSearch('${$value}'); return false;">${$value}</a>, {{/each}}
+						 </div>
+					</td>
+				</tr>

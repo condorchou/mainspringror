@@ -1,0 +1,117 @@
+<div id="ms_wrapper">
+<!-- begin containment div sets width for content -->
+<div style="float:left;width:640px;margin-left:1px;margin-top:0px;">
+	<div id="left_container">
+	<!-- begin video embed container-->
+		<!--<${video_player}{{html "</scr"+"ipt>"}}-->
+		<div id="video_embed_container">
+		</div>
+	 <!-- end video embed container -->
+
+	 <!-- begin video description information container -->
+		<div class="space15"><img alt="" src="images/spacer.gif" /></div>
+	</div>
+	<div id="video_rate">		
+		<div id="rating_stats">
+			<strong>${num_comments}</strong>&nbsp;comments&nbsp;
+			<span>|</span>
+			<strong>${views}</strong>&nbsp;views&nbsp;
+			<span>|</span>
+			<strong>${likes_count}</strong>&nbsp;<nobr>thumbs up</nobr>&nbsp;
+		</div>
+		<div id="social_buttons">
+			<span id="ilikethis">	
+			{{html thumbs_up_link}}
+			</span>
+			
+		&nbsp;
+			<a href="mailto:  ?subject=Connect TV: ${org_name}  Wellness&body=Test O' Riley thought you might be interested in this Connect TV episode: ${org_name}  Wellness ${url}">
+				<img alt="Share this video" src="images/share_link.gif" />
+			</a>
+		</div>
+		<div class="clearboth"></div>
+	</div> <!-- end video_rate -->
+	<span id="participants">
+		This Connected TV episode is brought to you by:&nbsp; <span>${participants} - ${location}</span>
+	</span>
+	<div class="clearboth eighty"></div>
+	<div id="tab_container"></div> <!-- End nav_div-->
+	<div id="navigation_grid" style="background-color:#FFF;">
+	  <div id="grid"></div>
+	</div>
+</div> <!--  End mail col -->
+
+<div id="feature_description">
+	<div id="search_box">
+		<div id="search_box_container" align="right">
+	<!-- this table used to contain the form (which had some styling issues with ie6, can probably clean this up with pure css not that form is removed) -->
+			<div id="search_box_contact_us">
+				<a href="${contact_us}" target="_top">contact us</a>
+			</div>
+	<!-- actual search form is invisible and sits on top of the table above -->
+			<div id="search_form_div">
+				<form id="search_form" method="post">
+
+				<input class="searchbox_off" id="search_box" name="search_terms" type="text" value="" />
+				<input class="search_button" name="commit" type="button" value="" onclick="$.mainspring.performSearch();return false;"/>
+
+				</form>
+				<script>
+					jQuery(document).ready(function($){	
+
+					$("input#search_box").blur(function(){
+							if (this.value == null || this.value=="" || this.value==undefined) {
+								this.className='searchbox_off';
+							}
+					});
+
+					$("input#search_box").focus(function(){
+						this.className='searchbox_on';
+					});
+				});
+
+				</script>
+			</div>
+		</div>
+	</div>
+	<div style="position:absolute;top:17px;left:220px;color:#7f7f7f;width:450px;height:13px;font-size:8.5pt;display:none;">&nbsp;</div>
+<!-- end header -->
+	<div id="clipContext">
+		<p id="location_title">${title}</p>
+		<p id="clip_date">${location}&nbsp; ${release_date}</p>
+
+		<!-- participants -->
+		<!-- end participants -->
+		<span id="long_description">
+			${description}
+		</span>
+		<br />
+
+		<div style="float:left;width:450px;overflow:hidden;">
+			<b>Related Links:</b>&nbsp; 
+		</div>
+
+		<br style="float:clear;"> 
+		<b>Tags:</b>&nbsp;{{each label}} <a href="#" onclick="$.mainspring.performSearch('${$value}'); return false;">${$value}</a>, {{/each}}
+		<!--<span id="videotags"></span>-->
+		<div class="space10">&nbsp;</div>	
+	</div>
+
+	<div style="float:left;width:280px;">
+		<div id="comments_div">
+			<form id="comment_form">
+
+				<div id="comments_label">Add a new comment</div>
+				<textarea class="comments_text_area" id="body" name="body"></textarea>
+				<div id="comments_submit_button"><input name="commit" type="button" value="submit comment" /></div>
+				<div class="comments_name_location">${name}, ${location}</div>
+				<div class="clear">&nbsp;</div>	
+				<div class="space10">&nbsp;</div>	
+			</form>
+			<!-- end form for submit comment -->
+			<div class="space5">&nbsp;</div>	
+			<div id="comments"></div>
+		</div>
+	</div>
+</div>
+</div>
