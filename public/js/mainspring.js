@@ -34,6 +34,11 @@
 
   }; //end fn.mainspring function
 
+	function isNumber(x) 
+	{ 
+		return ( (typeof x === typeof 1) && (null !== x) && isFinite(x) );
+	};
+
 	
 	function getOpts(){
 		return $.mainspring.opts;
@@ -76,7 +81,7 @@
   $.mainspring = {
 
 		debug: true, 
-		crossdomain: false, 
+		crossdomain: true, 
     
     //default settings
     defaults : {
@@ -100,7 +105,6 @@
     },
 
 		renderTabs: function(data){
-			$.cookie({"tab": data});
 
 			var video = [{t:1},{t:2},{t:3},{t:4}];
 			$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
@@ -208,10 +212,8 @@
 			}else{
 				search = data;	
 			}
-			alert(search);
-
-			$.cookie({"search": search});
-			$.cookie({"backUrl": $(location).attr('href')});
+			$.cookie("search", search);
+			$.cookie("backUrl", $(location).attr('href'));
 
 			var aUrl = $.mainspring.decodeRemoteURI("videos.json?search="+search);
 			$.ajax({url: aUrl, dataType:'jsonp', jsonpCallback: "$.mainspring.renderSearchResults"})
@@ -262,10 +264,12 @@
 
 			});
 			
+			//If no tabs defined set to 0
+			if(!isNumber(Number($.cookie('mstab'))))
+				$.cookie('mstab',0);
+
 			//Render tabs based on tabs data
-			$.mainspring.renderTabs(data[0].video.tab_highlight);
-
-
+			$.mainspring.renderTabs($.cookie('mstab'));
 
 			//if we have comments render comments
 			if(typeof(comments) !== 'undefined')
@@ -278,7 +282,7 @@
 				$.tmpl(template, data[0].video).appendTo("#video_embed_container");
 			});
 
-			$.cookie({"backUrl": $(location).attr('href')});
+			$.cookie("backUrl", $(location).attr('href'));
     },
     setUserCookie: function(data) {
     //alert("set the returned user id into the cookie so we don't need to make this call again");
