@@ -10,7 +10,6 @@
                      
        //this jQuery object
        $.mainspring.opts.element = this;
-       
        //inject other dependencies
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
@@ -21,6 +20,9 @@
        $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script'});
        $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script'});
        $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script'});
+
+			 //local test copy before copy to sepcific servert
+       //$.ajax({url: $.mainspring.getHost()+'/js/msextension.js', dataType:'script'});
        $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
 
        if (true) {

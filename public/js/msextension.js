@@ -53,6 +53,7 @@ $.mainspring.renderTabs = function(data){
             st = ui.index;
             $.mainspring[video[st].cb](video[st].l);
         });
+
       });
     });
 
