@@ -9,10 +9,10 @@
 <script>
   $('#connect_tv_container').mainspring({
     environment:'development',
-    clientHandle: 'belsobeer',
-    clientUserID: 'condor@condor.com',
+    clientHandle: 'corvel',
+    clientUserID: 'corvel@corvel.com',
     name: 'Condor Chou',
-    location: 'Boston, MA',
+    location: 'Los Angeles, CA',
     remoteURI: '<?php echo $_GET['goto']; ?>',
     width: 1000
   });
