@@ -5,15 +5,13 @@ gem 'cancan'
 gem 'jquery-rails', '>= 1.0.12'
 gem 'bitsontherun'
 
-group :production do
-end
 gem 'restful_jsonp'
 gem 'rabl'
 gem 'yajl-ruby'
 
 
 group :production do
-
+  gem 'pg'
   gem 'thinking-sphinx'
   gem 'flying-sphinx'
 end
