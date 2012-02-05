@@ -11,7 +11,7 @@
        //this jQuery object
        $.mainspring.opts.element = this;
        //inject other dependencies
-       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/style.css" type="text/css"/>');
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
 			 //local test copy before copy to sepcific servert
@@ -83,7 +83,7 @@
   $.mainspring = {
 
 		debug: true, 
-		crossdomain: true, 
+		crossdomain: 2, //0 - localhost, 1 - intranet, 2 - deployed servert
     
     //default settings
     defaults : {
@@ -253,7 +253,9 @@
 			}else{
 				data[0].video.thumbs_up_link = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
 			}
-			data[0].video.label =	data[0].video.label.split(",");	
+			if(typeof(data[0].video.label) !== 'undefined'){
+				data[0].video.label =	data[0].video.label.split(",");	
+			}
 				
 			var searchUrl = [{search_url: "http://google.com"}];
 			
@@ -304,10 +306,12 @@
       '&location='+$.mainspring.encodeLocation();
     },
     getHost: function() {
-			if($.mainspring.crossdomain)
-				var url = "http://10.0.1.7:8080";
-			else
+			if($.mainspring.crossdomain == 0)
 				var url = "http://localhost:8080";
+			else if($.mainspring.crossdomain == 1)
+				var url = "http://10.0.1.7:8080";
+			else if($.mainspring.crossdomain == 2)
+				var url = "http://www.mainspringror.com";
 
       //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
@@ -315,17 +319,18 @@
          url = "http://staging.mainspringror.com";
       } else if ($.mainspring.opts.environment == 'production') {
          url = "https://production.mainspringror.com";
+      } else if ($.mainspring.opts.environment == 'development'){
+				var url = "http://www.mainspringror.com";
       }
       return url;
     },
-    test: function(data) {
-			console.log(data);	
-		},
     getCommonHost: function() {
-			if($.mainspring.crossdomain)
-				var url = "http://10.0.1.7:8888";
-			else
+			if($.mainspring.crossdomain == 0)
 				var url = "http://localhost";
+			else if($.mainspring.crossdomain == 1)
+				var url = "http://10.0.1.7:8888";
+			else if($.mainspring.crossdomain == 1)
+				var url = "http://www.mainspringror.com";
 
       //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
@@ -333,7 +338,9 @@
          url = "http://staging.mainspringror.com";
       } else if ($.mainspring.opts.environment == 'production') {
          url = "https://production.mainspringror.com";
-      }
+      } else if ($.mainspring.opts.environment == 'development'){
+				var url = "http://www.mainspringror.com";
+			}
       return url;
     },
     getClientServiceURL: function() {
