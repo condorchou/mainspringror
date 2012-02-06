@@ -128,8 +128,6 @@
 							 // Objects available in the function context:
 							//alert(ui.tab);     // anchor element of the selected (clicked) tab
 							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
-							alert(ui.index);   // zero-based index of the selected (clicked) tab
-							$("#grid div").remove();
 							url = $.mainspring.decodeRemoteURI("videos.json");
 							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
 
@@ -173,6 +171,7 @@
 					tiles[i] = data[i].video;
 				}
 
+				$("div.video_tile_wrapper").remove();
 				$.get("tmpl/tiles.tmpl.html", function(template){	
 					$.tmpl(template, tiles).appendTo("#grid");
 				});

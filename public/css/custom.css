@@ -29,4 +29,10 @@
 
 .datelink{
 	line-height:20px;
+	cursor:pointer;
+	color: #2E8DAC;
 }
+.datelink:hover{
+	font-weight:bold;
+}
+

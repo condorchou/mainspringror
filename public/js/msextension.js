@@ -1,31 +1,33 @@
 function coefVideo(){
   return "<div id='cofe_years'>\
         <div id='cofe_title'>CofE Videos</div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2011)'>2011</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2010)'>2010</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2009)'>2009</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2008)'>2008</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2007)'>2007</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2006)'>2006</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2005)'>2005</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2004)'>2004</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2003)'>2003</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2002)'>2002</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2001)'>2001</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2000)'>2000</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1999)'>1999</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1998)'>1998</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1997)'>1997</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1996)'>1996</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1995)'>1995</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1994)'>1994</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1993)'>1993</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1992)'>1992</a></div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2011))'>2011</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2010))'>2010</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2009))'>2009</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2008))'>2008</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2007))'>2007</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2006))'>2006</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2005))'>2005</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2004))'>2004</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2003))'>2003</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2002))'>2002</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2001))'>2001</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(2000))'>2000</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1999))'>1999</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1998))'>1998</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1997))'>1997</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1996))'>1996</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1995))'>1995</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1994))'>1994</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1993))'>1993</div>\
+        <div class='datelink' onclick='$.mainspring.renderCustom(String(1992))'>1992</div>\
       </div>";
 }
 
 $.mainspring.renderCustom = function(data){
   var aStr = coefVideo();
+
+  $("#cofe_years").remove();
   $("#grid").append(aStr);
   $.mainspring.getTileInfo(data);
 };
