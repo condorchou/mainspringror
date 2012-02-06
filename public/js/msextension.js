@@ -1,26 +1,26 @@
 function coefVideo(){
   return "<div id='cofe_years'>\
         <div id='cofe_title'>CofE Videos</div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2011)'>2011</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2010)'>2010</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2009)'>2009</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2008)'>2008</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2007)'>2007</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2006)'>2006</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2005)'>2005</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2004)'>2004</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2003)'>2003</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2002)'>2002</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2001)'>2001</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(2000)'>2000</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1999)'>1999</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1998)'>1998</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1997)'>1997</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1996)'>1996</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1995)'>1995</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1994)'>1994</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1993)'>1993</a></div>\
-        <div class='datelink'><a href='#' onclick='$.mainspring.renderTiles2(1992)'>1992</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2011)'>2011</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2010)'>2010</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2009)'>2009</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2008)'>2008</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2007)'>2007</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2006)'>2006</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2005)'>2005</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2004)'>2004</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2003)'>2003</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2002)'>2002</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2001)'>2001</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(2000)'>2000</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1999)'>1999</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1998)'>1998</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1997)'>1997</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1996)'>1996</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1995)'>1995</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1994)'>1994</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1993)'>1993</a></div>\
+        <div class='datelink'><a href='#' onclick='$.mainspring.renderCustom(1992)'>1992</a></div>\
       </div>";
 }
 
