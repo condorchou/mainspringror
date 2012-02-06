@@ -33,10 +33,10 @@ $.mainspring.renderCustom = function(data){
 $.mainspring.renderTabs = function(data){
   var st = Number($.cookie('mstab'));
 
-  var video = [ {t:'ConnectedTV',l:'connectv',cb:'getTileInfo'},
-                {t:'CofE Videos',l:'coef videos',cb:'renderCustom'},
-                {t:'Partnership Videos',l:'partnership',cb:'getTileInfo'},
-                {t:'Marketing',l:'marketing',cb:'getTileInfo'}];
+  var video = [ {t:'ConnectedTV',l:'Connected TV',cb:'getTileInfo'},
+                {t:'CofE Videos',l:'CofE',cb:'renderCustom'},
+                {t:'Partnership Videos',l:'Partnership',cb:'getTileInfo'},
+                {t:'Marketing',l:'Marketing',cb:'getTileInfo'}];
 
     $.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
       $.get("tmpl/tab.tmpl.html", function(tabTmpl){
