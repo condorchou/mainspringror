@@ -7,30 +7,38 @@
        //options override defaults
        $.mainspring.opts = $.extend({}, $.mainspring.defaults, options);       
        //if localStorage is empty
-                     
        //this jQuery object
        $.mainspring.opts.element = this;
        //inject other dependencies
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
+			 /*
+       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js"></script>');
+       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.tmpl.min.js"></script>');
+       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.cookie.js"></script>');
+       $('head').append('<script src="'+$.mainspring.getClientServiceURL()+'/behavior.js"></script>');
+			 */
+                     
 			 //local test copy before copy to sepcific servert
        //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
-       $.ajax({url: $.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script'});
+				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script', cache:'true'});
+				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script', cache:'true'});
+				 $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script', cache:'true'});
 
-			 //local test copy before copy to sepcific servert
-       //$.ajax({url: $.mainspring.getHost()+'/js/msextension.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
+				 //local test copy before copy to sepcific servert
+				 //$.ajax({url: $.mainspring.getHost()+'/js/msextension.js', dataType:'script'});
+				 $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script', cache:'true'});
 
-       if (true) {
-         $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'jQuery.mainspring.setUserCookie' });
-       }
+				 if (true) {
+					 $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'jQuery.mainspring.setUserCookie' });
+				 }
 
-       //fetch remote page with jsonp ajax call with authentication and call a callback method
-       $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
+       $.ajax({url: $.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js', dataType:'script', cache:'true',success:function(){
+				 //fetch remote page with jsonp ajax call with authentication and call a callback method
+				 $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
+				 }
+			 });
 
        return this;
 
@@ -120,7 +128,7 @@
 							 // Objects available in the function context:
 							//alert(ui.tab);     // anchor element of the selected (clicked) tab
 							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
-							//alert(ui.index);   // zero-based index of the selected (clicked) tab
+							alert(ui.index);   // zero-based index of the selected (clicked) tab
 							$("#grid div").remove();
 							url = $.mainspring.decodeRemoteURI("videos.json");
 							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
@@ -163,9 +171,6 @@
 				var tiles = new Array();
 				for(i = 0; i < data.length; i++){
 					tiles[i] = data[i].video;
-					if($.mainspring.debug == true){
-						tiles[i].botr_video_key = "EVwCtgxd";
-					}
 				}
 
 				$.get("tmpl/tiles.tmpl.html", function(template){	
@@ -178,7 +183,7 @@
 		getTileInfo: function(search){
 				var callback = $.mainspring.renderTiles;
 				url = $.mainspring.decodeRemoteURI("videos.json?search="+search);
-				$.ajax({url: url, dataType:'jsonp', jsonpCallback: callback})
+				$.ajax({url: url, dataType:'jsonp', jsonpCallback: '$.mainspring.renderTiles'})
 		},
 
 		renderSearchResults: function(data){

@@ -1,6 +1,6 @@
 <html>
 <head>
-  <script src="js/jquery-1.7.1.min.js"></script>
+  <script src="http://www.mainspringror.com/js/jquery-1.7.1.min.js"></script>
   <script src="js/mainspring.js"></script>
 </head>
 <body>
