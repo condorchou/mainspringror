@@ -189,9 +189,9 @@
 		renderSearchResults: function(data){
 			//parse data for search rendering
 			for(i = 0; i < data.length; i++){
-				if($.mainspring.debug === true){
+				/*if($.mainspring.debug === true){
 					data[i].video.botr_video_key = "EVwCtgxd";
-				}
+				}*/
 				//old label based tags
 				//data[i].video.label = data[i].video.label.split(',');
 				data[i].video.label = data[i].video.tags;
