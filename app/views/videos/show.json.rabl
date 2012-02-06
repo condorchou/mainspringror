@@ -3,6 +3,10 @@ object Video.includes(:comments => :user).where(:id => @video)
   :participants, :release_date, :approved, :botr_video_key,
   :views, :likes_count
 
+  code :tags do
+    @video.tags.collect {|t| t.name}
+  end
+
   code :liked_by_current_user do
     !Like.where(:video_id => @video.id, :user_id => @user.id).first.blank?
   end
