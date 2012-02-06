@@ -192,7 +192,9 @@
 				if($.mainspring.debug === true){
 					data[i].video.botr_video_key = "EVwCtgxd";
 				}
-				data[i].video.label = data[i].video.label.split(',');
+				//old label based tags
+				//data[i].video.label = data[i].video.label.split(',');
+				data[i].video.label = data[i].video.tags;
 			}
 
 			$("#ms_wrapper div").remove();
@@ -258,8 +260,10 @@
 			}else{
 				data[0].video.thumbs_up_link = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
 			}
-			if(typeof(data[0].video.label) !== 'undefined'){
-				data[0].video.label =	data[0].video.label.split(",");	
+			//if(typeof(data[0].video.label) !== 'undefined'){
+			if(typeof(data[0].video.tags) !== 'undefined'){
+				//data[0].video.label =	data[0].video.label.split(",");	
+				data[0].video.label =	data[0].video.tags;
 			}
 				
 			var searchUrl = [{search_url: "http://google.com"}];
