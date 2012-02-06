@@ -7,30 +7,38 @@
        //options override defaults
        $.mainspring.opts = $.extend({}, $.mainspring.defaults, options);       
        //if localStorage is empty
-                     
        //this jQuery object
        $.mainspring.opts.element = this;
        //inject other dependencies
-       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/style.css" type="text/css"/>');
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
+			 /*
+       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js"></script>');
+       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.tmpl.min.js"></script>');
+       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.cookie.js"></script>');
+       $('head').append('<script src="'+$.mainspring.getClientServiceURL()+'/behavior.js"></script>');
+			 */
+                     
 			 //local test copy before copy to sepcific servert
        //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
-       $.ajax({url: $.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script'});
+				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script', cache:'true'});
+				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script', cache:'true'});
+				 $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script', cache:'true'});
 
-			 //local test copy before copy to sepcific servert
-       //$.ajax({url: $.mainspring.getHost()+'/js/msextension.js', dataType:'script'});
-       $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script'});
+				 //local test copy before copy to sepcific servert
+				 //$.ajax({url: $.mainspring.getHost()+'/js/msextension.js', dataType:'script'});
+				 $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script', cache:'true'});
 
-       if (true) {
-         $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'jQuery.mainspring.setUserCookie' });
-       }
+				 if (true) {
+					 $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'jQuery.mainspring.setUserCookie' });
+				 }
 
-       //fetch remote page with jsonp ajax call with authentication and call a callback method
-       $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
+       $.ajax({url: $.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js', dataType:'script', cache:'true',success:function(){
+				 //fetch remote page with jsonp ajax call with authentication and call a callback method
+				 $.mainspring.fetchRemoteURI($.mainspring.opts.remoteURI);
+				 }
+			 });
 
        return this;
 
@@ -83,7 +91,7 @@
   $.mainspring = {
 
 		debug: true, 
-		crossdomain: true, 
+		crossdomain: 2, //0 - localhost, 1 - intranet, 2 - deployed servert
     
     //default settings
     defaults : {
@@ -120,8 +128,6 @@
 							 // Objects available in the function context:
 							//alert(ui.tab);     // anchor element of the selected (clicked) tab
 							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
-							//alert(ui.index);   // zero-based index of the selected (clicked) tab
-							$("#grid div").remove();
 							url = $.mainspring.decodeRemoteURI("videos.json");
 							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
 
@@ -148,12 +154,9 @@
 				aUrl += "?auth_token="+at+"&_method=POST";
 
 				$.post(aUrl, function(data){})
-				.success(function(){if($.mainspring.debug === true)alert("ilikeit success")})
-				.error(function(){})//alert("ilikeit error")})
 				.complete(function(){
 						var img = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
 						$('#ilikethis').hide().replaceWith(img).fadeIn();
-						
 				});
 				
 
@@ -163,11 +166,9 @@
 				var tiles = new Array();
 				for(i = 0; i < data.length; i++){
 					tiles[i] = data[i].video;
-					if($.mainspring.debug == true){
-						tiles[i].botr_video_key = "EVwCtgxd";
-					}
 				}
 
+				$("div.video_tile_wrapper").remove();
 				$.get("tmpl/tiles.tmpl.html", function(template){	
 					$.tmpl(template, tiles).appendTo("#grid");
 				});
@@ -178,16 +179,18 @@
 		getTileInfo: function(search){
 				var callback = $.mainspring.renderTiles;
 				url = $.mainspring.decodeRemoteURI("videos.json?search="+search);
-				$.ajax({url: url, dataType:'jsonp', jsonpCallback: callback})
+				$.ajax({url: url, dataType:'jsonp', jsonpCallback: '$.mainspring.renderTiles'})
 		},
 
 		renderSearchResults: function(data){
 			//parse data for search rendering
 			for(i = 0; i < data.length; i++){
-				if($.mainspring.debug === true){
+				/*if($.mainspring.debug === true){
 					data[i].video.botr_video_key = "EVwCtgxd";
-				}
-				data[i].video.label = data[i].video.label.split(',');
+				}*/
+				//old label based tags
+				//data[i].video.label = data[i].video.label.split(',');
+				data[i].video.label = data[i].video.tags;
 			}
 
 			$("#ms_wrapper div").remove();
@@ -253,7 +256,11 @@
 			}else{
 				data[0].video.thumbs_up_link = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
 			}
-			data[0].video.label =	data[0].video.label.split(",");	
+			//if(typeof(data[0].video.label) !== 'undefined'){
+			if(typeof(data[0].video.tags) !== 'undefined'){
+				//data[0].video.label =	data[0].video.label.split(",");	
+				data[0].video.label =	data[0].video.tags;
+			}
 				
 			var searchUrl = [{search_url: "http://google.com"}];
 			
@@ -304,10 +311,12 @@
       '&location='+$.mainspring.encodeLocation();
     },
     getHost: function() {
-			if($.mainspring.crossdomain)
-				var url = "http://10.0.1.7:8080";
-			else
+			if($.mainspring.crossdomain == 0)
 				var url = "http://localhost:8080";
+			else if($.mainspring.crossdomain == 1)
+				var url = "http://10.0.1.7:8080";
+			else if($.mainspring.crossdomain == 2)
+				var url = "http://www.mainspringror.com";
 
       //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
@@ -315,17 +324,18 @@
          url = "http://staging.mainspringror.com";
       } else if ($.mainspring.opts.environment == 'production') {
          url = "https://production.mainspringror.com";
+      } else if ($.mainspring.opts.environment == 'development'){
+				var url = "http://www.mainspringror.com";
       }
       return url;
     },
-    test: function(data) {
-			console.log(data);	
-		},
     getCommonHost: function() {
-			if($.mainspring.crossdomain)
-				var url = "http://10.0.1.7:8888";
-			else
+			if($.mainspring.crossdomain == 0)
 				var url = "http://localhost";
+			else if($.mainspring.crossdomain == 1)
+				var url = "http://10.0.1.7:8888";
+			else if($.mainspring.crossdomain == 1)
+				var url = "http://www.mainspringror.com";
 
       //var url = "http://127.0.0.1:8080";
       //var url = "http://192.168.2.10:8080";
@@ -333,7 +343,9 @@
          url = "http://staging.mainspringror.com";
       } else if ($.mainspring.opts.environment == 'production') {
          url = "https://production.mainspringror.com";
-      }
+      } else if ($.mainspring.opts.environment == 'development'){
+				var url = "http://www.mainspringror.com";
+			}
       return url;
     },
     getClientServiceURL: function() {
