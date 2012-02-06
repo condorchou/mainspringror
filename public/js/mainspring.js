@@ -154,12 +154,9 @@
 				aUrl += "?auth_token="+at+"&_method=POST";
 
 				$.post(aUrl, function(data){})
-				.success(function(){if($.mainspring.debug === true)alert("ilikeit success")})
-				.error(function(){})//alert("ilikeit error")})
 				.complete(function(){
 						var img = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
 						$('#ilikethis').hide().replaceWith(img).fadeIn();
-						
 				});
 				
 
