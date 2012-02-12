@@ -11,7 +11,7 @@
 				<form id="search_form" method="post">
 
 				<input class="searchbox_off" id="search_box" name="search_terms" type="text" value="" />
-				<input class="search_button" name="commit" type="button" value="" onclick="$.mainspring.performSearch();return false;"/>
+				<input class="search_button" id="submit_button" name="commit" type="button" value="" onclick="$.mainspring.performSearch();return false;"/>
 
 				</form>
 				<script>
@@ -25,7 +25,15 @@
 
 					$("input#search_box").focus(function(){
 						this.className='searchbox_on';
+
+						$("input#search_box").keypress(function(e){
+							if(e.which == 13){
+								jQuery('#submit_button').focus().click();
+								return false;
+							}
+						});
 					});
+
 				});
 
 				</script>

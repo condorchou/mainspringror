@@ -13,12 +13,6 @@
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
-			 /*
-       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js"></script>');
-       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.tmpl.min.js"></script>');
-       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.cookie.js"></script>');
-       $('head').append('<script src="'+$.mainspring.getClientServiceURL()+'/behavior.js"></script>');
-			 */
                      
 			 //local test copy before copy to sepcific servert
        //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
