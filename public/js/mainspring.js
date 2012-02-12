@@ -11,6 +11,9 @@
        $.mainspring.opts.element = this;
        //inject other dependencies
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
+       //$('head').append('<link rel="stylesheet" href="http://localhost:8080/css/style.css" type="text/css"/>');
+
+
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
                      
@@ -37,6 +40,13 @@
        return this;
 
   }; //end fn.mainspring function
+
+	function showLoading(){
+		$("#loader").show();
+	}
+	function hideLoading(){
+		$("#loader").hide();
+	}
 
 	function isNumber(x) 
 	{ 
@@ -146,6 +156,7 @@
 
 		},
 		renderTiles: function(data){
+			$("#loader").attr("display","block");
 			if(typeof(data) !== 'undefined'){
 				var tiles = new Array();
 				for(i = 0; i < data.length; i++){
@@ -154,6 +165,7 @@
 
 				$("div.video_tile_wrapper").remove();
 				$.get("tmpl/tiles.tmpl.html", function(template){	
+					hideLoading();
 					$.tmpl(template, tiles).appendTo("#grid");
 				});
 			}
@@ -161,7 +173,7 @@
 		},
 
 		getTileInfo: function(search){
-				var callback = $.mainspring.renderTiles;
+				showLoading();
 				url = $.mainspring.decodeRemoteURI("videos.json?search="+search);
 				$.ajax({url: url, dataType:'jsonp', jsonpCallback: '$.mainspring.renderTiles'})
 		},
