@@ -64,16 +64,6 @@
 		$.ajax({url: aUrl, dataType:'jsonp', jsonpCallback: "$.mainspring.renderNewComments"})
 		$("textarea#body.comments_text_area").attr('value','');
 
-		/*$.post(aUrl, function(data){
-		})
-		.success(function(data){alert("add comment success")})
-		.error(function(data){alert("comment add error");console.log(data)})//alert("ilikeit error")})
-		.complete(function(data){
-			console.log(data);
-			//$("#comment_form textarea").animate({color:"#FFF"}).val('').css({'color':'#000'}).show();
-			$("#comment_form textarea").val('');
-		});
-		*/
 	};
 
 	function renderComments(data){
@@ -179,11 +169,6 @@
 		renderSearchResults: function(data){
 			//parse data for search rendering
 			for(i = 0; i < data.length; i++){
-				/*if($.mainspring.debug === true){
-					data[i].video.botr_video_key = "EVwCtgxd";
-				}*/
-				//old label based tags
-				//data[i].video.label = data[i].video.label.split(',');
 				data[i].video.label = data[i].video.tags;
 			}
 
