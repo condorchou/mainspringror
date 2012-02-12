@@ -10,8 +10,8 @@
        //this jQuery object
        $.mainspring.opts.element = this;
        //inject other dependencies
-       //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
-       $('head').append('<link rel="stylesheet" href="http://localhost:8080/css/style.css" type="text/css"/>');
+       $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
+       //$('head').append('<link rel="stylesheet" href="http://localhost:8080/css/style.css" type="text/css"/>');
 
 
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
