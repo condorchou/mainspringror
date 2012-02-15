@@ -11,14 +11,11 @@
        $.mainspring.opts.element = this;
        //inject other dependencies
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/style.css" type="text/css"/>');
+       //$('head').append('<link rel="stylesheet" href="http://localhost:8080/css/style.css" type="text/css"/>');
+
+
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getClientServiceURL()+'/style.css" type="text/css"/>');
        $('head').append('<link rel="stylesheet" href="'+$.mainspring.getHost()+'/css/custom-theme/jquery-ui-1.8.17.custom.css" type="text/css"/>');
-			 /*
-       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery-ui-1.8.17.custom.min.js"></script>');
-       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.tmpl.min.js"></script>');
-       $('head').append('<script src="'+$.mainspring.getHost()+'/js/jquery.cookie.js"></script>');
-       $('head').append('<script src="'+$.mainspring.getClientServiceURL()+'/behavior.js"></script>');
-			 */
                      
 			 //local test copy before copy to sepcific servert
        //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
@@ -43,6 +40,15 @@
        return this;
 
   }; //end fn.mainspring function
+
+	function showLoading(){
+		$("#grid").hide();
+		$("#loader").show();
+	}
+	function hideLoading(){
+		$("#loader").hide();
+		$("#grid").show();
+	}
 
 	function isNumber(x) 
 	{ 
@@ -70,16 +76,6 @@
 		$.ajax({url: aUrl, dataType:'jsonp', jsonpCallback: "$.mainspring.renderNewComments"})
 		$("textarea#body.comments_text_area").attr('value','');
 
-		/*$.post(aUrl, function(data){
-		})
-		.success(function(data){alert("add comment success")})
-		.error(function(data){alert("comment add error");console.log(data)})//alert("ilikeit error")})
-		.complete(function(data){
-			console.log(data);
-			//$("#comment_form textarea").animate({color:"#FFF"}).val('').css({'color':'#000'}).show();
-			$("#comment_form textarea").val('');
-		});
-		*/
 	};
 
 	function renderComments(data){
@@ -136,6 +132,28 @@
 			});
 		},
 
+		formatDate: function(data){
+			 var dt = new Date(data);
+			var month=new Array(12);
+			month[0]="Jan";
+			month[1]="Feb";
+			month[2]="Mar";
+			month[3]="Apr";
+			month[4]="May";
+			month[5]="Jun";
+			month[6]="Jul";
+			month[7]="Aug";
+			month[8]="Sep";
+			month[9]="Oct";
+			month[10]="Nov";
+			month[11]="Dec";
+			// Get the month, day, and year.
+			var s='';
+			s += month[dt.getMonth()] + " ";
+			s += dt.getDate() + " ";
+			s += dt.getFullYear();
+			return s;	
+		},
 		renderNewComments: function(data){
 			var acomment = {username: this.opts.name,created_at:data.created_at,body:data.body};
 			var data = {comment:acomment};
@@ -162,6 +180,7 @@
 
 		},
 		renderTiles: function(data){
+			$("#loader").attr("display","block");
 			if(typeof(data) !== 'undefined'){
 				var tiles = new Array();
 				for(i = 0; i < data.length; i++){
@@ -170,6 +189,7 @@
 
 				$("div.video_tile_wrapper").remove();
 				$.get("tmpl/tiles.tmpl.html", function(template){	
+					hideLoading();
 					$.tmpl(template, tiles).appendTo("#grid");
 				});
 			}
@@ -177,7 +197,7 @@
 		},
 
 		getTileInfo: function(search){
-				var callback = $.mainspring.renderTiles;
+				showLoading();
 				url = $.mainspring.decodeRemoteURI("videos.json?search="+search);
 				$.ajax({url: url, dataType:'jsonp', jsonpCallback: '$.mainspring.renderTiles'})
 		},
@@ -185,11 +205,6 @@
 		renderSearchResults: function(data){
 			//parse data for search rendering
 			for(i = 0; i < data.length; i++){
-				/*if($.mainspring.debug === true){
-					data[i].video.botr_video_key = "EVwCtgxd";
-				}*/
-				//old label based tags
-				//data[i].video.label = data[i].video.label.split(',');
 				data[i].video.label = data[i].video.tags;
 			}
 

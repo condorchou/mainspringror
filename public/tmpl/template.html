@@ -37,6 +37,7 @@
 	<div class="clearboth eighty"></div>
 	<div id="tab_container"></div> <!-- End nav_div-->
 	<div id="navigation_grid" style="background-color:#FFF;">
+		<div id="loader"><img src="images/loading.gif" alt="loading..."/></div>
 	  <div id="grid"></div>
 	</div>
 </div> <!--  End mail col -->
@@ -53,7 +54,7 @@
 				<form id="search_form" method="post">
 
 				<input class="searchbox_off" id="search_box" name="search_terms" type="text" value="" />
-				<input class="search_button" name="commit" type="button" value="" onclick="$.mainspring.performSearch();return false;"/>
+				<input class="search_button" id="submit_button" name="commit" type="button" value="" onclick="$.mainspring.performSearch();return false;"/>
 
 				</form>
 				<script>
@@ -67,6 +68,14 @@
 
 					$("input#search_box").focus(function(){
 						this.className='searchbox_on';
+					});
+
+					$("input#search_box").keypress(function(e){
+						if(e.which == 13){
+							jQuery(this).blur();
+							jQuery('#submit_button').focus().click();
+							return false;
+						}
 					});
 				});
 

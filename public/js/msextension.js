@@ -35,9 +35,11 @@ $.mainspring.renderCustom = function(data){
 $.mainspring.renderTabs = function(data){
   var st = Number($.cookie('mstab'));
 
-  var video = [ {t:'ConnectedTV',l:'Connected TV',cb:'getTileInfo'},
+  var video = [ 
+{t:'All Videos',l:'',cb:'getTileInfo'},
+{t:'ConnectedTV',l:'Connected TV',cb:'getTileInfo'},
                 {t:'CofE Videos',l:'CofE',cb:'renderCustom'},
-                {t:'Partnership Videos',l:'Partnership',cb:'getTileInfo'},
+                {t:'Partnerships',l:'Partnership',cb:'getTileInfo'},
                 {t:'Marketing',l:'Marketing',cb:'getTileInfo'}];
 
     $.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
@@ -54,9 +56,9 @@ $.mainspring.renderTabs = function(data){
             $.cookie("mstab", ui.index);
             st = ui.index;
             $.mainspring[video[st].cb](video[st].l);
-        });
+        }); 
 
-      });
-    });
+      }); 
+    }); 
 
 };
