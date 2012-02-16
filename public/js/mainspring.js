@@ -19,13 +19,24 @@
                      
 			 //local test copy before copy to sepcific servert
        //$('head').append('<link rel="stylesheet" href="'+$.mainspring.getCommonURL()+'/css/custom.css" type="text/css"/>');
-				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script', cache:'true'});
 				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.cookie.js', dataType:'script', cache:'true'});
 				 $.ajax({url: $.mainspring.getHost()+'/js/quickpager.jquery.js', dataType:'script', cache:'true'});
 
+				 $.ajax({url: $.mainspring.getHost()+'/js/jquery.tmpl.min.js', dataType:'script', cache:'true',success:function(){
+					 $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script', cache:'true',success:function(){
+							$.mainspring.templateTmpl = $.template(null,templateTmpl());
+							$.mainspring.commentsTmpl = $.template(null,commentsTmpl());
+							$.mainspring.searchEntryTmpl = $.template(null,searchEntryTmpl());
+							$.mainspring.searchTmpl = $.template(null,searchTmpl());
+							$.mainspring.videoTmpl = $.template(null,videoTmpl());
+							$.mainspring.tabContainerTmpl = $.template(null,tabContainerTmpl());
+							$.mainspring.tabTmpl = $.template(null,tabTmpl());
+							$.mainspring.tilesTmpl = $.template(null,tilesTmpl());
+					 }});
+				 }});
+
 				 //local test copy before copy to sepcific servert
 				 //$.ajax({url: $.mainspring.getHost()+'/js/msextension.js', dataType:'script'});
-				 $.ajax({url: $.mainspring.getClientServiceURL()+'/behavior.js', dataType:'script', cache:'true'});
 
 				 if (true) {
 					 $.ajax({url: $.mainspring.createUserJsonpURL(), cache:true, dataType:'jsonp', jsonpCallback:'jQuery.mainspring.setUserCookie' });
@@ -79,16 +90,23 @@
 	};
 
 	function renderComments(data){
-			$.get("tmpl/comments.html", function(template){
-				$.tmpl(template, data).appendTo("#comments");
-				$("#comments").quickPager({pageSize:10});
-			});
+		$.tmpl($.mainspring.commentsTmpl, data).appendTo("#comments");
+		$("#comments").quickPager({pageSize:10});
 	};
+
   $.mainspring = {
 
 		debug: true, 
 		crossdomain: 2, //0 - localhost, 1 - intranet, 2 - deployed servert
     
+		templateTmpl: 0,// = $.template(null,templateTmpl());
+		searchEntryTmpl: 0,// = $.template(null,searchEntryTmpl());
+		searchTmpl : 0, //$.template(null,searchTmpl());
+		videoTmpl : 0, //$.template(null,searchTmpl());
+		commentsTmpl : 0, //$.template(null,commentsTmpl());
+		tabContainerTmpl : 0,//$.template(null,tabContainerTmpl());
+		tabTmpl : 0, // $.template(null,tabTmpl());
+		tilesTmpl : 0,//$.template(null,tilesTmpl());
     //default settings
     defaults : {
         environment: "development",
@@ -112,24 +130,19 @@
 
 		renderTabs: function(data){
 
-			var video = [{t:1},{t:2},{t:3},{t:4}];
-			$.get("tmpl/tabContainer.tmpl.html", function(tabContainer){
-				$.get("tmpl/tab.tmpl.html", function(tabTmpl){
+				var video = [{t:1},{t:2},{t:3},{t:4}];
+
 					//$.tmpl(tabTmpl,video).appendTo("#tab_container");
-					$.tmpl(tabContainer).appendTo("#tab_container");
-					$.tmpl(tabTmpl,video).appendTo("#tab_top");
+					$.tmpl($.mainspring.tabContainerTmpl).appendTo("#tab_container");
+					$.tmpl($.mainspring.tabTmpl,video).appendTo("#tab_top");
 					$('#nav_div').tabs();
 					$('#nav_div').tabs('select', data); // switch to third tab
 					$('#nav_div').bind('tabsselect', function(event, ui) {
 							 // Objects available in the function context:
-							//alert(ui.tab);     // anchor element of the selected (clicked) tab
-							//alert(ui.panel);   // element, that contains the selected/clicked tab contents
 							url = $.mainspring.decodeRemoteURI("videos.json");
 							$.ajax({url: url, dataType:'jsonp', jsonpCallback: "$.mainspring.renderTiles"})
 
 					});
-				});
-			});
 		},
 
 		formatDate: function(data){
@@ -158,22 +171,21 @@
 			var acomment = {username: this.opts.name,created_at:data.created_at,body:data.body};
 			var data = {comment:acomment};
 			//renderComments(data);
-			$.get("tmpl/comments.html", function(template){
-				$.tmpl(template, data).prependTo("#comments");
-			});
+			$("#nocomments").hide();
+			$.tmpl($.mainspring.commentsTmpl, data).prependTo("#comments");
 		},
 
     //overridable static functions 
 		ilikethis: function(userid,videoid){
 				var time = new Date().getTime();
-				var aUrl = "http://localhost:8080";
+				var aUrl = $.mainspring.getHost();
 				var at = this.opts.clientHandle+"_"+this.opts.clientUserID;
 				aUrl += "/clients/"+this.opts.clientHandle+"/videos/"+videoid+"/likes.json";
 				aUrl += "?auth_token="+at+"&_method=POST";
 
 				$.post(aUrl, function(data){})
 				.complete(function(){
-						var img = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
+						var img = "<img alt=\"i liked this\" src=\""+$.mainspring.getHost()+"/images/thumb_up_gray.gif\" />";
 						$('#ilikethis').hide().replaceWith(img).fadeIn();
 				});
 				
@@ -188,10 +200,8 @@
 				}
 
 				$("div.video_tile_wrapper").remove();
-				$.get("tmpl/tiles.tmpl.html", function(template){	
-					hideLoading();
-					$.tmpl(template, tiles).appendTo("#grid");
-				});
+				hideLoading();
+				$.tmpl($.mainspring.tilesTmpl, tiles).appendTo("#grid");
 			}
 
 		},
@@ -209,16 +219,13 @@
 			}
 
 			$("#ms_wrapper div").remove();
-			$.get("tmpl/search.tmpl.html", function(template){
-				$.tmpl(template,{terms:$.cookie('search'), backUrl:$.cookie('backUrl')}).appendTo("#ms_wrapper");
-			});
+
+			$.tmpl($.mainspring.searchTmpl,{terms:$.cookie('search'), backUrl:$.cookie('backUrl')}).appendTo("#ms_wrapper");
 
 			//grab template for individual search results
 			if(data.length > 0){
-				$.get("tmpl/searchEntry.tmpl.html", function(template){
-					$.tmpl(template,data).appendTo("#searchListContainer");
-					$("#searchListContainer #noresults").remove();
-				});
+				$.tmpl($.mainspring.searchEntryTmpl,data).appendTo("#searchListContainer");
+				$("#searchListContainer #noresults").remove();
 			}
 				
 		},
@@ -267,9 +274,9 @@
 			data[0].video.video_player = "<script type=text/javascript src=http://content.bitsontherun.com/players/EVwCtgxd-kasi1DWo.js>";
 
 			if(data[0].video.liked_by_current_user === false){
-				data[0].video.thumbs_up_link = "<a href=\"#\" onclick=\"$.mainspring.ilikethis('"+data[0].video.userid+"','"+data[0].video.id+"'); return false;\"><img alt=\"i like this\" border=\"none\" src=\"images/thumb_up.gif\" /></a>";
+				data[0].video.thumbs_up_link = "<a href=\"#\" onclick=\"$.mainspring.ilikethis('"+data[0].video.userid+"','"+data[0].video.id+"'); return false;\"><img alt=\"i like this\" border=\"none\" src=\""+$.mainspring.getHost()+"/images/thumb_up.gif\" /></a>";
 			}else{
-				data[0].video.thumbs_up_link = "<img alt=\"i liked this\" src=\"images/thumb_up_gray.gif\" />";
+				data[0].video.thumbs_up_link = "<img alt=\"i liked this\" src=\""+$.mainspring.getHost()+"/images/thumb_up_gray.gif\" />";
 			}
 			//if(typeof(data[0].video.label) !== 'undefined'){
 			if(typeof(data[0].video.tags) !== 'undefined'){
@@ -280,13 +287,10 @@
 			var searchUrl = [{search_url: "http://google.com"}];
 			
 			//Grab main template structure
-			$.get('tmpl/template.html', function(template){
-				$.tmpl(template, data[0].video).appendTo("#connect_tv_container");
-					
+			$.tmpl($.mainspring.templateTmpl, data[0].video).appendTo("#connect_tv_container");
 				//initialize comments
-				setupComments(data[0].video,this);
+			setupComments(data[0].video,this);
 
-			});
 			
 			//If no tabs defined set to 0
 			if(!isNumber(Number($.cookie('mstab'))))
@@ -299,12 +303,12 @@
 			if(typeof(comments) !== 'undefined')
 			{
 				renderComments(comments);
+			}else{
+				$("#comments").append("<BR><BR><div id='nocomments' style='padding-left:20px;'><i>No Comments</i></div>");
 			}
 			
 			//Render video template
-			$.get("tmpl/video.tmpl.html", function(template){	
-				$.tmpl(template, data[0].video).appendTo("#video_embed_container");
-			});
+			$.tmpl($.mainspring.videoTmpl, data[0].video).appendTo("#video_embed_container");
 
 			$.cookie("backUrl", $(location).attr('href'));
     },
