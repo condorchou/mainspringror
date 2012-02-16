@@ -268,8 +268,7 @@
 
 			data[0].video.name = this.opts.name;
 			data[0].video.location = this.opts.location;
-			var tmp = data[0].video.release_date.split("T");
-			data[0].video.release_date = tmp[0];//.substring(0,tmp[0].length-1);
+			data[0].video.release_date = $.mainspring.formatDate(data[0].video.release_date);//.substring(0,tmp[0].length-1);
 			data[0].video.userid = $.mainspring.opts.clientUserID;
 			data[0].video.video_player = "<script type=text/javascript src=http://content.bitsontherun.com/players/EVwCtgxd-kasi1DWo.js>";
 
