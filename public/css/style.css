@@ -789,9 +789,8 @@ a.current{
 	border:0;
 	margin-top:10px;
 	width:148px;
-	/*max-height:95px;
+	max-height:90px;
 	overflow-y:hidden;
-	*/	
 	padding-bottom:5px;
 }
 
