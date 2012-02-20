@@ -12,10 +12,10 @@ class Ability
       #should not allow client_admin to create a super_admin
       #TODO: need to prevent selection of super_admin in views
       can [:manage], [User], :client_id => user.client.id
-      can [:show,:edit,:update,:style], [Client], :id => user.client.id
+      can [:show,:edit,:update,:style, :behavior, :primary_video, :secondary_video], [Client], :id => user.client.id
       can :manage, ContentAsset, :client_id => user.client.id
     elsif user.role == 'intranet_user' #default user
-      can [:show, :style], Client, :id => user.client.id #required for nested resource, since it goes through client
+      can [:show, :style, :behavior, :primary_video, :secondary_video], Client, :id => user.client.id #required for nested resource, since it goes through client
       can [:index, :show], Video, :client_id => user.client.id
       can :read, ContentAsset, :client_id => user.client.id
     end

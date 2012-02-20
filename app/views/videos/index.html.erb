@@ -18,7 +18,13 @@
   </tr>
 
 <% @videos.each do |video| %>
-  <tr>
+  <% if video.id == @client.primary_video_id %>
+    <tr style="background-color:orange;" title="Primary Video">
+  <% elsif video.id == @client.secondary_video_id %>
+    <tr style="background-color:yellow;" title="Secondary Video">
+  <% else %>
+    <tr>
+  <% end %>
     <td><%= video.title %></td>
     <td><%= video.location %></td>
     <td><%= video.description %></td>

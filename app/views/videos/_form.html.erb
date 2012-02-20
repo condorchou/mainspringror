@@ -47,10 +47,13 @@
     <%= f.label :approved %><br />
     <%= f.check_box :approved %>
   </div>
+
   <div class="field">
-    <%= f.label :views %><br />
-    <%= f.text_field :views %>
+    <%= f.label :featured_as %><br />
+    <%= f.select :featured_as, ["None", "Primary", "Secondary"] %>
   </div>
+
+
 
 <% end %>
 
