@@ -7,9 +7,6 @@ object Video.includes(:comments => :user).where(:id => @video)
     @video.tags.collect {|t| t.name}
   end
 
-  code :liked_by_current_user do
-    !Like.where(:video_id => @video.id, :user_id => @user.id).first.blank?
-  end
 
   child :comments do
     attribute :created_at

@@ -19,10 +19,15 @@ class VideosController < ApplicationController
  # end 
   
   def index
-    if params[:tags].blank?
+    if !params[:search].blank?
       @videos = @client.videos.search(params[:search])
-    else
+    elsif !params[:tags].blank?
       @videos = @client.videos.find_tagged_with(params[:tags])
+    else
+      @videos = @client.videos
+    end
+    if !params[:order].blank?
+      @videos = @videos.order(params[:order])
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -35,6 +40,7 @@ class VideosController < ApplicationController
   # GET /clients/videos/1.xml
   def show
   #  @video = Video.includes([:comments, :user]).where(:id => @video.id)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @video }

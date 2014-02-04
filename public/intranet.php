@@ -1,12 +1,7 @@
 <html>
 <head>
-  <script src="js/jquery-1.7.1.min.js"></script>
-  <script src="js/jquery-ui-1.8.17.custom.min.js"></script>
-  <script src="js/jquery.tmpl.min.js"></script>
-  <script src="js/jquery.cookie.js"></script>
-  <script src="js/quickpager.jquery.js"></script>
+  <script src="http://www.mainspringror.com/js/jquery-1.7.1.min.js"></script>
   <script src="js/mainspring.js"></script>
-	<link type="text/css" href="css/custom-theme/jquery-ui-1.8.17.custom.css" rel="stylesheet" /> 
 </head>
 <body>
 
@@ -14,10 +9,10 @@
 <script>
   $('#connect_tv_container').mainspring({
     environment:'development',
-    clientHandle: 'belsobeer',
-    clientUserID: 'condor@condor.com',
+    clientHandle: 'corvel',
+    clientUserID: 'corvel@corvel.com',
     name: 'Condor Chou',
-    location: 'Boston, MA',
+    location: 'Los Angeles, CA',
     remoteURI: '<?php echo $_GET['goto']; ?>',
     width: 1000
   });

@@ -1,7 +1,7 @@
 class Client < ActiveRecord::Base
-  has_many :videos
-  has_many :users
-  has_many :content_assets
+  has_many :videos, :dependent => :destroy
+  has_many :users, :dependent => :destroy
+  has_many :content_assets, :dependent => :destroy
 
   before_create do
     self.handle = self.company_name.downcase.gsub(/[^a-zA-Z0-9]/,'_')

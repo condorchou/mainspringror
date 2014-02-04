@@ -1,7 +1,7 @@
 	<ul class="comments">
 		<li>
      <span class="user">${comment.username}</span>
-     <span class="date">${comment.created_at}</span>
+     <span class="date">${$.mainspring.formatDate(comment.created_at)}</span>
 		 <div class="clear">&nbsp;</div>	
 		 ${comment.body}
     <div class="comments_divide"></div>

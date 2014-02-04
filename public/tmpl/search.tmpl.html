@@ -1,7 +1,46 @@
 <div id="searchContainer">
 	<div id="searchNav">
-		<div id="search_box"></div>
-		<div style="font-size: 15px; margin: 28px 0pt;">
+		<div id="search_box">
+		<div id="search_box_container" align="right">
+	<!-- this table used to contain the form (which had some styling issues with ie6, can probably clean this up with pure css not that form is removed) -->
+			<div id="search_box_contact_us">
+				<a href="${contact_us}" target="_top">contact us</a>
+			</div>
+	<!-- actual search form is invisible and sits on top of the table above -->
+			<div id="search_form">
+				<form id="search_form" method="post">
+
+				<input class="searchbox_off" id="search_box" name="search_terms" type="text" value="" />
+				<input class="search_button" id="submit_button" name="commit" type="button" value="" onclick="$.mainspring.performSearch();return false;"/>
+
+				</form>
+				<script>
+					jQuery(document).ready(function($){	
+
+					$("input#search_box").blur(function(){
+							if (this.value == null || this.value=="" || this.value==undefined) {
+								this.className='searchbox_off';
+							}
+					});
+
+					$("input#search_box").focus(function(){
+						this.className='searchbox_on';
+
+						$("input#search_box").keypress(function(e){
+							if(e.which == 13){
+								jQuery('#submit_button').focus().click();
+								return false;
+							}
+						});
+					});
+
+				});
+
+				</script>
+			</div>
+			</div>
+		</div>
+		<div style="font-size: 15px; margin: 0 0 28px 0;">
 			<span style="color: gray;">VIDEOS WITH SEARCH TERMS:</span>${terms}
 		</div>
 	</div>

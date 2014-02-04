@@ -1,0 +1,38 @@
+.ui-tabs .ui-tabs-nav li a { 
+    /* Tab width */
+    /*width: 129.6px;*/ /* 4 tabs */
+    width:98px; /* 5 tabs */
+    /* Tab alignment */ 
+    text-align:center;
+    /*Tab Link Color*/
+    color: #2E8DAC;
+}
+
+.ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+  /* Active Tab Link text color */
+  color: #333333 !important;
+}
+
+#cofe_years {
+    float: left;
+    height: '100%';
+    margin-bottom: 10px;
+    overflow: hidden;
+    width: 130px;
+    text-align:left;
+    padding-left:30px;
+}
+#cofe_title {
+  margin-bottom:20px;
+  line-height:20px;
+  font-size:14px;
+}
+
+.datelink{
+  line-height:20px;
+  cursor:pointer;
+  color: #2E8DAC;
+}
+.datelink:hover{
+  font-weight:bold;
+}

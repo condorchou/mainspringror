@@ -13,6 +13,20 @@ class ClientsController < ApplicationController
     end
   end
 
+  def primary_video
+    @video = @client.videos.where(:id => @client.primary_video_id).first
+    respond_to do |format|
+      format.json
+    end
+  end
+
+  def secondary_video
+    @video = @client.videos.where(:id => @client.secondary_video_id).first
+    respond_to do |format|
+      format.json 
+    end
+  end
+
   def style
     respond_to do |format|
     #  format.html { render :text => @client.css}
@@ -25,6 +39,9 @@ class ClientsController < ApplicationController
     respond_to do |format|
     #  format.html { render :text => @client.css}
       format.js
+      format.html { render :html => @client }
+      format.xml  { render :xml => @client }
+      format.json { render :json => @client }
     end
 
   end

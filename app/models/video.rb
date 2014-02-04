@@ -5,7 +5,7 @@ class Video < ActiveRecord::Base
 
   belongs_to :client
   belongs_to :user
-  has_many :comments
+  has_many :comments, :order => "id DESC"
   has_many :likes
 
   if Rails.env.to_s == "production"
@@ -32,6 +32,34 @@ class Video < ActiveRecord::Base
     end
 
   end
+
+  def featured_as
+    if self.id == self.client.primary_video_id
+      "Primary"
+    elsif self.id == self.client.secondary_video_id
+      "Secondary"
+    else
+      "None"
+    end
+  end
+
+  def featured_as=(feature_type)
+    c = self.client
+
+    if feature_type == "Primary"
+      c.primary_video_id = self.id
+      c.secondary_video_id = nil if c.secondary_video_id == c.primary_video_id
+    elsif feature_type == "Secondary"
+      c.secondary_video_id = self.id
+      c.primary_video_id = nil if c.primary_video_id == c.secondary_video_id
+    elsif feature_type == "None"
+      c.primary_video_id = nil if c.primary_video_id == self.id
+      c.secondary_video_id = nil if c.secondary_video_id == self.id
+    end
+    c.save!
+
+  end
+
 
 
 end

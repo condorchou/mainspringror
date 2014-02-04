@@ -746,6 +746,12 @@ a.current{
 	padding-left:0px;
 }
 
+#loader{
+	display:none;
+	position:relative;
+	left:100px;
+}
+
 #grid2{
 	margin-top:7px;
 	width:404px;

@@ -6,6 +6,8 @@ Mainspring::Application.routes.draw do
   resources :clients do
     
     member do 
+      get 'primary_video'
+      get 'secondary_video'
       get 'style'
       get 'behavior'
     end
